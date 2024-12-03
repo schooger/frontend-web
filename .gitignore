@@ -22,7 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-src/ai.jsx
-src/ocr.jsx
-src/voice.jsx
