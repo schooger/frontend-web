@@ -29,8 +29,8 @@ export default function App() {
       ></img>
 
       <div className="text-[4rem] font-bold">
-        <span className="text-amber-400"> schoo</span>
-        <span className="text-[#1a73e8]">ger</span>
+        <span className="text-amber-500"> schoo</span>
+        <span className="text-blue-600">ger</span>
       </div>
       <div className="relative w-[40rem] h-auto">
         <form onSubmit={form.onSubmit((values) => console.log(values))}>

@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@api/*": ["./src/@api/*"],
+      "@style/*": ["./src/@style/*"],
+      "@layout/*": ["./src/@layout/*"],
+      "@form/*": ["./src/@form/*"],
+      "@view/*": ["./src/@view/*"],
+    },
+
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -20,7 +28,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
   },
   "include": ["src"]
 }
