@@ -5,7 +5,7 @@ import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core'
 
 import '@style/index.css'
-import App from './app'
+import App from '@layout/app.layout'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
