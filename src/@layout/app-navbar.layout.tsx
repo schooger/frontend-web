@@ -1,6 +1,14 @@
 import AppLogo from "./app-logo"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Coins, Home, Palmtree, Settings, Telescope, User } from 'lucide-react';
+
+const links = [
+  { title: 'Home', icon: <Home /> },
+  { title: 'My Profile', icon: <User /> },
+  { title: 'Settings', icon: <Settings /> },
+  { title: 'Explore', icon: <Telescope /> },
+  { title: 'Metaverse', icon: <Palmtree /> },
+  { title: '1.8M Tokens', icon: <Coins /> },
+]
 
 export default function AppNavbar() {
   console.log('app-navbar')
@@ -11,11 +19,22 @@ export default function AppNavbar() {
         <AppLogo />
 
         <div className="hidden">
-          <FontAwesomeIcon icon={faSearch} className="text-[1.5rem] font-bold text-gray-700" />
+
         </div>
       </div>
 
-      <div className="text-[#444]">
+      <div className="flex flex-col gap-4 text-[#444] mt-8">
+        {
+          links.map((link) => (
+            <div className="flex justify-start items-center gap-2 font-medium text-md">
+              {link.icon}
+              <span>{link.title}</span>
+            </div>
+          ))
+        }
+      </div>
+
+      <div className="hidden text-[#444]">
         {
           [1, 2, 3, 4].map((i) => (
             <div className="flex flex-col justify-between items-baseline w-full mt-8">

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Badge, Button, Textarea } from "@mantine/core";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from "@mantine/form";
+import { ArrowUp } from 'lucide-react';
 
 export default function App() {
   const form = useForm({
@@ -22,10 +21,10 @@ export default function App() {
 
   return (
     <div className="flex justify-center items-center flex-col h-screen pb-[12rem]">
-
       <div className="text-[2.4rem] font-bold mb-4">
         <span className="text-[#444]">ask schooger</span>
       </div>
+
       <div className="relative w-[90%] max-w-[40rem] h-auto">
         <form onSubmit={form.onSubmit((values) => console.log(values))}>
           <Textarea
@@ -57,7 +56,7 @@ export default function App() {
             }
           </div>
 
-          <div className="absolute right-2 bottom-2">
+          <div className="absolute right-3 bottom-2">
             <Button
               type="submit"
               variant="filled"
@@ -68,7 +67,7 @@ export default function App() {
               }}
               disabled={(length > 0 && remainingLength >= 0) ? false : true}
             >
-              <FontAwesomeIcon icon={faArrowUp} className="text-xl font-bold" />
+              <ArrowUp strokeWidth={3.5} />
             </Button>
           </div>
         </form>
