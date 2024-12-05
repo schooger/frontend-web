@@ -1,6 +1,6 @@
+import ViewHome from "@view/home.view"
 import AppHeader from "./app-header.layout"
 import AppNavbar from "./app-navbar.layout"
-import Test from "./test"
 
 export default function App() {
   console.log('app')
@@ -15,8 +15,8 @@ export default function App() {
       <AppHeader />
       <AppNavbar />
 
-      <div className="w-full min-h-[40rem] pl-[18rem] pr-[1rem] py-[3rem]">
-        <Test />
+      <div className="w-full min-h-[40rem] pl-[14rem] pr-[1rem] py-[3rem]">
+        <ViewHome />
       </div>
     </div>
   )

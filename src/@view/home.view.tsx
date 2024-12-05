@@ -3,7 +3,7 @@ import { Badge, Button, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { ArrowUp } from 'lucide-react';
 
-export default function App() {
+export default function ViewHome() {
   const form = useForm({
     mode: 'controlled',
     initialValues: {
