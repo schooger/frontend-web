@@ -31,8 +31,8 @@ export default function AppNavbar() {
 
       <div className="flex flex-col gap-4 text-[#444] mt-8">
         {
-          links.map((link) => (
-            <div className="flex justify-start items-center gap-2 font-medium text-md">
+          links.map((link, i) => (
+            <div className="flex justify-start items-center gap-2 font-medium text-md" key={`link-${i}`}>
               {link.icon}
               <span>{link.title}</span>
             </div>
@@ -43,7 +43,7 @@ export default function AppNavbar() {
       <div className="mt-8">
         <Accordion
           multiple
-          defaultValue={['profiles']}
+          defaultValue={['Profiles']}
           classNames={{
             item: 'border-none',
             panel: 'pl-4',
@@ -52,12 +52,12 @@ export default function AppNavbar() {
           }}
         >
           {
-            accorLinks.map((link) => (
-              <Accordion.Item value={link.title}>
+            accorLinks.map((link, m) => (
+              <Accordion.Item value={link.title} key={`link-m-${m}`}>
                 <Accordion.Control icon={link.icon}>{link.title}</Accordion.Control>
                 {
-                  link.sublinks.map((sublink) => (
-                    <Accordion.Panel>{sublink.title}</Accordion.Panel>
+                  link.sublinks.map((sublink, n) => (
+                    <Accordion.Panel key={`link-n-${n}`}>{sublink.title}</Accordion.Panel>
                   ))
                 }
               </Accordion.Item>

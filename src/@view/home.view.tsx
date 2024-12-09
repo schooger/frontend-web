@@ -17,7 +17,7 @@ export default function ViewHome() {
   const remainingLength = maxLength - length
   const errorMessage = remainingLength < 0 ? true : false;
 
-  console.log('app', remainingLength)
+  console.log('home.view')
 
   return (
     <div className="flex justify-center items-center flex-col h-screen pb-[12rem]">
