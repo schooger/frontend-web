@@ -1,114 +1,163 @@
-import { Accordion } from "@mantine/core";
+import { Accordion, Skeleton } from "@mantine/core";
 import AppLogo from "./app-logo"
 import { Coins, Gift, Home, Landmark, Palmtree, School, Settings, SquareChartGantt, Telescope, Trophy, User, Users } from 'lucide-react';
 import { Link } from "@tanstack/react-router";
-
-const topLinks = [
-  { link: '/', title: 'Home', icon: <Home /> },
-  { link: '/coming-soon', title: 'My Profile', icon: <User /> },
-  { link: '/coming-soon', title: 'Settings', icon: <Settings /> },
-  { link: '/coming-soon', title: 'Explore', icon: <Telescope /> },
-  { link: '/coming-soon', title: 'Ranking', icon: <Trophy /> },
-  { link: '/coming-soon', title: 'Rewards', icon: <Gift /> },
-  { link: '/coming-soon', title: '1.8M Tokens', icon: <Coins /> },
-  { link: '/coming-soon', title: 'Metaverse', icon: <Palmtree /> },
-]
-
-const accorLinks = [
-  {
-    title: 'Organization',
-    icon: <School size={20} />,
-    sublinks: [
-      { link: '/coming-soon', title: 'Classes' },
-      { link: '/coming-soon', title: 'Modules' },
-      { link: '/coming-soon', title: 'Calendars' },
-      { link: '/coming-soon', title: 'Transports' },
-      { link: '/coming-soon', title: 'Permissions' },
-    ]
-  },
-  {
-    title: 'Reports',
-    icon: <SquareChartGantt size={20} />,
-    sublinks: [
-      { link: '/coming-soon', title: 'Exams' },
-      { link: '/coming-soon', title: 'Degrees' },
-      { link: '/coming-soon', title: 'Homework' },
-      { link: '/coming-soon', title: 'Presence' },
-    ]
-  },
-  {
-    title: 'Profiles',
-    icon: <Users size={20} />,
-    sublinks: [
-      { link: '/coming-soon', title: 'Students' },
-      { link: '/coming-soon', title: 'Parents' },
-      { link: '/coming-soon', title: 'Teachers' },
-      { link: '/coming-soon', title: 'Administrators' }
-    ]
-  },
-  {
-    title: 'Accounting',
-    icon: <Landmark size={20} />,
-    sublinks: [
-      { link: '/coming-soon', title: 'Incomes' },
-      { link: '/coming-soon', title: 'Charges' }
-    ]
-  },
-]
+import { useQuery } from '@tanstack/react-query'
 
 export default function AppNavbar() {
+  const lang = localStorage.getItem('lang') || 'en'
+
+  const { isPending, isError, data } = useQuery<{ [key: string]: any }, Error>({
+    queryKey: ['app-navbar.lang'],
+    queryFn: async () => {
+      try {
+        const r = await import(`@lang/${lang}/app-navbar.lang.ts`)
+        return r.default
+      } catch (err) {
+        return err
+      }
+    },
+  })
+
+  const { topLinks, accorLinks } = links(data)
+
   console.log('app-navbar')
 
   return (
     <div className="fixed top-0 left-0 z-40 w-[14rem] h-full px-4 py-2 overflow-auto">
-      <div className="flex justify-between items-baseline w-full">
+      <div className="flex justify-start items-baseline w-full">
         <AppLogo />
-
-        <div className="hidden">
-
-        </div>
       </div>
-
-      <div className="flex flex-col gap-4 text-[#444] mt-8">
-        {
-          topLinks.map((link, i) => (
-            <Link to={link.link} key={`link-top-${i}`}>
-              <div className="flex justify-start items-center gap-2 font-medium text-md">
-                {link.icon}
-                <span>{link.title}</span>
-              </div>
-            </Link>
-          ))
-        }
-      </div>
-
-      <div className="mt-8">
-        <Accordion
-          multiple
-          defaultValue={['Organization']}
-          classNames={{
-            item: 'border-none',
-            panel: 'pl-4',
-            control: 'pl-0 hover:bg-gray-200',
-            label: 'font-bold text-[#444]',
-          }}
-        >
-          {
-            accorLinks.map((link, m) => (
-              <Accordion.Item value={link.title} key={`link-m-${m}`}>
-                <Accordion.Control icon={link.icon}>{link.title}</Accordion.Control>
+      {
+        (isPending) ? <Loader />
+          : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
+            : <>
+              <div className="flex flex-col gap-4 text-[#444] mt-8">
                 {
-                  link.sublinks.map((sublink, n) => (
-                    <Link to={sublink.link} key={`link-n-${n}`}>
-                      <Accordion.Panel>{sublink.title}</Accordion.Panel>
+                  topLinks.map((link, i) => (
+                    <Link to={link.link} key={`link-top-${i}`}>
+                      <div className="flex justify-start items-center gap-2 font-medium text-md capitalize">
+                        {link.icon}
+                        <span>{link.title}</span>
+                      </div>
                     </Link>
                   ))
                 }
-              </Accordion.Item>
-            ))
-          }
-        </Accordion>
-      </div>
+              </div>
+
+              <div className="mt-8 capitalize">
+                <Accordion
+                  multiple
+                  defaultValue={['item-0']}
+                  classNames={{
+                    item: 'border-none',
+                    panel: 'pl-4',
+                    control: 'pl-0 hover:bg-gray-200',
+                    label: 'font-bold text-[#444]',
+                  }}
+                >
+                  {
+                    accorLinks.map((link, m) => (
+                      <Accordion.Item value={`item-${m}`} key={`link-m-${m}`}>
+                        <Accordion.Control icon={link.icon} className="capitalize">{link.title}</Accordion.Control>
+                        {
+                          link.sublinks.map((sublink, n) => (
+                            <Link to={sublink.link} key={`link-n-${n}`}>
+                              <Accordion.Panel>{sublink.title}</Accordion.Panel>
+                            </Link>
+                          ))
+                        }
+                      </Accordion.Item>
+                    ))
+                  }
+                </Accordion>
+              </div>
+            </>
+      }
     </div>
   )
+}
+
+function Loader() {
+  return (
+    <div className="mt-8">
+      {
+        Array.from({ length: 8 }, (_, i) => i).map((i) => (
+          <div className="block" key={`skeleton-${i}`}>
+            <Skeleton
+              height={40}
+              circle
+              mb="xl"
+              classNames={{
+                root: 'inline-block align-top'
+              }}
+            />
+
+            <div className="w-[7.2rem] inline-block align-top mt-1 ml-2">
+              <Skeleton height={7} radius="xl" />
+              <Skeleton height={7} mt={5} radius="xl" />
+              <Skeleton height={7} mt={5} width="70%" radius="xl" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  )
+}
+
+function links(lang: any) {
+  const topLinks = [
+    { link: '/', title: lang?.home, icon: <Home /> },
+    { link: '/coming-soon', title: lang?.my_profile, icon: <User /> },
+    { link: '/coming-soon', title: lang?.settings, icon: <Settings /> },
+    { link: '/coming-soon', title: lang?.explore, icon: <Telescope /> },
+    { link: '/coming-soon', title: lang?.ranking, icon: <Trophy /> },
+    { link: '/coming-soon', title: lang?.rewards, icon: <Gift /> },
+    { link: '/coming-soon', title: lang?.tokens, icon: <Coins /> },
+    { link: '/coming-soon', title: lang?.metaverse, icon: <Palmtree /> },
+  ]
+
+  const accorLinks = [
+    {
+      title: lang?.organization,
+      icon: <School size={20} />,
+      sublinks: [
+        { link: '/coming-soon', title: lang?.classes },
+        { link: '/coming-soon', title: lang?.modules },
+        { link: '/coming-soon', title: lang?.calendars },
+        { link: '/coming-soon', title: lang?.transports },
+        { link: '/coming-soon', title: lang?.permissions },
+      ]
+    },
+    {
+      title: lang?.reports,
+      icon: <SquareChartGantt size={20} />,
+      sublinks: [
+        { link: '/coming-soon', title: lang?.exams },
+        { link: '/coming-soon', title: lang?.degrees },
+        { link: '/coming-soon', title: lang?.homework },
+        { link: '/coming-soon', title: lang?.presence },
+      ]
+    },
+    {
+      title: lang?.profiles,
+      icon: <Users size={20} />,
+      sublinks: [
+        { link: '/coming-soon', title: lang?.students },
+        { link: '/coming-soon', title: lang?.parents },
+        { link: '/coming-soon', title: lang?.teachers },
+        { link: '/coming-soon', title: lang?.administrators }
+      ]
+    },
+    {
+      title: lang?.accounting,
+      icon: <Landmark size={20} />,
+      sublinks: [
+        { link: '/coming-soon', title: lang?.incomes },
+        { link: '/coming-soon', title: lang?.charges }
+      ]
+    },
+  ]
+
+  return { topLinks, accorLinks }
 }

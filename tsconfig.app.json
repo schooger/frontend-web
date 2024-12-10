@@ -3,8 +3,9 @@
     "paths": {
       "@api/*": ["./src/@api/*"],
       "@style/*": ["./src/@style/*"],
-      "@layout/*": ["./src/@layout/*"],
       "@form/*": ["./src/@form/*"],
+      "@lang/*": ["./src/@lang/*"],
+      "@layout/*": ["./src/@layout/*"],
       "@view/*": ["./src/@view/*"],
     },
 

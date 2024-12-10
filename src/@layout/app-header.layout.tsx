@@ -3,9 +3,18 @@ import { ChevronsUpDown, Languages } from 'lucide-react';
 
 export default function AppHeader() {
   console.log('app-header')
+  const lang = localStorage.getItem('lang') || 'en'
+
+  const changeLanguage = (value: string | null) => {
+    if (value) {
+      localStorage.setItem('lang', value)
+
+      window.location.reload()
+    }
+  }
 
   return (
-    <div className="fixed top-0 left-0 z-40 w-full h-[3.6rem] pl-[18rem]">
+    <div className="fixed top-0 left-0 z-40 w-full h-[3.6rem] pl-[14rem]">
       <div className="flex justify-between items-center pr-4">
         <div></div>
         <div className="flex justify-end items-center gap-2">
@@ -13,8 +22,13 @@ export default function AppHeader() {
             <Select
               radius="xl"
               placeholder="Select placeholder"
-              data={['English', 'عربية', 'Français']}
-              defaultValue="English"
+              data={[
+                { label: 'English', value: 'en' },
+                { label: 'العربية', value: 'ar' },
+                { label: 'français', value: 'fr' },
+              ]}
+              onChange={changeLanguage}
+              defaultValue={lang}
               allowDeselect={false}
               leftSection={<Languages color="#444" size={20} />}
               leftSectionPointerEvents="none"
