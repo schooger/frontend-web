@@ -5,7 +5,7 @@ export default function AppHeader() {
   console.log('app-header')
 
   return (
-    <div className="fixed top-0 left-0 w-full h-[3.6rem] pl-[18rem]">
+    <div className="fixed top-0 left-0 z-40 w-full h-[3.6rem] pl-[18rem]">
       <div className="flex justify-between items-center pr-4">
         <div></div>
         <div className="flex justify-end items-center gap-2">

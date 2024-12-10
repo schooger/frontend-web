@@ -4,10 +4,8 @@ export default function ViewComingSoon() {
   console.log('coming-soon.view')
 
   return (
-    <div className="flex justify-center items-center flex-col h-screen pb-[12rem]">
-      <div className="relative w-[90%] max-w-[40rem] h-auto">
-        <h1>Coming Soon</h1>
-      </div>
+    <div className="text-center pt-[8rem]">
+      <h1 className="relative text-5xl md:text-6xl md:leading-tight font-bold md:text-center leading-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-violet-500 mb-6">Coming Soon!</h1>
     </div>
   )
 }
