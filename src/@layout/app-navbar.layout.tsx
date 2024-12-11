@@ -108,8 +108,8 @@ function Loader() {
 function links(lang: any) {
   const topLinks = [
     { link: '/', title: lang?.home, icon: <Home /> },
-    { link: '/coming-soon', title: lang?.my_profile, icon: <User /> },
-    { link: '/coming-soon', title: lang?.settings, icon: <Settings /> },
+    { link: '/profile', title: lang?.my_profile, icon: <User /> },
+    { link: '/settings', title: lang?.settings, icon: <Settings /> },
     { link: '/coming-soon', title: lang?.explore, icon: <Telescope /> },
     { link: '/coming-soon', title: lang?.ranking, icon: <Trophy /> },
     { link: '/coming-soon', title: lang?.rewards, icon: <Gift /> },
@@ -122,39 +122,39 @@ function links(lang: any) {
       title: lang?.organization,
       icon: <School size={20} />,
       sublinks: [
-        { link: '/coming-soon', title: lang?.classes },
-        { link: '/coming-soon', title: lang?.modules },
-        { link: '/coming-soon', title: lang?.calendars },
-        { link: '/coming-soon', title: lang?.transports },
-        { link: '/coming-soon', title: lang?.permissions },
+        { link: '/organization/classes', title: lang?.classes },
+        { link: '/organization/modules', title: lang?.modules },
+        { link: '/organization/calendars', title: lang?.calendars },
+        { link: '/organization/transports', title: lang?.transports },
+        { link: '/organization/permissions', title: lang?.permissions },
       ]
     },
     {
       title: lang?.reports,
       icon: <SquareChartGantt size={20} />,
       sublinks: [
-        { link: '/coming-soon', title: lang?.exams },
-        { link: '/coming-soon', title: lang?.degrees },
-        { link: '/coming-soon', title: lang?.homework },
-        { link: '/coming-soon', title: lang?.presence },
+        { link: '/reports/exams', title: lang?.exams },
+        { link: '/reports/degrees', title: lang?.degrees },
+        { link: '/reports/homework', title: lang?.homework },
+        { link: '/reports/presence', title: lang?.presence },
       ]
     },
     {
       title: lang?.profiles,
       icon: <Users size={20} />,
       sublinks: [
-        { link: '/coming-soon', title: lang?.students },
-        { link: '/coming-soon', title: lang?.parents },
-        { link: '/coming-soon', title: lang?.teachers },
-        { link: '/coming-soon', title: lang?.administrators }
+        { link: '/profiles/parents', title: lang?.parents },
+        { link: '/profiles/teachers', title: lang?.teachers },
+        { link: '/profiles/students', title: lang?.students },
+        { link: '/profiles/administrators', title: lang?.administrators },
       ]
     },
     {
       title: lang?.accounting,
       icon: <Landmark size={20} />,
       sublinks: [
-        { link: '/coming-soon', title: lang?.incomes },
-        { link: '/coming-soon', title: lang?.charges }
+        { link: '/accounting/incomes', title: lang?.incomes },
+        { link: '/accounting/charges', title: lang?.charges },
       ]
     },
   ]

@@ -1,8 +1,10 @@
 import { RouterProvider, createRouter } from '@tanstack/react-router'
-
 import { routeTree } from '../routeTree.gen'
+
 // @ts-ignore
-const router = createRouter({ routeTree })
+const router = createRouter({
+  routeTree,
+})
 
 export default function App() {
   console.log('app')
