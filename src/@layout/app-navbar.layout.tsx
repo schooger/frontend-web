@@ -1,27 +1,24 @@
 import { Accordion, Skeleton } from "@mantine/core";
 import AppLogo from "./app-logo"
-import { Coins, Gift, Home, Landmark, Palmtree, School, Settings, SquareChartGantt, Telescope, Trophy, User, Users } from 'lucide-react';
-import { Link } from "@tanstack/react-router";
+import { CircleUser, Coins, Gift, Home, Landmark, Palmtree, School, Settings, SquareChartGantt, Telescope, Trophy, Users } from 'lucide-react';
+import { Link, useLocation } from "@tanstack/react-router";
 import { useQuery } from '@tanstack/react-query'
 
 export default function AppNavbar() {
+  console.log('app-navbar')
   const lang = localStorage.getItem('lang') || 'en'
 
   const { isPending, isError, data } = useQuery<{ [key: string]: any }, Error>({
     queryKey: ['app-navbar.lang'],
-    queryFn: async () => {
-      try {
-        const r = await import(`@lang/${lang}/app-navbar.lang.ts`)
-        return r.default
-      } catch (err) {
-        return err
-      }
-    },
+    queryFn: () => getLanguage(lang),
   })
 
-  const { topLinks, accorLinks } = links(data)
+  const tokens = '1.9M'
 
-  console.log('app-navbar')
+  const { topLinks, accordionLinks } = getLinks(data, tokens)
+
+  const { pathname } = useLocation();
+  const openedAccordionItems = getOpenedAccordionItems(pathname)
 
   return (
     <div className="fixed top-0 left-0 z-40 w-[14rem] h-full px-4 py-2 overflow-auto">
@@ -35,8 +32,11 @@ export default function AppNavbar() {
               <div className="flex flex-col gap-4 text-[#444] mt-8">
                 {
                   topLinks.map((link, i) => (
-                    <Link to={link.link} key={`link-top-${i}`}>
-                      <div className="flex justify-start items-center gap-2 font-medium text-md capitalize">
+                    <Link to={link.path} key={`link-top-${i}`}>
+                      <div className={`flex justify-start items-center gap-2 text-md capitalize ${pathname === link.path
+                        ? 'text-blue-500 font-bold'
+                        : 'font-medium'
+                        }`}>
                         {link.icon}
                         <span>{link.title}</span>
                       </div>
@@ -48,7 +48,7 @@ export default function AppNavbar() {
               <div className="mt-8 capitalize">
                 <Accordion
                   multiple
-                  defaultValue={['item-0']}
+                  defaultValue={openedAccordionItems}
                   classNames={{
                     item: 'border-none',
                     panel: 'pl-4',
@@ -57,13 +57,18 @@ export default function AppNavbar() {
                   }}
                 >
                   {
-                    accorLinks.map((link, m) => (
+                    accordionLinks.map((link, m) => (
                       <Accordion.Item value={`item-${m}`} key={`link-m-${m}`}>
                         <Accordion.Control icon={link.icon} className="capitalize">{link.title}</Accordion.Control>
                         {
                           link.sublinks.map((sublink, n) => (
-                            <Link to={sublink.link} key={`link-n-${n}`}>
-                              <Accordion.Panel>{sublink.title}</Accordion.Panel>
+                            <Link to={sublink.path} key={`link-n-${n}`}>
+                              <Accordion.Panel>
+                                <span className={`${pathname === sublink.path
+                                  ? 'text-blue-500 font-bold'
+                                  : 'font-medium'
+                                  }`}>{sublink.title}</span>
+                              </Accordion.Panel>
                             </Link>
                           ))
                         }
@@ -76,6 +81,80 @@ export default function AppNavbar() {
       }
     </div>
   )
+}
+
+function getOpenedAccordionItems(pathname: string): string[] {
+  if (['/organization/classes', '/organization/modules', '/organization/calendars', '/organization/transports', '/organization/permissions'].includes(pathname)) return ['item-0']
+  if (['/reports/exams', '/reports/degrees', '/reports/homework', '/reports/presence'].includes(pathname)) return ['item-1']
+  if (['/profiles/parents', '/profiles/students', '/profiles/teachers', '/profiles/administrators'].includes(pathname)) return ['item-2']
+  if (['/accounting/incomes', '/accounting/charges'].includes(pathname)) return ['item-3']
+  return []
+}
+
+function getLinks(lang: any, tokens: string) {
+  const topLinks = [
+    { path: '/', title: lang?.home, icon: <Home size={22} strokeWidth={2.2} /> },
+    { path: '/profile', title: lang?.my_profile, icon: <CircleUser size={22} strokeWidth={2.2} /> },
+    { path: '/settings', title: lang?.settings, icon: <Settings size={22} strokeWidth={2.2} /> },
+    { path: '/coming-soon', title: lang?.explore, icon: <Telescope size={22} strokeWidth={2.2} /> },
+    { path: '/coming-soon', title: lang?.ranking, icon: <Trophy size={22} strokeWidth={2.2} /> },
+    { path: '/coming-soon', title: lang?.rewards, icon: <Gift size={22} strokeWidth={2.2} /> },
+    { path: '/coming-soon', title: `${tokens} ${lang?.tokens}`, icon: <Coins size={22} strokeWidth={2.2} /> },
+    { path: '/coming-soon', title: lang?.metaverse, icon: <Palmtree size={22} strokeWidth={2.2} /> },
+  ]
+
+  const accordionLinks = [
+    {
+      title: lang?.organization,
+      icon: <School size={20} />,
+      sublinks: [
+        { path: '/organization/classes', title: lang?.classes },
+        { path: '/organization/modules', title: lang?.modules },
+        { path: '/organization/calendars', title: lang?.calendars },
+        { path: '/organization/transports', title: lang?.transports },
+        { path: '/organization/permissions', title: lang?.permissions },
+      ]
+    },
+    {
+      title: lang?.reports,
+      icon: <SquareChartGantt size={20} />,
+      sublinks: [
+        { path: '/reports/exams', title: lang?.exams },
+        { path: '/reports/degrees', title: lang?.degrees },
+        { path: '/reports/homework', title: lang?.homework },
+        { path: '/reports/presence', title: lang?.presence },
+      ]
+    },
+    {
+      title: lang?.profiles,
+      icon: <Users size={20} />,
+      sublinks: [
+        { path: '/profiles/parents', title: lang?.parents },
+        { path: '/profiles/teachers', title: lang?.teachers },
+        { path: '/profiles/students', title: lang?.students },
+        { path: '/profiles/administrators', title: lang?.administrators },
+      ]
+    },
+    {
+      title: lang?.accounting,
+      icon: <Landmark size={20} />,
+      sublinks: [
+        { path: '/accounting/incomes', title: lang?.incomes },
+        { path: '/accounting/charges', title: lang?.charges },
+      ]
+    },
+  ]
+
+  return { topLinks, accordionLinks }
+}
+
+async function getLanguage(lang: string) {
+  try {
+    const r = await import(`@lang/${lang}/app-navbar.lang.ts`)
+    return r.default
+  } catch (err) {
+    return err
+  }
 }
 
 function Loader() {
@@ -103,61 +182,4 @@ function Loader() {
       }
     </div>
   )
-}
-
-function links(lang: any) {
-  const topLinks = [
-    { link: '/', title: lang?.home, icon: <Home /> },
-    { link: '/profile', title: lang?.my_profile, icon: <User /> },
-    { link: '/settings', title: lang?.settings, icon: <Settings /> },
-    { link: '/coming-soon', title: lang?.explore, icon: <Telescope /> },
-    { link: '/coming-soon', title: lang?.ranking, icon: <Trophy /> },
-    { link: '/coming-soon', title: lang?.rewards, icon: <Gift /> },
-    { link: '/coming-soon', title: lang?.tokens, icon: <Coins /> },
-    { link: '/coming-soon', title: lang?.metaverse, icon: <Palmtree /> },
-  ]
-
-  const accorLinks = [
-    {
-      title: lang?.organization,
-      icon: <School size={20} />,
-      sublinks: [
-        { link: '/organization/classes', title: lang?.classes },
-        { link: '/organization/modules', title: lang?.modules },
-        { link: '/organization/calendars', title: lang?.calendars },
-        { link: '/organization/transports', title: lang?.transports },
-        { link: '/organization/permissions', title: lang?.permissions },
-      ]
-    },
-    {
-      title: lang?.reports,
-      icon: <SquareChartGantt size={20} />,
-      sublinks: [
-        { link: '/reports/exams', title: lang?.exams },
-        { link: '/reports/degrees', title: lang?.degrees },
-        { link: '/reports/homework', title: lang?.homework },
-        { link: '/reports/presence', title: lang?.presence },
-      ]
-    },
-    {
-      title: lang?.profiles,
-      icon: <Users size={20} />,
-      sublinks: [
-        { link: '/profiles/parents', title: lang?.parents },
-        { link: '/profiles/teachers', title: lang?.teachers },
-        { link: '/profiles/students', title: lang?.students },
-        { link: '/profiles/administrators', title: lang?.administrators },
-      ]
-    },
-    {
-      title: lang?.accounting,
-      icon: <Landmark size={20} />,
-      sublinks: [
-        { link: '/accounting/incomes', title: lang?.incomes },
-        { link: '/accounting/charges', title: lang?.charges },
-      ]
-    },
-  ]
-
-  return { topLinks, accorLinks }
 }

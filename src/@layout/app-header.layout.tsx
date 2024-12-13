@@ -2,7 +2,7 @@ import { Select } from '@mantine/core';
 import { ChevronsUpDown, Languages } from 'lucide-react';
 
 export default function AppHeader() {
-  console.log('app-header')
+  //console.log('app-header')
   const lang = localStorage.getItem('lang') || 'en'
 
   const changeLanguage = (value: string | null) => {
@@ -17,8 +17,8 @@ export default function AppHeader() {
     <div className="fixed top-0 left-0 z-40 w-full h-[3.6rem] pl-[14rem]">
       <div className="flex justify-between items-center pr-4">
         <div></div>
-        <div className="flex justify-end items-center gap-2">
-          <div className="h-[2.8rem] mt-2 font-bold">
+        <div className="flex justify-end items-center gap-2 pt-[.375rem]">
+          <div className="h-[2.8rem] font-bold">
             <Select
               radius="xl"
               placeholder="Select placeholder"
@@ -54,7 +54,7 @@ export default function AppHeader() {
           </div>
 
           <div
-            className="w-[2.8rem] h-[2.8rem] mt-2 bg-white bg-no-repeat bg-cover bg-center rounded-full overflow-hidden"
+            className="w-[2.8rem] h-[2.8rem] bg-white bg-no-repeat bg-cover bg-center rounded-full overflow-hidden"
             style={{ backgroundImage: "url('/image.jpg')" }}
           ></div>
         </div>
