@@ -1,6 +1,7 @@
 import { createRootRoute, Outlet, useMatchRoute } from '@tanstack/react-router'
 import AppHeader from "@layout/app-header.layout"
 import AppNavbar from "@layout/app-navbar.layout"
+import ViewNotFound from "@view/404.view"
 import { Loader } from '@mantine/core';
 
 export const Route = createRootRoute({
@@ -29,6 +30,9 @@ export const Route = createRootRoute({
 
       </>
     )
+  },
+  notFoundComponent: () => {
+    return <ViewNotFound />
   },
   wrapInSuspense: true,
 })

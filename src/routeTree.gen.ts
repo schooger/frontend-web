@@ -13,7 +13,6 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as R404Import } from './routes/404'
 
 // Create Virtual Routes
 
@@ -60,12 +59,6 @@ const ComingSoonLazyRoute = ComingSoonLazyImport.update({
   path: '/coming-soon',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/coming-soon.lazy').then((d) => d.Route))
-
-const R404Route = R404Import.update({
-  id: '/404',
-  path: '/404',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexLazyRoute = IndexLazyImport.update({
   id: '/',
@@ -228,13 +221,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/404': {
-      id: '/404'
-      path: '/404'
-      fullPath: '/404'
-      preLoaderRoute: typeof R404Import
-      parentRoute: typeof rootRoute
-    }
     '/coming-soon': {
       id: '/coming-soon'
       path: '/coming-soon'
@@ -368,7 +354,6 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '/404': typeof R404Route
   '/coming-soon': typeof ComingSoonLazyRoute
   '/profile': typeof ProfileIndexLazyRoute
   '/settings': typeof SettingsIndexLazyRoute
@@ -391,7 +376,6 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '/404': typeof R404Route
   '/coming-soon': typeof ComingSoonLazyRoute
   '/profile': typeof ProfileIndexLazyRoute
   '/settings': typeof SettingsIndexLazyRoute
@@ -415,7 +399,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
-  '/404': typeof R404Route
   '/coming-soon': typeof ComingSoonLazyRoute
   '/profile/': typeof ProfileIndexLazyRoute
   '/settings/': typeof SettingsIndexLazyRoute
@@ -440,7 +423,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/404'
     | '/coming-soon'
     | '/profile'
     | '/settings'
@@ -462,7 +444,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/404'
     | '/coming-soon'
     | '/profile'
     | '/settings'
@@ -484,7 +465,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/404'
     | '/coming-soon'
     | '/profile/'
     | '/settings/'
@@ -508,7 +488,6 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
-  R404Route: typeof R404Route
   ComingSoonLazyRoute: typeof ComingSoonLazyRoute
   ProfileIndexLazyRoute: typeof ProfileIndexLazyRoute
   SettingsIndexLazyRoute: typeof SettingsIndexLazyRoute
@@ -531,7 +510,6 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  R404Route: R404Route,
   ComingSoonLazyRoute: ComingSoonLazyRoute,
   ProfileIndexLazyRoute: ProfileIndexLazyRoute,
   SettingsIndexLazyRoute: SettingsIndexLazyRoute,
@@ -563,7 +541,6 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/404",
         "/coming-soon",
         "/profile/",
         "/settings/",
@@ -586,9 +563,6 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.lazy.tsx"
-    },
-    "/404": {
-      "filePath": "404.tsx"
     },
     "/coming-soon": {
       "filePath": "coming-soon.lazy.tsx"
