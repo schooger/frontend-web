@@ -1,7 +1,5 @@
 
-export default function ViewComingSoon() {
-
-  console.log('coming-soon.view')
+export default function View() {
 
   return (
     <div className="text-center pt-[8rem]">

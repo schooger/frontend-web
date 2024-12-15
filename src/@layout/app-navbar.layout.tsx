@@ -96,9 +96,9 @@ function getLinks(lang: any, tokens: string) {
     { path: '/', title: lang?.home, icon: <Home size={22} strokeWidth={2.2} /> },
     { path: '/profile', title: lang?.my_profile, icon: <CircleUser size={22} strokeWidth={2.2} /> },
     { path: '/settings', title: lang?.settings, icon: <Settings size={22} strokeWidth={2.2} /> },
-    { path: '/coming-soon', title: lang?.explore, icon: <Telescope size={22} strokeWidth={2.2} /> },
-    { path: '/coming-soon', title: lang?.ranking, icon: <Trophy size={22} strokeWidth={2.2} /> },
-    { path: '/coming-soon', title: lang?.rewards, icon: <Gift size={22} strokeWidth={2.2} /> },
+    { path: '/explore', title: lang?.explore, icon: <Telescope size={22} strokeWidth={2.2} /> },
+    { path: '/ranking', title: lang?.ranking, icon: <Trophy size={22} strokeWidth={2.2} /> },
+    { path: '/rewards', title: lang?.rewards, icon: <Gift size={22} strokeWidth={2.2} /> },
     { path: '/coming-soon', title: `${tokens} ${lang?.tokens}`, icon: <Coins size={22} strokeWidth={2.2} /> },
     { path: '/coming-soon', title: lang?.metaverse, icon: <Palmtree size={22} strokeWidth={2.2} /> },
   ]

@@ -3,7 +3,7 @@ import { Badge, Button, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { ArrowUp } from 'lucide-react';
 
-export default function ViewHome() {
+export default function View() {
   const form = useForm({
     mode: 'controlled',
     initialValues: {
@@ -16,8 +16,6 @@ export default function ViewHome() {
   const maxLength = 1000;
   const remainingLength = maxLength - length
   const errorMessage = remainingLength < 0 ? true : false;
-
-  console.log('home.view')
 
   return (
     <div className="flex justify-center items-center flex-col h-screen pb-[12rem]">
