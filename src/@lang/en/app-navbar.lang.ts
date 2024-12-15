@@ -1,6 +1,6 @@
 const lang = {
   home: 'home',
-  my_profile: 'My Profile',
+  my_profile: 'my profile',
   settings: 'settings',
   explore: 'explore',
   ranking: 'ranking',

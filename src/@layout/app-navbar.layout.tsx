@@ -1,5 +1,5 @@
-import { Accordion, Skeleton } from "@mantine/core";
 import AppLogo from "./app-logo"
+import { Accordion, Skeleton } from "@mantine/core";
 import { CircleUser, Coins, Gift, Home, Landmark, Palmtree, School, Settings, SquareChartGantt, Telescope, Trophy, Users } from 'lucide-react';
 import { Link, useLocation } from "@tanstack/react-router";
 import { useQuery } from '@tanstack/react-query'
@@ -148,15 +148,6 @@ function getLinks(lang: any, tokens: string) {
   return { topLinks, accordionLinks }
 }
 
-async function getLanguage(lang: string) {
-  try {
-    const r = await import(`@lang/${lang}/app-navbar.lang.ts`)
-    return r.default
-  } catch (err) {
-    return err
-  }
-}
-
 function Loader() {
   return (
     <div className="mt-8">
@@ -182,4 +173,13 @@ function Loader() {
       }
     </div>
   )
+}
+
+async function getLanguage(lang: string) {
+  try {
+    const r = await import(`@lang/${lang}/app-navbar.lang.ts`)
+    return r.default
+  } catch (err) {
+    return err
+  }
 }
