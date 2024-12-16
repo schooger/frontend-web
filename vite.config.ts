@@ -1,12 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import MillionLint from "@million/lint";
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 
 //@ts-ignore
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react(), TanStackRouterVite()],
+  plugins: [react(), MillionLint.vite(), TanStackRouterVite()],
   resolve: {
     alias: {
       '@api': path.resolve('.', 'src/@api'),

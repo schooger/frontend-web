@@ -8,14 +8,14 @@ export default function AppNavbar() {
   console.log('app-navbar')
   const lang = localStorage.getItem('lang') || 'en'
 
-  const { isPending, isError, data } = useQuery<{ [key: string]: any }, Error>({
+  const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
     queryKey: ['app-navbar.lang'],
     queryFn: () => getLanguage(lang),
   })
 
   const tokens = '1.9M'
 
-  const { topLinks, accordionLinks } = getLinks(data, tokens)
+  const { topLinks, accordionLinks } = getLinks($lang, tokens)
 
   const { pathname } = useLocation();
   const openedAccordionItems = getOpenedAccordionItems(pathname)
@@ -91,56 +91,56 @@ function getOpenedAccordionItems(pathname: string): string[] {
   return []
 }
 
-function getLinks(lang: any, tokens: string) {
+function getLinks($lang: any, tokens: string) {
   const topLinks = [
-    { path: '/', title: lang?.home, icon: <Home size={22} strokeWidth={2.2} /> },
-    { path: '/profile', title: lang?.my_profile, icon: <CircleUser size={22} strokeWidth={2.2} /> },
-    { path: '/settings', title: lang?.settings, icon: <Settings size={22} strokeWidth={2.2} /> },
-    { path: '/explore', title: lang?.explore, icon: <Telescope size={22} strokeWidth={2.2} /> },
-    { path: '/ranking', title: lang?.ranking, icon: <Trophy size={22} strokeWidth={2.2} /> },
-    { path: '/rewards', title: lang?.rewards, icon: <Gift size={22} strokeWidth={2.2} /> },
-    { path: '/coming-soon', title: `${tokens} ${lang?.tokens}`, icon: <Coins size={22} strokeWidth={2.2} /> },
-    { path: '/coming-soon', title: lang?.metaverse, icon: <Palmtree size={22} strokeWidth={2.2} /> },
+    { path: '/', title: $lang?.home, icon: <Home size={22} strokeWidth={2.2} /> },
+    { path: '/profile', title: $lang?.my_profile, icon: <CircleUser size={22} strokeWidth={2.2} /> },
+    { path: '/settings', title: $lang?.settings, icon: <Settings size={22} strokeWidth={2.2} /> },
+    { path: '/explore', title: $lang?.explore, icon: <Telescope size={22} strokeWidth={2.2} /> },
+    { path: '/ranking', title: $lang?.ranking, icon: <Trophy size={22} strokeWidth={2.2} /> },
+    { path: '/rewards', title: $lang?.rewards, icon: <Gift size={22} strokeWidth={2.2} /> },
+    { path: '/coming-soon', title: `${tokens} ${$lang?.tokens}`, icon: <Coins size={22} strokeWidth={2.2} /> },
+    { path: '/coming-soon', title: $lang?.metaverse, icon: <Palmtree size={22} strokeWidth={2.2} /> },
   ]
 
   const accordionLinks = [
     {
-      title: lang?.organization,
+      title: $lang?.organization,
       icon: <School size={20} />,
       sublinks: [
-        { path: '/organization/classes', title: lang?.classes },
-        { path: '/organization/modules', title: lang?.modules },
-        { path: '/organization/calendars', title: lang?.calendars },
-        { path: '/organization/transports', title: lang?.transports },
-        { path: '/organization/permissions', title: lang?.permissions },
+        { path: '/organization/classes', title: $lang?.classes },
+        { path: '/organization/modules', title: $lang?.modules },
+        { path: '/organization/calendars', title: $lang?.calendars },
+        { path: '/organization/transports', title: $lang?.transports },
+        { path: '/organization/permissions', title: $lang?.permissions },
       ]
     },
     {
-      title: lang?.reports,
+      title: $lang?.reports,
       icon: <SquareChartGantt size={20} />,
       sublinks: [
-        { path: '/reports/exams', title: lang?.exams },
-        { path: '/reports/degrees', title: lang?.degrees },
-        { path: '/reports/homework', title: lang?.homework },
-        { path: '/reports/presence', title: lang?.presence },
+        { path: '/reports/exams', title: $lang?.exams },
+        { path: '/reports/degrees', title: $lang?.degrees },
+        { path: '/reports/homework', title: $lang?.homework },
+        { path: '/reports/presence', title: $lang?.presence },
       ]
     },
     {
-      title: lang?.profiles,
+      title: $lang?.profiles,
       icon: <Users size={20} />,
       sublinks: [
-        { path: '/profiles/parents', title: lang?.parents },
-        { path: '/profiles/teachers', title: lang?.teachers },
-        { path: '/profiles/students', title: lang?.students },
-        { path: '/profiles/administrators', title: lang?.administrators },
+        { path: '/profiles/parents', title: $lang?.parents },
+        { path: '/profiles/teachers', title: $lang?.teachers },
+        { path: '/profiles/students', title: $lang?.students },
+        { path: '/profiles/administrators', title: $lang?.administrators },
       ]
     },
     {
-      title: lang?.accounting,
+      title: $lang?.accounting,
       icon: <Landmark size={20} />,
       sublinks: [
-        { path: '/accounting/incomes', title: lang?.incomes },
-        { path: '/accounting/charges', title: lang?.charges },
+        { path: '/accounting/incomes', title: $lang?.incomes },
+        { path: '/accounting/charges', title: $lang?.charges },
       ]
     },
   ]
@@ -174,10 +174,10 @@ function Loader() {
     </div>
   )
 }
-
+// maybe i can imprt the getLanguage from @api dynamically, maybe it gonna work
 async function getLanguage(lang: string) {
   try {
-    const r = await import(`@lang/${lang}/app-navbar.lang.ts`)
+    const r = await import(`@lang/${lang}/layout/app-navbar.lang.ts`)
     return r.default
   } catch (err) {
     return err

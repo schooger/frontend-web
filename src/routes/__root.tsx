@@ -1,14 +1,11 @@
-import { createRootRoute, Outlet, useMatchRoute } from '@tanstack/react-router'
-import AppHeader from "@layout/app-header.layout"
+import { createRootRoute } from '@tanstack/react-router'
+import { AppHeader } from "@layout/app-header.layout"
 import AppNavbar from "@layout/app-navbar.layout"
-import ViewNotFound from "@view/404.view"
-import { Loader } from '@mantine/core';
+import ViewNotFound from "@view/not-found.view"
+import AppBody from '@layout/app-body.layout';
 
 export const Route = createRootRoute({
   component: () => {
-    const matchRoute = useMatchRoute();
-    const isPending = matchRoute({ pending: true });
-
     return (
       <>
         <img
@@ -19,20 +16,10 @@ export const Route = createRootRoute({
 
         <AppHeader />
         <AppNavbar />
-
-        {isPending ? (
-          <div className="flex justify-center flex-col items-center w-full py-8">
-            <Loader color="#444" size="md" type="dots" />
-          </div>
-        ) : (
-          <Outlet />
-        )}
-
+        <AppBody />
       </>
     )
   },
-  notFoundComponent: () => {
-    return <ViewNotFound />
-  },
+  notFoundComponent: () => <ViewNotFound />,
   wrapInSuspense: true,
 })

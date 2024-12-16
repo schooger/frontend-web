@@ -5,11 +5,11 @@ import { Link } from '@tanstack/react-router';
 import { ChevronsUpDown, Languages, LogOut, Settings, UserCircle } from 'lucide-react';
 import { useState } from 'react';
 
-export default function AppHeader() {
-  //console.log('app-header')
+export function AppHeader() {
+  console.log('app-header')
   const lang = localStorage.getItem('lang') || 'en'
 
-  const { isPending, isError, data } = useQuery<{ [key: string]: any }, Error>({
+  const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
     queryKey: ['app-header.lang'],
     queryFn: () => getLanguage(lang),
   })
@@ -64,7 +64,7 @@ export default function AppHeader() {
                   />
                 </div>
 
-                <Dropdown lang={data} />
+                <Dropdown $lang={$lang} />
               </>
         }
       </div>
@@ -72,7 +72,7 @@ export default function AppHeader() {
   )
 }
 
-function Dropdown({ lang }: any) {
+function Dropdown({ $lang }: any) {
   const [imageIsLoaded, _imageIsLoaded] = useState(false)
 
   return (
@@ -100,17 +100,17 @@ function Dropdown({ lang }: any) {
         <Menu.Item
           leftSection={<UserCircle size={20} className="text-[#444]" />}
         >
-          <Link to="/profile" className="text-[#444] capitalize">{lang?.my_profile}</Link>
+          <Link to="/profile" className="text-[#444] capitalize">{$lang?.my_profile}</Link>
         </Menu.Item>
         <Menu.Item
           leftSection={<Settings size={20} className="text-[#444]" />}
         >
-          <Link to="/settings" className="text-[#444] capitalize">{lang?.settings}</Link>
+          <Link to="/settings" className="text-[#444] capitalize">{$lang?.settings}</Link>
         </Menu.Item>
         <Menu.Item
           leftSection={<LogOut size={20} className="text-red-500" />}
         >
-          <span className="text-red-500 capitalize">{lang?.sign_out}</span>
+          <span className="text-red-500 capitalize">{$lang?.sign_out}</span>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
@@ -144,9 +144,9 @@ function Loader() {
   )
 }
 
-async function getLanguage(lang: string) {
+export async function getLanguage(lang: string) {
   try {
-    const r = await import(`@lang/${lang}/app-header.lang.ts`)
+    const r = await import(`@lang/${lang}/layout/app-header.lang.ts`)
     return r.default
   } catch (err) {
     return err
