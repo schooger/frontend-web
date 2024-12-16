@@ -6,11 +6,10 @@ import { useQuery } from '@tanstack/react-query'
 
 export default function AppNavbar() {
   console.log('app-navbar')
-  const lang = localStorage.getItem('lang') || 'en'
 
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
-    queryKey: ['app-navbar.lang'],
-    queryFn: () => getLanguage(lang),
+    queryKey: ['layout/app-navbar.lang'],
+    queryFn: async () => (await import(`@lang/${localStorage.getItem('lang') || 'en'}/layout/app-navbar.lang.ts`)).default,
   })
 
   const tokens = '1.9M'
@@ -26,7 +25,7 @@ export default function AppNavbar() {
         <AppLogo />
       </div>
       {
-        (isPending) ? <Loader />
+        (isPending) ? <AppNavbarLoader />
           : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
             : <>
               <div className="flex flex-col gap-4 text-[#444] mt-8">
@@ -148,7 +147,7 @@ function getLinks($lang: any, tokens: string) {
   return { topLinks, accordionLinks }
 }
 
-function Loader() {
+function AppNavbarLoader() {
   return (
     <div className="mt-8">
       {
@@ -173,13 +172,4 @@ function Loader() {
       }
     </div>
   )
-}
-// maybe i can imprt the getLanguage from @api dynamically, maybe it gonna work
-async function getLanguage(lang: string) {
-  try {
-    const r = await import(`@lang/${lang}/layout/app-navbar.lang.ts`)
-    return r.default
-  } catch (err) {
-    return err
-  }
 }

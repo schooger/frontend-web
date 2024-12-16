@@ -5,13 +5,13 @@ import { Link } from '@tanstack/react-router';
 import { ChevronsUpDown, Languages, LogOut, Settings, UserCircle } from 'lucide-react';
 import { useState } from 'react';
 
-export function AppHeader() {
+export default function AppHeader() {
   console.log('app-header')
   const lang = localStorage.getItem('lang') || 'en'
 
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
-    queryKey: ['app-header.lang'],
-    queryFn: () => getLanguage(lang),
+    queryKey: ['layout/app-header.lang'],
+    queryFn: async () => (await import(`@lang/${localStorage.getItem('lang') || 'en'}/layout/app-header.lang.ts`)).default,
   })
 
   const changeLanguage = (value: string | null) => {
@@ -26,7 +26,7 @@ export function AppHeader() {
     <div className="fixed top-0 left-0 z-40 w-full h-[3.6rem] pl-[14rem]">
       <div className="flex justify-end items-start gap-2 pt-[.375rem] pr-2">
         {
-          (isPending) ? <Loader />
+          (isPending) ? <AppHeaderLoader />
             : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
               : <>
                 <div className="h-[2.8rem] font-bold">
@@ -64,7 +64,7 @@ export function AppHeader() {
                   />
                 </div>
 
-                <Dropdown $lang={$lang} />
+                <AppHeaderDropdown $lang={$lang} />
               </>
         }
       </div>
@@ -72,7 +72,7 @@ export function AppHeader() {
   )
 }
 
-function Dropdown({ $lang }: any) {
+function AppHeaderDropdown({ $lang }: any) {
   const [imageIsLoaded, _imageIsLoaded] = useState(false)
 
   return (
@@ -117,7 +117,7 @@ function Dropdown({ $lang }: any) {
   );
 }
 
-function Loader() {
+function AppHeaderLoader() {
   return (
     <div className="h-[3rem]">
       {
@@ -143,13 +143,3 @@ function Loader() {
     </div>
   )
 }
-
-export async function getLanguage(lang: string) {
-  try {
-    const r = await import(`@lang/${lang}/layout/app-header.lang.ts`)
-    return r.default
-  } catch (err) {
-    return err
-  }
-}
-

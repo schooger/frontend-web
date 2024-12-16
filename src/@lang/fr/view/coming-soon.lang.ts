@@ -1,5 +1,5 @@
-const lang = {
+const $lang = {
   coming_soon: 'prochainement!',
 }
 
-export default lang
+export default $lang

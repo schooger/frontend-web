@@ -1,4 +1,4 @@
-const lang = {
+const $lang = {
   home: 'home',
   my_profile: 'my profile',
   settings: 'settings',
@@ -28,4 +28,4 @@ const lang = {
   charges: 'charges',
 }
 
-export default lang
+export default $lang
