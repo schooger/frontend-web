@@ -31,7 +31,7 @@ export default function AppNavbar() {
               <div className="flex flex-col gap-4 text-[#444] mt-8">
                 {
                   topLinks.map((link, i) => (
-                    <Link to={link.path} key={`link-top-${i}`}>
+                    <Link to={link.path} key={`link-top-${i}`} aria-label={link.title}>
                       <div className={`flex justify-start items-center gap-2 text-md capitalize ${pathname === link.path
                         ? 'text-blue-500 font-bold'
                         : 'font-medium'
@@ -61,7 +61,7 @@ export default function AppNavbar() {
                         <Accordion.Control icon={link.icon} className="capitalize">{link.title}</Accordion.Control>
                         {
                           link.sublinks.map((sublink, n) => (
-                            <Link to={sublink.path} key={`link-n-${n}`}>
+                            <Link to={sublink.path} key={`link-n-${n}`} aria-label={sublink.title}>
                               <Accordion.Panel>
                                 <span className={`${pathname === sublink.path
                                   ? 'text-blue-500 font-bold'

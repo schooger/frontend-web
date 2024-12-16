@@ -76,6 +76,7 @@ export default function View() {
                         root: `w-[2rem_!important] h-[2rem_!important] p-[0rem_!important] ${(remainingLength < 0) ? 'bg-[#fa5252_!important] text-[#fff_!important]' : '#1a73e8 text-[#fff_!important]'}`,
                       }}
                       disabled={(length > 0 && remainingLength >= 0) ? false : true}
+                      aria-label='ask schooger'
                     >
                       <ArrowUp strokeWidth={3.5} />
                     </Button>
