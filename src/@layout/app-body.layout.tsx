@@ -2,7 +2,6 @@ import { Outlet, useMatchRoute } from '@tanstack/react-router'
 import { Loader } from '@mantine/core';
 
 export default function AppBody() {
-  console.log('app-body')
   const matchRoute = useMatchRoute();
   const isPending = matchRoute({ pending: true });
 

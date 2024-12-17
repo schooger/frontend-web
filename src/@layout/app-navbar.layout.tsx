@@ -5,10 +5,8 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { useQuery } from '@tanstack/react-query'
 
 export default function AppNavbar() {
-  console.log('app-navbar')
-
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
-    queryKey: ['layout/app-navbar.lang'],
+    queryKey: ['lang/layout/app-navbar'],
     queryFn: async () => (await import(`@lang/${localStorage.getItem('lang') || 'en'}/layout/app-navbar.lang.ts`)).default,
   })
 

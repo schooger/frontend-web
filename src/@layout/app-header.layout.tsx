@@ -6,11 +6,10 @@ import { ChevronsUpDown, Languages, LogOut, Settings, UserCircle } from 'lucide-
 import { useState } from 'react';
 
 export default function AppHeader() {
-  console.log('app-header')
   const lang = localStorage.getItem('lang') || 'en'
 
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
-    queryKey: ['layout/app-header.lang'],
+    queryKey: ['lang/layout/app-header'],
     queryFn: async () => (await import(`@lang/${localStorage.getItem('lang') || 'en'}/layout/app-header.lang.ts`)).default,
   })
 

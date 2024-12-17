@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 
 export default function View() {
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
-    queryKey: ['view/coming-soon.lang'],
+    queryKey: ['lang/view/coming-soon'],
     queryFn: async () => (await import(`@lang/${localStorage.getItem('lang') || 'en'}/view/coming-soon.lang.ts`)).default,
   })
 

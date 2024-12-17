@@ -3,7 +3,7 @@ import AppLoader from "@layout/app-loader.layout"
 
 export default function View() {
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
-    queryKey: ['view/not-found.lang'],
+    queryKey: ['lang/view/not-found'],
     queryFn: async () => (await import(`@lang/${localStorage.getItem('lang') || 'en'}/view/not-found.lang.ts`)).default,
   })
 
