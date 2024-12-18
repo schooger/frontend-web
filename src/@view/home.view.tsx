@@ -1,6 +1,5 @@
 import AppLoader from "@layout/app-loader.layout"
 import { useQuery } from "@tanstack/react-query";
-import FormAssistant from '@form/ai/assistant.form'
 
 export default function View() {
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
@@ -17,10 +16,6 @@ export default function View() {
             <div className="flex justify-center items-center flex-col h-screen pb-[12rem]">
               <div className="text-3xl font-bold mb-4">
                 <span className="text-[#444]">{$lang?.ask_schooger_for_help}</span>
-              </div>
-
-              <div className="relative w-[90%] max-w-[40rem] h-auto">
-                <FormAssistant />
               </div>
             </div>
       }

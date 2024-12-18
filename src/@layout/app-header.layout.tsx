@@ -1,8 +1,8 @@
-import { Select, Skeleton } from '@mantine/core';
+import { Button, Select, Skeleton } from '@mantine/core';
 import { Menu } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
-import { ChevronsUpDown, Languages, LogOut, Settings, UserCircle } from 'lucide-react';
+import { ChevronsUpDown, Languages, LogOut, Settings, UserCircle, WandSparkles } from 'lucide-react';
 import { useState } from 'react';
 
 export default function AppHeader() {
@@ -21,6 +21,14 @@ export default function AppHeader() {
     }
   }
 
+  const showAssistantForm = () => {
+    const $assistantForm = document.getElementById('assistant-form')
+    const $assistantFormTextarea = document.getElementById('assistant-form-textarea')
+
+    if ($assistantForm) $assistantForm.style.maxHeight = '28rem'
+    if ($assistantFormTextarea) $assistantFormTextarea.focus()
+  }
+
   return (
     <div className="fixed top-0 left-0 z-40 w-full h-[3.6rem] pl-[14rem]">
       <div className="flex justify-end items-start gap-2 pt-[.375rem] pr-2">
@@ -28,6 +36,18 @@ export default function AppHeader() {
           (isPending) ? <AppHeaderLoader />
             : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
               : <>
+                <Button
+                  variant="default"
+                  className="h-[2.8rem] rounded-full border-0 bg-blue-500 hover:bg-blue-700"
+                  onClick={showAssistantForm}
+                >
+                  <div className="flex justify-start items-center gap-2 text-white text-md font-bold">
+                    <WandSparkles size={28} strokeWidth={1.75} />
+                    <span>Ask Schooger</span>
+                  </div>
+
+                </Button>
+
                 <div className="h-[2.8rem] font-bold">
                   <Select
                     radius="xl"
