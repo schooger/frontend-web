@@ -97,7 +97,7 @@ function getLinks($lang: any, tokens: string) {
     { path: '/ranking', title: $lang?.ranking, icon: <Trophy size={22} strokeWidth={2.2} /> },
     { path: '/rewards', title: $lang?.rewards, icon: <Gift size={22} strokeWidth={2.2} /> },
     { path: '/coming-soon', title: `${tokens} ${$lang?.tokens}`, icon: <Coins size={22} strokeWidth={2.2} /> },
-    { path: '/coming-soon', title: $lang?.metaverse, icon: <Palmtree size={22} strokeWidth={2.2} /> },
+    { path: '/metaverse', title: $lang?.metaverse, icon: <Palmtree size={22} strokeWidth={2.2} /> },
   ]
 
   const accordionLinks = [

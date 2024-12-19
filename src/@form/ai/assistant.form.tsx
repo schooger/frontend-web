@@ -4,6 +4,7 @@ import { useForm } from "@mantine/form";
 import { ArrowUp, ChevronsDown } from 'lucide-react';
 import { useQuery } from "@tanstack/react-query";
 import api from '@api/ai/assistant.api'
+import { useNavigate } from "@tanstack/react-router";
 
 export default function Form() {
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
@@ -17,10 +18,74 @@ export default function Form() {
     enabled: false,
   });
 
+  const navigate = useNavigate()
+  const _navigate = async (target: string) => {
+    await new Promise(r => setTimeout(r, 1000))
+    navigate({
+      to: `/${target}`,
+    })
+  }
+  // don't forget add limits...
+  const _click = async (target: string) => {
+    while (true) {
+      const $ = document.getElementById(target)
+
+      if ($) {
+        $.click()
+        break
+      }
+
+      console.log('no element exists, retrying...', target)
+      await new Promise((r) => setTimeout(r, 1000))
+    }
+  }
+
+  const delay = (ms: number): Promise<void> => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  const typeLikeHuman = async ($: HTMLInputElement, text: string, delayTime: number) => {
+    if (!$) return;
+
+    let index = 0;
+    while (index < text.length) {
+      $.value = text.slice(0, index + 1);
+      index++;
+      await delay(delayTime);
+    }
+  }
+
+  const _write = async (target: string, value: any) => {
+    while (true) {
+      const $ = document.getElementById(target) as HTMLInputElement
+
+      if ($) {
+        await typeLikeHuman($, value, 10);
+        break
+      }
+
+      console.log('no element exists, retrying...')
+      await new Promise((r) => setTimeout(r, 1000))
+    }
+  }
+
   const submit = async (values: any) => {
     console.log(values)
     const { data } = await submitForm()
-    console.log(data)
+    //!!!!!!!!!!!!!!!!!!! don't forget to add the stop event of the process if the user interact with the UI or maybe add stop execution button
+    if (data?.actions) {
+      const actions = data?.actions
+      console.table(actions)
+
+      for (const action of actions) {
+        const { name, target, value } = action
+
+        if (name === 'navigate') await _navigate(target)
+        else if (name === 'click') await _click(target)
+        else if (name === 'write') await _write(target, value)
+      }
+    }
+    console.log('done')
   }
 
   const [isFocus, _isFocus] = useState(false);
@@ -43,14 +108,6 @@ export default function Form() {
     }
   }, [submitFormStatus])
 
-  const hideAssistant = (e: any) => {
-    e.preventDefault()
-
-    const $assistantForm = document.getElementById('assistant-form')
-
-    if ($assistantForm) $assistantForm.style.maxHeight = '0rem'
-  }
-
   return (
     <>
       {
@@ -59,11 +116,11 @@ export default function Form() {
             :
             <div className="fixed left-0 right-0 m-auto bottom-0 w-[48rem] max-w-[90%] transition-[max-height] duration-500" id="assistant-form" style={{ maxHeight: 0 }}>
               <div className="relative h-auto mb-2 ml-[14rem]">
-                <a href="#" role="button"
+                <a role="button"
                   aria-label='hide assistant'
                   className="absolute right-[-2.4rem] top-[2.4rem] z-10"
                   onClick={hideAssistant}
-                  >
+                >
                   <ChevronsDown size={40} color="#444" />
                 </a>
 
@@ -120,3 +177,39 @@ export default function Form() {
     </>
   )
 }
+
+const hideAssistant = (e: any) => {
+  e.preventDefault()
+  const $assistantForm = document.getElementById('assistant-form')
+  if ($assistantForm) $assistantForm.style.maxHeight = '0rem'
+}
+
+/**
+
+  @ai/actions: [ navigate, click, write ]
+    actions: [
+      {
+        name: "navigate",
+        target: "/",
+      },
+      {
+        name: "click",
+        target: "new_class_form",
+      },
+      {
+        name: "write",
+        target: "new_class_form_name",
+        value: "Class A",
+      },
+      {
+        name: "write",
+        target: "new_class_form_level",
+        value: 4,
+      },
+      {
+        name: "click",
+        target: "new_class_form_submit",
+      },
+    ]
+
+*/

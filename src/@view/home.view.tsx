@@ -1,5 +1,6 @@
 import AppLoader from "@layout/app-loader.layout"
 import { useQuery } from "@tanstack/react-query";
+import Child1 from './child.view'
 
 export default function View() {
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
@@ -17,6 +18,7 @@ export default function View() {
               <div className="text-3xl font-bold mb-4">
                 <span className="text-[#444]">{$lang?.ask_schooger_for_help}</span>
               </div>
+              <Child1 />
             </div>
       }
     </>

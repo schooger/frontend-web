@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const MetaverseLazyImport = createFileRoute('/metaverse')()
 const ComingSoonLazyImport = createFileRoute('/coming-soon')()
 const IndexLazyImport = createFileRoute('/')()
 const SettingsIndexLazyImport = createFileRoute('/settings/')()
@@ -53,6 +54,12 @@ const AccountingChargesIndexLazyImport = createFileRoute(
 )()
 
 // Create/Update Routes
+
+const MetaverseLazyRoute = MetaverseLazyImport.update({
+  id: '/metaverse',
+  path: '/metaverse',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/metaverse.lazy').then((d) => d.Route))
 
 const ComingSoonLazyRoute = ComingSoonLazyImport.update({
   id: '/coming-soon',
@@ -228,6 +235,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComingSoonLazyImport
       parentRoute: typeof rootRoute
     }
+    '/metaverse': {
+      id: '/metaverse'
+      path: '/metaverse'
+      fullPath: '/metaverse'
+      preLoaderRoute: typeof MetaverseLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/profile/': {
       id: '/profile/'
       path: '/profile'
@@ -355,6 +369,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/coming-soon': typeof ComingSoonLazyRoute
+  '/metaverse': typeof MetaverseLazyRoute
   '/profile': typeof ProfileIndexLazyRoute
   '/settings': typeof SettingsIndexLazyRoute
   '/accounting/charges': typeof AccountingChargesIndexLazyRoute
@@ -377,6 +392,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/coming-soon': typeof ComingSoonLazyRoute
+  '/metaverse': typeof MetaverseLazyRoute
   '/profile': typeof ProfileIndexLazyRoute
   '/settings': typeof SettingsIndexLazyRoute
   '/accounting/charges': typeof AccountingChargesIndexLazyRoute
@@ -400,6 +416,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/coming-soon': typeof ComingSoonLazyRoute
+  '/metaverse': typeof MetaverseLazyRoute
   '/profile/': typeof ProfileIndexLazyRoute
   '/settings/': typeof SettingsIndexLazyRoute
   '/accounting/charges/': typeof AccountingChargesIndexLazyRoute
@@ -424,6 +441,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/coming-soon'
+    | '/metaverse'
     | '/profile'
     | '/settings'
     | '/accounting/charges'
@@ -445,6 +463,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/coming-soon'
+    | '/metaverse'
     | '/profile'
     | '/settings'
     | '/accounting/charges'
@@ -466,6 +485,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/coming-soon'
+    | '/metaverse'
     | '/profile/'
     | '/settings/'
     | '/accounting/charges/'
@@ -489,6 +509,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   ComingSoonLazyRoute: typeof ComingSoonLazyRoute
+  MetaverseLazyRoute: typeof MetaverseLazyRoute
   ProfileIndexLazyRoute: typeof ProfileIndexLazyRoute
   SettingsIndexLazyRoute: typeof SettingsIndexLazyRoute
   AccountingChargesIndexLazyRoute: typeof AccountingChargesIndexLazyRoute
@@ -511,6 +532,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   ComingSoonLazyRoute: ComingSoonLazyRoute,
+  MetaverseLazyRoute: MetaverseLazyRoute,
   ProfileIndexLazyRoute: ProfileIndexLazyRoute,
   SettingsIndexLazyRoute: SettingsIndexLazyRoute,
   AccountingChargesIndexLazyRoute: AccountingChargesIndexLazyRoute,
@@ -542,6 +564,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/coming-soon",
+        "/metaverse",
         "/profile/",
         "/settings/",
         "/accounting/charges/",
@@ -566,6 +589,9 @@ export const routeTree = rootRoute
     },
     "/coming-soon": {
       "filePath": "coming-soon.lazy.tsx"
+    },
+    "/metaverse": {
+      "filePath": "metaverse.lazy.tsx"
     },
     "/profile/": {
       "filePath": "profile/index.lazy.tsx"

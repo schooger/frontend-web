@@ -29,6 +29,7 @@ export default function AppHeader() {
     if ($assistantFormTextarea) $assistantFormTextarea.focus()
   }
 
+
   return (
     <div className="fixed top-0 left-0 z-40 w-full h-[3.6rem] pl-[14rem]">
       <div className="flex justify-end items-start gap-2 pt-[.375rem] pr-2">
@@ -43,9 +44,8 @@ export default function AppHeader() {
                 >
                   <div className="flex justify-start items-center gap-2 text-white text-md font-bold">
                     <WandSparkles size={28} strokeWidth={1.75} />
-                    <span>Ask Schooger</span>
+                    <span>ask schooger</span>
                   </div>
-
                 </Button>
 
                 <div className="h-[2.8rem] font-bold">
