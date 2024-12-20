@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Badge, Button, Skeleton, Textarea } from "@mantine/core";
+import { useEffect } from "react";
+import { Alert, Button, Skeleton, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { ArrowUp, ChevronsDown } from 'lucide-react';
+import { ArrowUp, ChevronsDown, CircleAlert } from 'lucide-react';
 import { useQuery } from "@tanstack/react-query";
 import api from '@api/ai/assistant.api'
 
@@ -20,7 +20,7 @@ export default function Form() {
   const submit = async (values: any) => {
     console.log(values)
     const { data } = await submitForm()
-    //!!!!!!!!!!!!!!!!!!! don't forget to add the stop event of the process if the user interact with the UI or maybe add stop execution button
+
     if (data?.actions) {
       const actions = data?.actions
       console.table(actions)
@@ -36,7 +36,6 @@ export default function Form() {
     console.log('done')
   }
 
-  const [isFocus, _isFocus] = useState(false);
   const form = useForm({
     mode: 'controlled',
     initialValues: {
@@ -44,7 +43,7 @@ export default function Form() {
     },
   });
   const length = form.getValues().userInput.length;
-  const maxLength = 200;
+  const maxLength = 2;
   const remainingLength = maxLength - length
   const errorMessage = remainingLength < 0 ? true : false;
 
@@ -66,18 +65,25 @@ export default function Form() {
               <div className="relative h-auto mb-2 ml-[14rem]">
                 <a role="button"
                   aria-label='hide assistant'
-                  className="absolute right-[-2.4rem] top-[2.4rem] z-10"
+                  className="absolute right-[-2.4rem] top-3 z-10"
                   onClick={hideAssistant}
                 >
-                  <ChevronsDown size={40} color="#444" />
+                  <ChevronsDown size={40} color="#888" />
                 </a>
+
+                <div className="absolute left-0 top-[-7.25rem] z-10">
+                  {
+                    (remainingLength < 0) &&
+                    <Alert variant="light" color="red" radius="lg" title="Character Limit Exceeded" icon={<CircleAlert />}>
+                      You have entered more than the allowed characters, maximum character is 200
+                    </Alert>
+                  }
+                </div>
 
                 <form onSubmit={form.onSubmit((values) => submit(values))}>
                   <Textarea
                     {...form.getInputProps('userInput')}
                     key={form.key('userInput')}
-                    onFocus={() => _isFocus(true)}
-                    onBlur={() => _isFocus(false)}
                     variant="default"
                     size="xl"
                     radius="lg"
@@ -86,23 +92,12 @@ export default function Form() {
                     autosize
                     maxRows={8}
                     classNames={{
-                      input: 'pb-[4rem_!important]',
+                      input: 'pr-[3rem]'
                     }}
                     id="assistant-form-textarea"
                   />
 
-                  <div className="absolute left-4 bottom-2">
-                    {
-                      (isFocus || remainingLength < 0) &&
-                      <Badge variant="light" color={remainingLength < 0 ? 'red' : remainingLength < 4 ? 'yellow' : 'blue'}>
-                        {
-                          remainingLength
-                        }
-                      </Badge>
-                    }
-                  </div>
-
-                  <div className="absolute right-3 bottom-2">
+                  <div className="absolute right-3 bottom-3">
                     <Button
                       type="submit"
                       variant="filled"
@@ -131,33 +126,3 @@ const hideAssistant = (e: any) => {
   const $assistantForm = document.getElementById('assistant-form')
   if ($assistantForm) $assistantForm.style.maxHeight = '0rem'
 }
-
-/**
-
-  @ai/actions: [ navigate, click, write ]
-    actions: [
-      {
-        name: "navigate",
-        target: "/",
-      },
-      {
-        name: "click",
-        target: "new_class_form",
-      },
-      {
-        name: "write",
-        target: "new_class_form_name",
-        value: "Class A",
-      },
-      {
-        name: "write",
-        target: "new_class_form_level",
-        value: 4,
-      },
-      {
-        name: "click",
-        target: "new_class_form_submit",
-      },
-    ]
-
-*/

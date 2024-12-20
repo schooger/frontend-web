@@ -12,8 +12,9 @@ async function typeLikeHuman($: HTMLInputElement, text: string, delayTime: numbe
     await wait(delayTime);
   }
 }
+
 // change to obj instead array!!!!!!!!!!!!!!!!!!!!
-export default async function _write(id: string, value: any) {
+export default async function write(id: string, value: any) {
   let n = 0
   while (true) {
     n++
