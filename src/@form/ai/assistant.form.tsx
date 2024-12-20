@@ -4,7 +4,6 @@ import { useForm } from "@mantine/form";
 import { ArrowUp, ChevronsDown } from 'lucide-react';
 import { useQuery } from "@tanstack/react-query";
 import api from '@api/ai/assistant.api'
-import { useNavigate } from "@tanstack/react-router";
 
 export default function Form() {
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
@@ -18,57 +17,6 @@ export default function Form() {
     enabled: false,
   });
 
-  const navigate = useNavigate()
-  const _navigate = async (target: string) => {
-    await new Promise(r => setTimeout(r, 1000))
-    navigate({
-      to: `/${target}`,
-    })
-  }
-  // don't forget add limits...
-  const _click = async (target: string) => {
-    while (true) {
-      const $ = document.getElementById(target)
-
-      if ($) {
-        $.click()
-        break
-      }
-
-      console.log('no element exists, retrying...', target)
-      await new Promise((r) => setTimeout(r, 1000))
-    }
-  }
-
-  const delay = (ms: number): Promise<void> => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  const typeLikeHuman = async ($: HTMLInputElement, text: string, delayTime: number) => {
-    if (!$) return;
-
-    let index = 0;
-    while (index < text.length) {
-      $.value = text.slice(0, index + 1);
-      index++;
-      await delay(delayTime);
-    }
-  }
-
-  const _write = async (target: string, value: any) => {
-    while (true) {
-      const $ = document.getElementById(target) as HTMLInputElement
-
-      if ($) {
-        await typeLikeHuman($, value, 10);
-        break
-      }
-
-      console.log('no element exists, retrying...')
-      await new Promise((r) => setTimeout(r, 1000))
-    }
-  }
-
   const submit = async (values: any) => {
     console.log(values)
     const { data } = await submitForm()
@@ -77,13 +25,13 @@ export default function Form() {
       const actions = data?.actions
       console.table(actions)
 
-      for (const action of actions) {
+      /*for (const action of actions) {
         const { name, target, value } = action
 
         if (name === 'navigate') await _navigate(target)
         else if (name === 'click') await _click(target)
         else if (name === 'write') await _write(target, value)
-      }
+      }*/
     }
     console.log('done')
   }
@@ -114,7 +62,7 @@ export default function Form() {
         (isPending) ? <Skeleton height="7rem" radius="lg" />
           : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
             :
-            <div className="fixed left-0 right-0 m-auto bottom-0 w-[48rem] max-w-[90%] transition-[max-height] duration-500" id="assistant-form" style={{ maxHeight: 0 }}>
+            <div className="fixed left-0 right-0 m-auto bottom-0 w-[48rem] max-w-[90%] transition-[max-height] duration-500" id="assistant-form" style={{ maxHeight: '28rem' }}>
               <div className="relative h-auto mb-2 ml-[14rem]">
                 <a role="button"
                   aria-label='hide assistant'

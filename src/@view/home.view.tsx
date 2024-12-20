@@ -1,6 +1,6 @@
 import AppLoader from "@layout/app-loader.layout"
+import AppLogo from "@layout/app-logo";
 import { useQuery } from "@tanstack/react-query";
-import Child1 from './child.view'
 
 export default function View() {
   const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
@@ -15,10 +15,10 @@ export default function View() {
           : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
             :
             <div className="flex justify-center items-center flex-col h-screen pb-[12rem]">
-              <div className="text-3xl font-bold mb-4">
-                <span className="text-[#444]">{$lang?.ask_schooger_for_help}</span>
+              <div className="flex flex-row justify-center items-center gap-1 text-3xl font-bold mb-4">
+                <span className="text-[#444]">welcome to</span>
+                <AppLogo fontSize="" />
               </div>
-              <Child1 />
             </div>
       }
     </>
