@@ -8,7 +8,7 @@ const router = createRouter({
 
 export default function App() {
   return (
-    <div className="absolute top-0 left-0 z-10 w-full min-h-full pl-[14rem] pt-[3.75rem]">
+    <div className="w-full min-h-full pl-[14rem] pt-[3.75rem] pb-[5rem]">
       <RouterProvider router={router} />
     </div>
   )

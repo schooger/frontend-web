@@ -10,6 +10,7 @@ export default defineConfig({
   plugins: [react(), MillionLint.vite(), TanStackRouterVite()],
   resolve: {
     alias: {
+      '@ai': path.resolve('.', 'src/@ai'),
       '@api': path.resolve('.', 'src/@api'),
       '@style': path.resolve('.', 'src/@style'),
       '@form': path.resolve('.', 'src/@form'),

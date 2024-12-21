@@ -61,11 +61,11 @@ export default function Form() {
         (isPending) ? <Skeleton height="7rem" radius="lg" />
           : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
             :
-            <div className="fixed left-0 right-0 m-auto bottom-0 w-[48rem] max-w-[90%] transition-[max-height] duration-500" id="assistant-form" style={{ maxHeight: '28rem' }}>
+            <div className="fixed z-40 left-0 right-0 m-auto bottom-0 w-[48rem] max-w-[90%] transition-[max-height] duration-500" id="assistant-form" style={{ maxHeight: '28rem' }}>
               <div className="relative h-auto mb-2 ml-[14rem]">
                 <a role="button"
                   aria-label='hide assistant'
-                  className="absolute right-[-2.4rem] top-3 z-10"
+                  className="hidden absolute right-[-2.4rem] top-3 z-10"
                   onClick={hideAssistant}
                 >
                   <ChevronsDown size={40} color="#888" />
@@ -97,7 +97,7 @@ export default function Form() {
                     id="assistant-form-textarea"
                   />
 
-                  <div className="absolute right-3 bottom-3">
+                  <div className="absolute right-3 bottom-[.85rem]">
                     <Button
                       type="submit"
                       variant="filled"

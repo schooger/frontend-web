@@ -1,6 +1,4 @@
-function wait(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
+import wait from "@ai/wait.ai";
 
 async function typeLikeHuman($: HTMLInputElement, text: string, delayTime: number) {
   if (!$) return;
