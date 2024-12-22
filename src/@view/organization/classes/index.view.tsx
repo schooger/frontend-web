@@ -1,32 +1,44 @@
-import { Avatar, Button, Group, Paper, Text } from "@mantine/core"
+import { Avatar, Button, Group, Paper, SimpleGrid, Text } from "@mantine/core"
 import { Shapes } from "lucide-react";
+import Planet from "@asset/planet.asset";
 
 export default function View() {
   console.log('classes.view')
-  const levels = [
-    { name: 'Grade 1', },
-    { name: 'Grade 2', },
-    { name: 'Grade 3', },
-    { name: 'Grade 4', },
-    { name: 'Grade 5', },
-    { name: 'Grade 6', },
+  const grades = [
+    { name: 'Grade 1', planet_name: 'hydro', planet_fill: '#fda4af' },
+    { name: 'Grade 2', planet_name: 'hilio', planet_fill: '#0ea5e9' },
+    { name: 'Grade 3', planet_name: 'argo', planet_fill: '#00FA9A' },
+    { name: 'Grade 4', planet_name: 'kryptal', planet_fill: '#FF00FF' },
+    { name: 'Grade 5', planet_name: 'netras', planet_fill: '#7e22ce' },
+    { name: 'Grade 6', planet_name: 'oxy', planet_fill: '#1d4ed8' },
+    { name: 'Grade 7', planet_name: 'iro', planet_fill: '#f97316' },
+    { name: 'Grade 8', planet_name: 'bismo', planet_fill: '#8B4513' },
+    { name: 'Grade 9', planet_name: 'chromo', planet_fill: '#047857' },
+    { name: 'Grade 10', planet_name: 'coppo', planet_fill: '#dc2626' },
+    { name: 'Grade 11', planet_name: 'silvo', planet_fill: '#cbd5e1' },
+    { name: 'Grade 12', planet_name: 'goldo', planet_fill: '#FFD700' },
   ]
 
   return (
-    <div className="flex flex-col justify-start items-start w-full px-2">
-      <div className="flex flex-col justify-start items-start w-[48rem] max-w-[90%]">
-        <h1 className="text-3xl font-bold my-2 text-left">Classes</h1>
-        {
-          levels.map((item) => (
-            <div className="my-8">
-              <h1 className="pl-4 text-xl font-bold my-2">{item.name}:</h1>
-              <div className="flex flex-row justify-start items-center gap-4">
-                <$Class name="Class A" />
-                <$EmptyClass />
+    <div className="flex flex-col justify-start items-center w-full px-2 h-full">
+      <div className="flex flex-col items-center w-[48rem] max-w-[90%] h-full">
+        <h1 className="w-full mb-8 text-left text-3xl font-bold">Grades</h1>
+
+        <SimpleGrid className="w-full" cols={6} spacing="xl">
+          {
+            grades.map(({ name, planet_name, planet_fill }) => (
+              <div className="flex flex-col justify-start items-center gap-2 pl-2 my-4">
+                <Planet
+                  width={80}
+                  height={80}
+                  planet_fill={planet_fill}
+                />
+                <span className="text-lg font-bold">{planet_name}</span>
+                <span className="text-md font-medium">{name}</span>
               </div>
-            </div>
-          ))
-        }
+            ))
+          }
+        </SimpleGrid>
       </div>
     </div>
   )
@@ -77,3 +89,12 @@ function $EmptyClass() {
     </Paper>
   )
 }
+
+/*
+schooger is an univers
+each school is a star
+each grade is a planet
+each class is a race
+each group is a troup
+each user is a character
+*/

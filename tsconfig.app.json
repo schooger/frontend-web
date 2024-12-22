@@ -3,6 +3,7 @@
     "paths": {
       "@ai/*": ["./src/@ai/*"],
       "@api/*": ["./src/@api/*"],
+      "@asset/*": ["./src/@asset/*"],
       "@style/*": ["./src/@style/*"],
       "@form/*": ["./src/@form/*"],
       "@lang/*": ["./src/@lang/*"],
