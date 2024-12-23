@@ -52,6 +52,9 @@ const AccountingIncomesIndexLazyImport = createFileRoute(
 const AccountingChargesIndexLazyImport = createFileRoute(
   '/accounting/charges/',
 )()
+const OrganizationClassesPlanetLazyImport = createFileRoute(
+  '/organization/classes/$planet',
+)()
 
 // Create/Update Routes
 
@@ -217,6 +220,15 @@ const AccountingChargesIndexLazyRoute = AccountingChargesIndexLazyImport.update(
   import('./routes/accounting/charges/index.lazy').then((d) => d.Route),
 )
 
+const OrganizationClassesPlanetLazyRoute =
+  OrganizationClassesPlanetLazyImport.update({
+    id: '/organization/classes/$planet',
+    path: '/organization/classes/$planet',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/organization/classes/$planet.lazy').then((d) => d.Route),
+  )
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -254,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/organization/classes/$planet': {
+      id: '/organization/classes/$planet'
+      path: '/organization/classes/$planet'
+      fullPath: '/organization/classes/$planet'
+      preLoaderRoute: typeof OrganizationClassesPlanetLazyImport
       parentRoute: typeof rootRoute
     }
     '/accounting/charges/': {
@@ -372,6 +391,7 @@ export interface FileRoutesByFullPath {
   '/metaverse': typeof MetaverseLazyRoute
   '/profile': typeof ProfileIndexLazyRoute
   '/settings': typeof SettingsIndexLazyRoute
+  '/organization/classes/$planet': typeof OrganizationClassesPlanetLazyRoute
   '/accounting/charges': typeof AccountingChargesIndexLazyRoute
   '/accounting/incomes': typeof AccountingIncomesIndexLazyRoute
   '/organization/calendars': typeof OrganizationCalendarsIndexLazyRoute
@@ -395,6 +415,7 @@ export interface FileRoutesByTo {
   '/metaverse': typeof MetaverseLazyRoute
   '/profile': typeof ProfileIndexLazyRoute
   '/settings': typeof SettingsIndexLazyRoute
+  '/organization/classes/$planet': typeof OrganizationClassesPlanetLazyRoute
   '/accounting/charges': typeof AccountingChargesIndexLazyRoute
   '/accounting/incomes': typeof AccountingIncomesIndexLazyRoute
   '/organization/calendars': typeof OrganizationCalendarsIndexLazyRoute
@@ -419,6 +440,7 @@ export interface FileRoutesById {
   '/metaverse': typeof MetaverseLazyRoute
   '/profile/': typeof ProfileIndexLazyRoute
   '/settings/': typeof SettingsIndexLazyRoute
+  '/organization/classes/$planet': typeof OrganizationClassesPlanetLazyRoute
   '/accounting/charges/': typeof AccountingChargesIndexLazyRoute
   '/accounting/incomes/': typeof AccountingIncomesIndexLazyRoute
   '/organization/calendars/': typeof OrganizationCalendarsIndexLazyRoute
@@ -444,6 +466,7 @@ export interface FileRouteTypes {
     | '/metaverse'
     | '/profile'
     | '/settings'
+    | '/organization/classes/$planet'
     | '/accounting/charges'
     | '/accounting/incomes'
     | '/organization/calendars'
@@ -466,6 +489,7 @@ export interface FileRouteTypes {
     | '/metaverse'
     | '/profile'
     | '/settings'
+    | '/organization/classes/$planet'
     | '/accounting/charges'
     | '/accounting/incomes'
     | '/organization/calendars'
@@ -488,6 +512,7 @@ export interface FileRouteTypes {
     | '/metaverse'
     | '/profile/'
     | '/settings/'
+    | '/organization/classes/$planet'
     | '/accounting/charges/'
     | '/accounting/incomes/'
     | '/organization/calendars/'
@@ -512,6 +537,7 @@ export interface RootRouteChildren {
   MetaverseLazyRoute: typeof MetaverseLazyRoute
   ProfileIndexLazyRoute: typeof ProfileIndexLazyRoute
   SettingsIndexLazyRoute: typeof SettingsIndexLazyRoute
+  OrganizationClassesPlanetLazyRoute: typeof OrganizationClassesPlanetLazyRoute
   AccountingChargesIndexLazyRoute: typeof AccountingChargesIndexLazyRoute
   AccountingIncomesIndexLazyRoute: typeof AccountingIncomesIndexLazyRoute
   OrganizationCalendarsIndexLazyRoute: typeof OrganizationCalendarsIndexLazyRoute
@@ -535,6 +561,7 @@ const rootRouteChildren: RootRouteChildren = {
   MetaverseLazyRoute: MetaverseLazyRoute,
   ProfileIndexLazyRoute: ProfileIndexLazyRoute,
   SettingsIndexLazyRoute: SettingsIndexLazyRoute,
+  OrganizationClassesPlanetLazyRoute: OrganizationClassesPlanetLazyRoute,
   AccountingChargesIndexLazyRoute: AccountingChargesIndexLazyRoute,
   AccountingIncomesIndexLazyRoute: AccountingIncomesIndexLazyRoute,
   OrganizationCalendarsIndexLazyRoute: OrganizationCalendarsIndexLazyRoute,
@@ -567,6 +594,7 @@ export const routeTree = rootRoute
         "/metaverse",
         "/profile/",
         "/settings/",
+        "/organization/classes/$planet",
         "/accounting/charges/",
         "/accounting/incomes/",
         "/organization/calendars/",
@@ -598,6 +626,9 @@ export const routeTree = rootRoute
     },
     "/settings/": {
       "filePath": "settings/index.lazy.tsx"
+    },
+    "/organization/classes/$planet": {
+      "filePath": "organization/classes/$planet.lazy.tsx"
     },
     "/accounting/charges/": {
       "filePath": "accounting/charges/index.lazy.tsx"

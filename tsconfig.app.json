@@ -4,6 +4,7 @@
       "@ai/*": ["./src/@ai/*"],
       "@api/*": ["./src/@api/*"],
       "@asset/*": ["./src/@asset/*"],
+      "@lib/*": ["./src/@lib/*"],
       "@style/*": ["./src/@style/*"],
       "@form/*": ["./src/@form/*"],
       "@lang/*": ["./src/@lang/*"],

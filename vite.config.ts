@@ -13,6 +13,7 @@ export default defineConfig({
       '@ai': path.resolve('.', 'src/@ai'),
       '@api': path.resolve('.', 'src/@api'),
       '@asset': path.resolve('.', 'src/@asset'),
+      '@lib': path.resolve('.', 'src/@lib'),
       '@style': path.resolve('.', 'src/@style'),
       '@form': path.resolve('.', 'src/@form'),
       '@lang': path.resolve('.', 'src/@lang'),
