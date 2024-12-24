@@ -11,8 +11,8 @@ export default function View() {
 
         <SimpleGrid className="w-full" cols={6} spacing="xl">
           {
-            planets.map(({ name, color, grade_name }) => (
-              <Link to={`/organization/classes/${name}`}>
+            planets.map(({ name, color, grade_name }, i) => (
+              <Link to={`/organization/classes/${name}`} key={`planet-${i}`}>
                 <div className="flex flex-col justify-start items-center gap-1 pl-2 my-4">
                   <Planet
                     width={120}
@@ -37,4 +37,9 @@ each grade is a planet
 each class is a race
 each group is a troup
 each user is a character
+
+component PascalCase
+function snake_case
+state $ and $_
+let, var, const, snake_case
 */
