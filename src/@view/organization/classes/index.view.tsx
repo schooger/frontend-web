@@ -32,7 +32,7 @@ export default function View() {
 }
 /*
 schooger is an univers
-each school is a star
+each school is a star -- no school is like a ?
 each grade is a planet
 each class is a race
 each group is a troup

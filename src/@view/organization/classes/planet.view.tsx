@@ -1,9 +1,8 @@
 import { useState } from "react"
-import { Avatar, Button, Group, Paper, Text } from "@mantine/core"
+import { Button, Group, Paper, Text } from "@mantine/core"
 import { Plus } from "lucide-react"
 import Planet from "@asset/planet.asset"
 import FormClass from "@form/organization/class.form"
-import { useMediaQuery } from "@mantine/hooks"
 
 interface Props {
   grade_name: string,
@@ -13,9 +12,7 @@ interface Props {
 
 export default function View({ grade_name, planet_name, planet_color }: Props) {
   const [$new_classes, $_new_classes] = useState<{ id: number }[]>([])
-  const isSmallScreen = useMediaQuery('(max-width: 780px)')
-  const isMediumScreen = useMediaQuery('(max-width: 1080px)');
-  console.log('sm', isSmallScreen, 'md', isMediumScreen)
+
   return (
     <div className="flex flex-col justify-start items-center w-full px-2 h-full">
       <div className="flex flex-col items-center w-[64rem] max-w-[90%] h-full">
@@ -31,10 +28,11 @@ export default function View({ grade_name, planet_name, planet_color }: Props) {
 
           <Button
             variant="default"
-            className="h-[2.8rem] rounded-full border-0 bg-blue-500 hover:bg-blue-700 text-white hover:text-white text-md"
+            style={{ backgroundColor: planet_color, color: get_color(planet_name) }}
+            className={`h-[2.8rem] rounded-full border-0`}
             onClick={() => { $_new_classes((prev) => [{ id: prev.length + 1 }, ...prev]) }}
           >
-            <Plus size={40} strokeWidth={2.4} />
+            <Plus size={28} strokeWidth={2.8} />
             <span className="ml-1 font-bold">CREATE</span>
           </Button>
         </div>
@@ -43,7 +41,7 @@ export default function View({ grade_name, planet_name, planet_color }: Props) {
           {
             $new_classes.map(({ id }, i) => (
               <div className="w-1/3 px-4 mb-8" key={`create-class-${i}`}>
-                <ClassBox action="create" id={id} $_new_classes={$_new_classes} />
+                <ClassBox action="create" id={id} planet_name={planet_name} planet_color={planet_color} $_new_classes={$_new_classes} />
               </div>
             ))
           }
@@ -51,7 +49,7 @@ export default function View({ grade_name, planet_name, planet_color }: Props) {
           {
             Array.from({ length: 3 }, (_, i) => (
               <div className="w-1/3 px-4 mb-8" key={`box-class-${i}`}>
-                <ClassBox name="Class" />
+                <ClassBox name="Class" planet_name={planet_name} planet_color={planet_color} />
               </div>
             ))
           }
@@ -65,18 +63,20 @@ interface PropsClassBox {
   action?: string,
   id?: number,
   name?: string,
+  planet_name: string,
+  planet_color: string,
   $_new_classes?: React.Dispatch<React.SetStateAction<{ id: number }[]>>,
 }
 
-function ClassBox({ action, id, name, $_new_classes }: PropsClassBox) {
+function ClassBox({ action, id, name, planet_name, planet_color, $_new_classes }: PropsClassBox) {
   const [$show_form, $_show_form] = useState<boolean>(action === 'create' ? true : false)
 
   return (
     <div>
       {
         $show_form === false
-          ? <CardClass name={name} $_show_form={$_show_form} />
-          : <FormClass action={action} id={id} name={name} $_new_classes={$_new_classes} $_show_form={$_show_form} />
+          ? <CardClass name={name} planet_name={planet_name} planet_color={planet_color} $_show_form={$_show_form} />
+          : <FormClass action={action} id={id} name={name} planet_name={planet_name} planet_color={planet_color} $_new_classes={$_new_classes} $_show_form={$_show_form} />
       }
     </div>
   )
@@ -84,16 +84,18 @@ function ClassBox({ action, id, name, $_new_classes }: PropsClassBox) {
 
 interface PropsCardClass {
   name?: string,
+  planet_name?: string,
+  planet_color?: string,
   $_show_form: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-function CardClass({ name, $_show_form }: PropsCardClass) {
+function CardClass({ name, planet_name, planet_color, $_show_form }: PropsCardClass) {
   return (
     <Paper radius="md" withBorder p="md" className="flex flex-col justify-center items-center w-full h-[18rem] overflow-hidden">
-      <Avatar
-        src=""
-        size={100}
-        radius={100}
+      <Planet
+        width={100}
+        height={100}
+        planet_fill={planet_color}
       />
 
       <Text className="mt-4 text-xl font-semibold">{name}</Text>
@@ -111,11 +113,17 @@ function CardClass({ name, $_show_form }: PropsCardClass) {
       </Group>
 
       <Button
-        variant="light"
+        variant="filled"
         fullWidth
         className="mt-4 font-bold"
+        style={{ backgroundColor: planet_color, color: get_color(planet_name) }}
         onClick={() => $_show_form(true)}
       >UPDATE</Button>
     </Paper>
   )
+}
+
+function get_color(planet_name: any): string {
+  if (['argo', 'silvo', 'goldo'].includes(planet_name)) return 'black'
+  return 'white'
 }

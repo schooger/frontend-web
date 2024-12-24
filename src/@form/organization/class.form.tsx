@@ -1,17 +1,18 @@
-import { Button, Input, Paper } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { Shapes } from "lucide-react";
-
+import { Button, Input, Paper } from "@mantine/core"
+import { useForm } from "@mantine/form"
+import Planet from "@asset/planet.asset"
 
 interface PropsClassForm {
   action?: string,
   id?: number,
   name?: string,
+  planet_name: string,
+  planet_color: string,
   $_new_classes?: React.Dispatch<React.SetStateAction<{ id: number }[]>>,
   $_show_form: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export default function FormClass({ action, id, name, $_new_classes, $_show_form }: PropsClassForm) {
+export default function FormClass({ action, id, name, planet_name, planet_color, $_new_classes, $_show_form }: PropsClassForm) {
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -33,7 +34,11 @@ export default function FormClass({ action, id, name, $_new_classes, $_show_form
       className="w-full"
     >
       <Paper radius="md" p="md" className="flex flex-col justify-between items-center gap-4 w-full h-[18rem] bg-transparent overflow-hidden">
-        <Shapes size={120} />
+        <Planet
+                width={100}
+                height={100}
+                planet_fill={planet_color}
+              />
 
         <div className="w-full">
           <Input
@@ -48,13 +53,24 @@ export default function FormClass({ action, id, name, $_new_classes, $_show_form
           <div className="flex justify-between items-center gap-2 w-full">
             {
               action === 'create'
-                ? <Button fullWidth type="button" variant="outline" className="mt-4 font-bold border-red-600 text-red-600 hover:bg-red-50 hover:text-red-700" onClick={remove}>Cancel</Button>
-                : <Button fullWidth type="button" variant="outline" className="mt-4 font-bold border-red-600 text-red-600 hover:bg-red-50 hover:text-red-700" onClick={() => $_show_form(false)}>Cancel</Button>
+                ? <Button fullWidth type="button" variant="outline" className="mt-4 font-extrabold border-2" style={{ borderColor: planet_color, color: ['argo', 'silvo', 'goldo'].includes(planet_name) ? 'black' : planet_color }} onClick={remove}>Cancel</Button>
+                : <Button fullWidth type="button" variant="outline" className="mt-4 font-extrabold border-2" style={{ borderColor: planet_color, color: ['argo', 'silvo', 'goldo'].includes(planet_name) ? 'black' : planet_color }} onClick={() => $_show_form(false)}>Cancel</Button>
             }
-            <Button fullWidth type="submit" variant="filled" className="mt-4 font-bold">SAVE</Button>
+            <Button 
+            fullWidth 
+            type="submit" 
+            variant="filled" 
+            style={{ backgroundColor: planet_color, color: get_color(planet_name) }}
+            className="mt-4 font-bold"
+            >SAVE</Button>
           </div>
         </div>
       </Paper>
     </form>
   )
+}
+
+function get_color(planet_name: any): string {
+  if (['argo', 'silvo', 'goldo'].includes(planet_name)) return 'black'
+  return 'white'
 }

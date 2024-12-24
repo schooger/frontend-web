@@ -39,7 +39,7 @@ export default function AppHeader() {
               : <>
                 <Button
                   variant="default"
-                  className="h-[2.8rem] rounded-full border-0 bg-blue-500 hover:bg-blue-700"
+                  className="hidden h-[2.8rem] rounded-full border-0 bg-blue-500 hover:bg-blue-700"
                   onClick={showAssistantForm}
                 >
                   <div className="flex justify-start items-center gap-2 text-white text-md font-bold">
