@@ -105,39 +105,39 @@ function getLinks($lang: any, tokens: string) {
       title: $lang?.organization,
       icon: <School size={20} />,
       sublinks: [
-        { path: '/organization/classes', title: $lang?.classes },
-        { path: '/organization/modules', title: $lang?.modules },
-        { path: '/organization/calendars', title: $lang?.calendars },
-        { path: '/organization/transports', title: $lang?.transports },
-        { path: '/organization/permissions', title: $lang?.permissions },
+        { path: '/classes', title: $lang?.classes },
+        { path: '/modules', title: $lang?.modules },
+        { path: '/calendars', title: $lang?.calendars },
+        { path: '/transports', title: $lang?.transports },
+        { path: '/permissions', title: $lang?.permissions },
       ]
     },
     {
       title: $lang?.reports,
       icon: <SquareChartGantt size={20} />,
       sublinks: [
-        { path: '/reports/exams', title: $lang?.exams },
-        { path: '/reports/degrees', title: $lang?.degrees },
-        { path: '/reports/homework', title: $lang?.homework },
-        { path: '/reports/presence', title: $lang?.presence },
+        { path: '/exams', title: $lang?.exams },
+        { path: '/degrees', title: $lang?.degrees },
+        { path: '/homework', title: $lang?.homework },
+        { path: '/presence', title: $lang?.presence },
       ]
     },
     {
       title: $lang?.profiles,
       icon: <Users size={20} />,
       sublinks: [
-        { path: '/profiles/parents', title: $lang?.parents },
-        { path: '/profiles/teachers', title: $lang?.teachers },
-        { path: '/profiles/students', title: $lang?.students },
-        { path: '/profiles/administrators', title: $lang?.administrators },
+        { path: '/parents', title: $lang?.parents },
+        { path: '/teachers', title: $lang?.teachers },
+        { path: '/students', title: $lang?.students },
+        { path: '/administrators', title: $lang?.administrators },
       ]
     },
     {
       title: $lang?.accounting,
       icon: <Landmark size={20} />,
       sublinks: [
-        { path: '/accounting/incomes', title: $lang?.incomes },
-        { path: '/accounting/charges', title: $lang?.charges },
+        { path: '/incomes', title: $lang?.incomes },
+        { path: '/charges', title: $lang?.charges },
       ]
     },
   ]

@@ -19,42 +19,8 @@ import { Route as rootRoute } from './routes/__root'
 const MetaverseLazyImport = createFileRoute('/metaverse')()
 const ComingSoonLazyImport = createFileRoute('/coming-soon')()
 const IndexLazyImport = createFileRoute('/')()
-const SettingsIndexLazyImport = createFileRoute('/settings/')()
-const ProfileIndexLazyImport = createFileRoute('/profile/')()
-const ReportsPresenceIndexLazyImport = createFileRoute('/reports/presence/')()
-const ReportsHomeworkIndexLazyImport = createFileRoute('/reports/homework/')()
-const ReportsExamsIndexLazyImport = createFileRoute('/reports/exams/')()
-const ReportsDegreesIndexLazyImport = createFileRoute('/reports/degrees/')()
-const ProfilesTeachersIndexLazyImport = createFileRoute('/profiles/teachers/')()
-const ProfilesStudentsIndexLazyImport = createFileRoute('/profiles/students/')()
-const ProfilesParentsIndexLazyImport = createFileRoute('/profiles/parents/')()
-const ProfilesAdministratorsIndexLazyImport = createFileRoute(
-  '/profiles/administrators/',
-)()
-const OrganizationTransportsIndexLazyImport = createFileRoute(
-  '/organization/transports/',
-)()
-const OrganizationPermissionsIndexLazyImport = createFileRoute(
-  '/organization/permissions/',
-)()
-const OrganizationModulesIndexLazyImport = createFileRoute(
-  '/organization/modules/',
-)()
-const OrganizationClassesIndexLazyImport = createFileRoute(
-  '/organization/classes/',
-)()
-const OrganizationCalendarsIndexLazyImport = createFileRoute(
-  '/organization/calendars/',
-)()
-const AccountingIncomesIndexLazyImport = createFileRoute(
-  '/accounting/incomes/',
-)()
-const AccountingChargesIndexLazyImport = createFileRoute(
-  '/accounting/charges/',
-)()
-const OrganizationClassesPlanetLazyImport = createFileRoute(
-  '/organization/classes/$planet',
-)()
+const ClassesIndexLazyImport = createFileRoute('/classes/')()
+const ClassesIdLazyImport = createFileRoute('/classes/$id')()
 
 // Create/Update Routes
 
@@ -76,158 +42,17 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const SettingsIndexLazyRoute = SettingsIndexLazyImport.update({
-  id: '/settings/',
-  path: '/settings/',
+const ClassesIndexLazyRoute = ClassesIndexLazyImport.update({
+  id: '/classes/',
+  path: '/classes/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/settings/index.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./routes/classes/index.lazy').then((d) => d.Route))
 
-const ProfileIndexLazyRoute = ProfileIndexLazyImport.update({
-  id: '/profile/',
-  path: '/profile/',
+const ClassesIdLazyRoute = ClassesIdLazyImport.update({
+  id: '/classes/$id',
+  path: '/classes/$id',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/profile/index.lazy').then((d) => d.Route))
-
-const ReportsPresenceIndexLazyRoute = ReportsPresenceIndexLazyImport.update({
-  id: '/reports/presence/',
-  path: '/reports/presence/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/reports/presence/index.lazy').then((d) => d.Route),
-)
-
-const ReportsHomeworkIndexLazyRoute = ReportsHomeworkIndexLazyImport.update({
-  id: '/reports/homework/',
-  path: '/reports/homework/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/reports/homework/index.lazy').then((d) => d.Route),
-)
-
-const ReportsExamsIndexLazyRoute = ReportsExamsIndexLazyImport.update({
-  id: '/reports/exams/',
-  path: '/reports/exams/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/reports/exams/index.lazy').then((d) => d.Route),
-)
-
-const ReportsDegreesIndexLazyRoute = ReportsDegreesIndexLazyImport.update({
-  id: '/reports/degrees/',
-  path: '/reports/degrees/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/reports/degrees/index.lazy').then((d) => d.Route),
-)
-
-const ProfilesTeachersIndexLazyRoute = ProfilesTeachersIndexLazyImport.update({
-  id: '/profiles/teachers/',
-  path: '/profiles/teachers/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/profiles/teachers/index.lazy').then((d) => d.Route),
-)
-
-const ProfilesStudentsIndexLazyRoute = ProfilesStudentsIndexLazyImport.update({
-  id: '/profiles/students/',
-  path: '/profiles/students/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/profiles/students/index.lazy').then((d) => d.Route),
-)
-
-const ProfilesParentsIndexLazyRoute = ProfilesParentsIndexLazyImport.update({
-  id: '/profiles/parents/',
-  path: '/profiles/parents/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/profiles/parents/index.lazy').then((d) => d.Route),
-)
-
-const ProfilesAdministratorsIndexLazyRoute =
-  ProfilesAdministratorsIndexLazyImport.update({
-    id: '/profiles/administrators/',
-    path: '/profiles/administrators/',
-    getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/profiles/administrators/index.lazy').then((d) => d.Route),
-  )
-
-const OrganizationTransportsIndexLazyRoute =
-  OrganizationTransportsIndexLazyImport.update({
-    id: '/organization/transports/',
-    path: '/organization/transports/',
-    getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/organization/transports/index.lazy').then((d) => d.Route),
-  )
-
-const OrganizationPermissionsIndexLazyRoute =
-  OrganizationPermissionsIndexLazyImport.update({
-    id: '/organization/permissions/',
-    path: '/organization/permissions/',
-    getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/organization/permissions/index.lazy').then((d) => d.Route),
-  )
-
-const OrganizationModulesIndexLazyRoute =
-  OrganizationModulesIndexLazyImport.update({
-    id: '/organization/modules/',
-    path: '/organization/modules/',
-    getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/organization/modules/index.lazy').then((d) => d.Route),
-  )
-
-const OrganizationClassesIndexLazyRoute =
-  OrganizationClassesIndexLazyImport.update({
-    id: '/organization/classes/',
-    path: '/organization/classes/',
-    getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/organization/classes/index.lazy').then((d) => d.Route),
-  )
-
-const OrganizationCalendarsIndexLazyRoute =
-  OrganizationCalendarsIndexLazyImport.update({
-    id: '/organization/calendars/',
-    path: '/organization/calendars/',
-    getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/organization/calendars/index.lazy').then((d) => d.Route),
-  )
-
-const AccountingIncomesIndexLazyRoute = AccountingIncomesIndexLazyImport.update(
-  {
-    id: '/accounting/incomes/',
-    path: '/accounting/incomes/',
-    getParentRoute: () => rootRoute,
-  } as any,
-).lazy(() =>
-  import('./routes/accounting/incomes/index.lazy').then((d) => d.Route),
-)
-
-const AccountingChargesIndexLazyRoute = AccountingChargesIndexLazyImport.update(
-  {
-    id: '/accounting/charges/',
-    path: '/accounting/charges/',
-    getParentRoute: () => rootRoute,
-  } as any,
-).lazy(() =>
-  import('./routes/accounting/charges/index.lazy').then((d) => d.Route),
-)
-
-const OrganizationClassesPlanetLazyRoute =
-  OrganizationClassesPlanetLazyImport.update({
-    id: '/organization/classes/$planet',
-    path: '/organization/classes/$planet',
-    getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/organization/classes/$planet.lazy').then((d) => d.Route),
-  )
+} as any).lazy(() => import('./routes/classes/$id.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -254,130 +79,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MetaverseLazyImport
       parentRoute: typeof rootRoute
     }
-    '/profile/': {
-      id: '/profile/'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileIndexLazyImport
+    '/classes/$id': {
+      id: '/classes/$id'
+      path: '/classes/$id'
+      fullPath: '/classes/$id'
+      preLoaderRoute: typeof ClassesIdLazyImport
       parentRoute: typeof rootRoute
     }
-    '/settings/': {
-      id: '/settings/'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/organization/classes/$planet': {
-      id: '/organization/classes/$planet'
-      path: '/organization/classes/$planet'
-      fullPath: '/organization/classes/$planet'
-      preLoaderRoute: typeof OrganizationClassesPlanetLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/accounting/charges/': {
-      id: '/accounting/charges/'
-      path: '/accounting/charges'
-      fullPath: '/accounting/charges'
-      preLoaderRoute: typeof AccountingChargesIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/accounting/incomes/': {
-      id: '/accounting/incomes/'
-      path: '/accounting/incomes'
-      fullPath: '/accounting/incomes'
-      preLoaderRoute: typeof AccountingIncomesIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/organization/calendars/': {
-      id: '/organization/calendars/'
-      path: '/organization/calendars'
-      fullPath: '/organization/calendars'
-      preLoaderRoute: typeof OrganizationCalendarsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/organization/classes/': {
-      id: '/organization/classes/'
-      path: '/organization/classes'
-      fullPath: '/organization/classes'
-      preLoaderRoute: typeof OrganizationClassesIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/organization/modules/': {
-      id: '/organization/modules/'
-      path: '/organization/modules'
-      fullPath: '/organization/modules'
-      preLoaderRoute: typeof OrganizationModulesIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/organization/permissions/': {
-      id: '/organization/permissions/'
-      path: '/organization/permissions'
-      fullPath: '/organization/permissions'
-      preLoaderRoute: typeof OrganizationPermissionsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/organization/transports/': {
-      id: '/organization/transports/'
-      path: '/organization/transports'
-      fullPath: '/organization/transports'
-      preLoaderRoute: typeof OrganizationTransportsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/profiles/administrators/': {
-      id: '/profiles/administrators/'
-      path: '/profiles/administrators'
-      fullPath: '/profiles/administrators'
-      preLoaderRoute: typeof ProfilesAdministratorsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/profiles/parents/': {
-      id: '/profiles/parents/'
-      path: '/profiles/parents'
-      fullPath: '/profiles/parents'
-      preLoaderRoute: typeof ProfilesParentsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/profiles/students/': {
-      id: '/profiles/students/'
-      path: '/profiles/students'
-      fullPath: '/profiles/students'
-      preLoaderRoute: typeof ProfilesStudentsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/profiles/teachers/': {
-      id: '/profiles/teachers/'
-      path: '/profiles/teachers'
-      fullPath: '/profiles/teachers'
-      preLoaderRoute: typeof ProfilesTeachersIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/reports/degrees/': {
-      id: '/reports/degrees/'
-      path: '/reports/degrees'
-      fullPath: '/reports/degrees'
-      preLoaderRoute: typeof ReportsDegreesIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/reports/exams/': {
-      id: '/reports/exams/'
-      path: '/reports/exams'
-      fullPath: '/reports/exams'
-      preLoaderRoute: typeof ReportsExamsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/reports/homework/': {
-      id: '/reports/homework/'
-      path: '/reports/homework'
-      fullPath: '/reports/homework'
-      preLoaderRoute: typeof ReportsHomeworkIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/reports/presence/': {
-      id: '/reports/presence/'
-      path: '/reports/presence'
-      fullPath: '/reports/presence'
-      preLoaderRoute: typeof ReportsPresenceIndexLazyImport
+    '/classes/': {
+      id: '/classes/'
+      path: '/classes'
+      fullPath: '/classes'
+      preLoaderRoute: typeof ClassesIndexLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -389,48 +102,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/coming-soon': typeof ComingSoonLazyRoute
   '/metaverse': typeof MetaverseLazyRoute
-  '/profile': typeof ProfileIndexLazyRoute
-  '/settings': typeof SettingsIndexLazyRoute
-  '/organization/classes/$planet': typeof OrganizationClassesPlanetLazyRoute
-  '/accounting/charges': typeof AccountingChargesIndexLazyRoute
-  '/accounting/incomes': typeof AccountingIncomesIndexLazyRoute
-  '/organization/calendars': typeof OrganizationCalendarsIndexLazyRoute
-  '/organization/classes': typeof OrganizationClassesIndexLazyRoute
-  '/organization/modules': typeof OrganizationModulesIndexLazyRoute
-  '/organization/permissions': typeof OrganizationPermissionsIndexLazyRoute
-  '/organization/transports': typeof OrganizationTransportsIndexLazyRoute
-  '/profiles/administrators': typeof ProfilesAdministratorsIndexLazyRoute
-  '/profiles/parents': typeof ProfilesParentsIndexLazyRoute
-  '/profiles/students': typeof ProfilesStudentsIndexLazyRoute
-  '/profiles/teachers': typeof ProfilesTeachersIndexLazyRoute
-  '/reports/degrees': typeof ReportsDegreesIndexLazyRoute
-  '/reports/exams': typeof ReportsExamsIndexLazyRoute
-  '/reports/homework': typeof ReportsHomeworkIndexLazyRoute
-  '/reports/presence': typeof ReportsPresenceIndexLazyRoute
+  '/classes/$id': typeof ClassesIdLazyRoute
+  '/classes': typeof ClassesIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/coming-soon': typeof ComingSoonLazyRoute
   '/metaverse': typeof MetaverseLazyRoute
-  '/profile': typeof ProfileIndexLazyRoute
-  '/settings': typeof SettingsIndexLazyRoute
-  '/organization/classes/$planet': typeof OrganizationClassesPlanetLazyRoute
-  '/accounting/charges': typeof AccountingChargesIndexLazyRoute
-  '/accounting/incomes': typeof AccountingIncomesIndexLazyRoute
-  '/organization/calendars': typeof OrganizationCalendarsIndexLazyRoute
-  '/organization/classes': typeof OrganizationClassesIndexLazyRoute
-  '/organization/modules': typeof OrganizationModulesIndexLazyRoute
-  '/organization/permissions': typeof OrganizationPermissionsIndexLazyRoute
-  '/organization/transports': typeof OrganizationTransportsIndexLazyRoute
-  '/profiles/administrators': typeof ProfilesAdministratorsIndexLazyRoute
-  '/profiles/parents': typeof ProfilesParentsIndexLazyRoute
-  '/profiles/students': typeof ProfilesStudentsIndexLazyRoute
-  '/profiles/teachers': typeof ProfilesTeachersIndexLazyRoute
-  '/reports/degrees': typeof ReportsDegreesIndexLazyRoute
-  '/reports/exams': typeof ReportsExamsIndexLazyRoute
-  '/reports/homework': typeof ReportsHomeworkIndexLazyRoute
-  '/reports/presence': typeof ReportsPresenceIndexLazyRoute
+  '/classes/$id': typeof ClassesIdLazyRoute
+  '/classes': typeof ClassesIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -438,96 +119,22 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/coming-soon': typeof ComingSoonLazyRoute
   '/metaverse': typeof MetaverseLazyRoute
-  '/profile/': typeof ProfileIndexLazyRoute
-  '/settings/': typeof SettingsIndexLazyRoute
-  '/organization/classes/$planet': typeof OrganizationClassesPlanetLazyRoute
-  '/accounting/charges/': typeof AccountingChargesIndexLazyRoute
-  '/accounting/incomes/': typeof AccountingIncomesIndexLazyRoute
-  '/organization/calendars/': typeof OrganizationCalendarsIndexLazyRoute
-  '/organization/classes/': typeof OrganizationClassesIndexLazyRoute
-  '/organization/modules/': typeof OrganizationModulesIndexLazyRoute
-  '/organization/permissions/': typeof OrganizationPermissionsIndexLazyRoute
-  '/organization/transports/': typeof OrganizationTransportsIndexLazyRoute
-  '/profiles/administrators/': typeof ProfilesAdministratorsIndexLazyRoute
-  '/profiles/parents/': typeof ProfilesParentsIndexLazyRoute
-  '/profiles/students/': typeof ProfilesStudentsIndexLazyRoute
-  '/profiles/teachers/': typeof ProfilesTeachersIndexLazyRoute
-  '/reports/degrees/': typeof ReportsDegreesIndexLazyRoute
-  '/reports/exams/': typeof ReportsExamsIndexLazyRoute
-  '/reports/homework/': typeof ReportsHomeworkIndexLazyRoute
-  '/reports/presence/': typeof ReportsPresenceIndexLazyRoute
+  '/classes/$id': typeof ClassesIdLazyRoute
+  '/classes/': typeof ClassesIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/coming-soon'
-    | '/metaverse'
-    | '/profile'
-    | '/settings'
-    | '/organization/classes/$planet'
-    | '/accounting/charges'
-    | '/accounting/incomes'
-    | '/organization/calendars'
-    | '/organization/classes'
-    | '/organization/modules'
-    | '/organization/permissions'
-    | '/organization/transports'
-    | '/profiles/administrators'
-    | '/profiles/parents'
-    | '/profiles/students'
-    | '/profiles/teachers'
-    | '/reports/degrees'
-    | '/reports/exams'
-    | '/reports/homework'
-    | '/reports/presence'
+  fullPaths: '/' | '/coming-soon' | '/metaverse' | '/classes/$id' | '/classes'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/coming-soon'
-    | '/metaverse'
-    | '/profile'
-    | '/settings'
-    | '/organization/classes/$planet'
-    | '/accounting/charges'
-    | '/accounting/incomes'
-    | '/organization/calendars'
-    | '/organization/classes'
-    | '/organization/modules'
-    | '/organization/permissions'
-    | '/organization/transports'
-    | '/profiles/administrators'
-    | '/profiles/parents'
-    | '/profiles/students'
-    | '/profiles/teachers'
-    | '/reports/degrees'
-    | '/reports/exams'
-    | '/reports/homework'
-    | '/reports/presence'
+  to: '/' | '/coming-soon' | '/metaverse' | '/classes/$id' | '/classes'
   id:
     | '__root__'
     | '/'
     | '/coming-soon'
     | '/metaverse'
-    | '/profile/'
-    | '/settings/'
-    | '/organization/classes/$planet'
-    | '/accounting/charges/'
-    | '/accounting/incomes/'
-    | '/organization/calendars/'
-    | '/organization/classes/'
-    | '/organization/modules/'
-    | '/organization/permissions/'
-    | '/organization/transports/'
-    | '/profiles/administrators/'
-    | '/profiles/parents/'
-    | '/profiles/students/'
-    | '/profiles/teachers/'
-    | '/reports/degrees/'
-    | '/reports/exams/'
-    | '/reports/homework/'
-    | '/reports/presence/'
+    | '/classes/$id'
+    | '/classes/'
   fileRoutesById: FileRoutesById
 }
 
@@ -535,48 +142,16 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   ComingSoonLazyRoute: typeof ComingSoonLazyRoute
   MetaverseLazyRoute: typeof MetaverseLazyRoute
-  ProfileIndexLazyRoute: typeof ProfileIndexLazyRoute
-  SettingsIndexLazyRoute: typeof SettingsIndexLazyRoute
-  OrganizationClassesPlanetLazyRoute: typeof OrganizationClassesPlanetLazyRoute
-  AccountingChargesIndexLazyRoute: typeof AccountingChargesIndexLazyRoute
-  AccountingIncomesIndexLazyRoute: typeof AccountingIncomesIndexLazyRoute
-  OrganizationCalendarsIndexLazyRoute: typeof OrganizationCalendarsIndexLazyRoute
-  OrganizationClassesIndexLazyRoute: typeof OrganizationClassesIndexLazyRoute
-  OrganizationModulesIndexLazyRoute: typeof OrganizationModulesIndexLazyRoute
-  OrganizationPermissionsIndexLazyRoute: typeof OrganizationPermissionsIndexLazyRoute
-  OrganizationTransportsIndexLazyRoute: typeof OrganizationTransportsIndexLazyRoute
-  ProfilesAdministratorsIndexLazyRoute: typeof ProfilesAdministratorsIndexLazyRoute
-  ProfilesParentsIndexLazyRoute: typeof ProfilesParentsIndexLazyRoute
-  ProfilesStudentsIndexLazyRoute: typeof ProfilesStudentsIndexLazyRoute
-  ProfilesTeachersIndexLazyRoute: typeof ProfilesTeachersIndexLazyRoute
-  ReportsDegreesIndexLazyRoute: typeof ReportsDegreesIndexLazyRoute
-  ReportsExamsIndexLazyRoute: typeof ReportsExamsIndexLazyRoute
-  ReportsHomeworkIndexLazyRoute: typeof ReportsHomeworkIndexLazyRoute
-  ReportsPresenceIndexLazyRoute: typeof ReportsPresenceIndexLazyRoute
+  ClassesIdLazyRoute: typeof ClassesIdLazyRoute
+  ClassesIndexLazyRoute: typeof ClassesIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   ComingSoonLazyRoute: ComingSoonLazyRoute,
   MetaverseLazyRoute: MetaverseLazyRoute,
-  ProfileIndexLazyRoute: ProfileIndexLazyRoute,
-  SettingsIndexLazyRoute: SettingsIndexLazyRoute,
-  OrganizationClassesPlanetLazyRoute: OrganizationClassesPlanetLazyRoute,
-  AccountingChargesIndexLazyRoute: AccountingChargesIndexLazyRoute,
-  AccountingIncomesIndexLazyRoute: AccountingIncomesIndexLazyRoute,
-  OrganizationCalendarsIndexLazyRoute: OrganizationCalendarsIndexLazyRoute,
-  OrganizationClassesIndexLazyRoute: OrganizationClassesIndexLazyRoute,
-  OrganizationModulesIndexLazyRoute: OrganizationModulesIndexLazyRoute,
-  OrganizationPermissionsIndexLazyRoute: OrganizationPermissionsIndexLazyRoute,
-  OrganizationTransportsIndexLazyRoute: OrganizationTransportsIndexLazyRoute,
-  ProfilesAdministratorsIndexLazyRoute: ProfilesAdministratorsIndexLazyRoute,
-  ProfilesParentsIndexLazyRoute: ProfilesParentsIndexLazyRoute,
-  ProfilesStudentsIndexLazyRoute: ProfilesStudentsIndexLazyRoute,
-  ProfilesTeachersIndexLazyRoute: ProfilesTeachersIndexLazyRoute,
-  ReportsDegreesIndexLazyRoute: ReportsDegreesIndexLazyRoute,
-  ReportsExamsIndexLazyRoute: ReportsExamsIndexLazyRoute,
-  ReportsHomeworkIndexLazyRoute: ReportsHomeworkIndexLazyRoute,
-  ReportsPresenceIndexLazyRoute: ReportsPresenceIndexLazyRoute,
+  ClassesIdLazyRoute: ClassesIdLazyRoute,
+  ClassesIndexLazyRoute: ClassesIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -592,24 +167,8 @@ export const routeTree = rootRoute
         "/",
         "/coming-soon",
         "/metaverse",
-        "/profile/",
-        "/settings/",
-        "/organization/classes/$planet",
-        "/accounting/charges/",
-        "/accounting/incomes/",
-        "/organization/calendars/",
-        "/organization/classes/",
-        "/organization/modules/",
-        "/organization/permissions/",
-        "/organization/transports/",
-        "/profiles/administrators/",
-        "/profiles/parents/",
-        "/profiles/students/",
-        "/profiles/teachers/",
-        "/reports/degrees/",
-        "/reports/exams/",
-        "/reports/homework/",
-        "/reports/presence/"
+        "/classes/$id",
+        "/classes/"
       ]
     },
     "/": {
@@ -621,59 +180,11 @@ export const routeTree = rootRoute
     "/metaverse": {
       "filePath": "metaverse.lazy.tsx"
     },
-    "/profile/": {
-      "filePath": "profile/index.lazy.tsx"
+    "/classes/$id": {
+      "filePath": "classes/$id.lazy.tsx"
     },
-    "/settings/": {
-      "filePath": "settings/index.lazy.tsx"
-    },
-    "/organization/classes/$planet": {
-      "filePath": "organization/classes/$planet.lazy.tsx"
-    },
-    "/accounting/charges/": {
-      "filePath": "accounting/charges/index.lazy.tsx"
-    },
-    "/accounting/incomes/": {
-      "filePath": "accounting/incomes/index.lazy.tsx"
-    },
-    "/organization/calendars/": {
-      "filePath": "organization/calendars/index.lazy.tsx"
-    },
-    "/organization/classes/": {
-      "filePath": "organization/classes/index.lazy.tsx"
-    },
-    "/organization/modules/": {
-      "filePath": "organization/modules/index.lazy.tsx"
-    },
-    "/organization/permissions/": {
-      "filePath": "organization/permissions/index.lazy.tsx"
-    },
-    "/organization/transports/": {
-      "filePath": "organization/transports/index.lazy.tsx"
-    },
-    "/profiles/administrators/": {
-      "filePath": "profiles/administrators/index.lazy.tsx"
-    },
-    "/profiles/parents/": {
-      "filePath": "profiles/parents/index.lazy.tsx"
-    },
-    "/profiles/students/": {
-      "filePath": "profiles/students/index.lazy.tsx"
-    },
-    "/profiles/teachers/": {
-      "filePath": "profiles/teachers/index.lazy.tsx"
-    },
-    "/reports/degrees/": {
-      "filePath": "reports/degrees/index.lazy.tsx"
-    },
-    "/reports/exams/": {
-      "filePath": "reports/exams/index.lazy.tsx"
-    },
-    "/reports/homework/": {
-      "filePath": "reports/homework/index.lazy.tsx"
-    },
-    "/reports/presence/": {
-      "filePath": "reports/presence/index.lazy.tsx"
+    "/classes/": {
+      "filePath": "classes/index.lazy.tsx"
     }
   }
 }

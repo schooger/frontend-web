@@ -1,16 +1,18 @@
 import { useState } from "react"
-import { Button, Group, Paper, Text } from "@mantine/core"
-import { Plus } from "lucide-react"
+import { Button, Group, Menu, Paper, Text } from "@mantine/core"
+import { EllipsisVertical, Plus } from "lucide-react"
 import Planet from "@asset/planet.asset"
-import FormClass from "@form/organization/class.form"
+import FormClass from "@form/class.form"
+import { Link } from "@tanstack/react-router"
 
 interface Props {
-  grade_name: string,
+  planet_id: number,
   planet_name: string,
   planet_color: string,
+  grade_name: string,
 }
 
-export default function View({ grade_name, planet_name, planet_color }: Props) {
+export default function View({ planet_id, planet_name, planet_color, grade_name }: Props) {
   const [$new_classes, $_new_classes] = useState<{ id: number }[]>([])
 
   return (
@@ -21,7 +23,7 @@ export default function View({ grade_name, planet_name, planet_color }: Props) {
             <Planet
               width={40}
               height={40}
-              planet_fill={planet_color}
+              planet_color={planet_color}
             />
             <h1 className="text-left text-3xl font-bold capitalize">{planet_name} - {grade_name}</h1>
           </div>
@@ -39,9 +41,9 @@ export default function View({ grade_name, planet_name, planet_color }: Props) {
 
         <div className="flex flex-wrap justify-start w-full">
           {
-            $new_classes.map(({ id }, i) => (
-              <div className="w-1/3 px-4 mb-8" key={`create-class-${i}`}>
-                <ClassBox action="create" id={id} planet_name={planet_name} planet_color={planet_color} $_new_classes={$_new_classes} />
+            $new_classes.map(({ id }) => (
+              <div className="w-1/3 px-4 mb-8" key={`create-class-${id}`}>
+                <ClassBox action="create" class_id={id} class_name="" planet_id={planet_id} planet_name={planet_name} planet_color={planet_color} $_new_classes={$_new_classes} />
               </div>
             ))
           }
@@ -49,7 +51,7 @@ export default function View({ grade_name, planet_name, planet_color }: Props) {
           {
             Array.from({ length: 3 }, (_, i) => (
               <div className="w-1/3 px-4 mb-8" key={`box-class-${i}`}>
-                <ClassBox name="Class" planet_name={planet_name} planet_color={planet_color} />
+                <ClassBox action="update" class_id={i} class_name="Class" planet_id={planet_id} planet_name={planet_name} planet_color={planet_color} />
               </div>
             ))
           }
@@ -60,45 +62,50 @@ export default function View({ grade_name, planet_name, planet_color }: Props) {
 }
 
 interface PropsClassBox {
-  action?: string,
-  id?: number,
-  name?: string,
+  action: 'create' | 'update',
+  class_id: number,
+  class_name: string,
+  planet_id: number,
   planet_name: string,
   planet_color: string,
   $_new_classes?: React.Dispatch<React.SetStateAction<{ id: number }[]>>,
 }
 
-function ClassBox({ action, id, name, planet_name, planet_color, $_new_classes }: PropsClassBox) {
+function ClassBox({ action, class_id, class_name, planet_id, planet_name, planet_color, $_new_classes }: PropsClassBox) {
   const [$show_form, $_show_form] = useState<boolean>(action === 'create' ? true : false)
 
   return (
     <div>
       {
         $show_form === false
-          ? <CardClass name={name} planet_name={planet_name} planet_color={planet_color} $_show_form={$_show_form} />
-          : <FormClass action={action} id={id} name={name} planet_name={planet_name} planet_color={planet_color} $_new_classes={$_new_classes} $_show_form={$_show_form} />
+          ? <CardClass class_name={class_name} planet_name={planet_name} planet_color={planet_color} $_show_form={$_show_form} />
+          : <FormClass action={action} class_id={class_id} class_name={class_name} planet_id={planet_id} planet_name={planet_name} planet_color={planet_color} $_new_classes={$_new_classes} $_show_form={$_show_form} />
       }
     </div>
   )
 }
 
 interface PropsCardClass {
-  name?: string,
+  class_name?: string,
   planet_name?: string,
   planet_color?: string,
   $_show_form: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-function CardClass({ name, planet_name, planet_color, $_show_form }: PropsCardClass) {
+function CardClass({ class_name, planet_name, planet_color, $_show_form }: PropsCardClass) {
   return (
-    <Paper radius="md" withBorder p="md" className="flex flex-col justify-center items-center w-full h-[18rem] overflow-hidden">
+    <Paper radius="md" withBorder p="md" className="relative flex flex-col justify-center items-center w-full h-[18rem] overflow-hidden">
+      <div className="absolute top-0 right-0 mt-2">
+        <CardDropdown />
+      </div>
+
       <Planet
         width={100}
         height={100}
-        planet_fill={planet_color}
+        planet_color={planet_color}
       />
 
-      <Text className="mt-4 text-xl font-semibold">{name}</Text>
+      <Text className="mt-4 text-xl font-semibold">{class_name}</Text>
 
       <Group mt="md" justify="center" gap={30}>
         <div>
@@ -123,7 +130,34 @@ function CardClass({ name, planet_name, planet_color, $_show_form }: PropsCardCl
   )
 }
 
+function CardDropdown() {
+  return (
+    <Menu shadow="md" width={155} position="left-start">
+      <Menu.Target>
+        <button className='bg-transparent border-0 rounded-full'>
+          <EllipsisVertical />
+        </button>
+      </Menu.Target>
+
+      <Menu.Dropdown className="font-semibold">
+        <Menu.Item>
+          <a role="button" className="text-[#444]" aria-label="update">update</a>
+        </Menu.Item>
+        <Menu.Item>
+          <a role="button" className="text-red-500" aria-label="delete">delete</a>
+        </Menu.Item>
+        <Menu.Item>
+          <Link to="students" className="text-[#444]" aria-label="view students">view students</Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Link to="teachers" className="text-[#444]" aria-label="view teachers">view teachers</Link>
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+
 function get_color(planet_name: any): string {
-  if (['argo', 'silvo', 'goldo'].includes(planet_name)) return 'black'
+  if (['hydro', 'iro'].includes(planet_name)) return 'black'
   return 'white'
 }
