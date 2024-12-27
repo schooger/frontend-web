@@ -31,7 +31,7 @@ export default function AppHeader() {
 
 
   return (
-    <div className="fixed top-0 left-0 z-40 w-full h-[3.6rem] pl-[14rem]">
+    <div className="fixed top-0 left-0 z-50 w-full h-[3.6rem] pl-[14rem]">
       <div className="flex justify-end items-start gap-2 pt-[.375rem] pr-2">
         {
           (isPending) ? <AppHeaderLoader />

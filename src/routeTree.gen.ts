@@ -19,8 +19,18 @@ import { Route as rootRoute } from './routes/__root'
 const MetaverseLazyImport = createFileRoute('/metaverse')()
 const ComingSoonLazyImport = createFileRoute('/coming-soon')()
 const IndexLazyImport = createFileRoute('/')()
+const LevelsIndexLazyImport = createFileRoute('/levels/')()
 const ClassesIndexLazyImport = createFileRoute('/classes/')()
-const ClassesIdLazyImport = createFileRoute('/classes/$id')()
+const LevelsPlanetnameIndexLazyImport = createFileRoute(
+  '/levels/$planet_name/',
+)()
+const ClassesClassidIndexLazyImport = createFileRoute('/classes/$class_id/')()
+const ClassesClassidTeachersLazyImport = createFileRoute(
+  '/classes/$class_id/teachers',
+)()
+const ClassesClassidStudentsLazyImport = createFileRoute(
+  '/classes/$class_id/students',
+)()
 
 // Create/Update Routes
 
@@ -42,17 +52,53 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
+const LevelsIndexLazyRoute = LevelsIndexLazyImport.update({
+  id: '/levels/',
+  path: '/levels/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/levels/index.lazy').then((d) => d.Route))
+
 const ClassesIndexLazyRoute = ClassesIndexLazyImport.update({
   id: '/classes/',
   path: '/classes/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/classes/index.lazy').then((d) => d.Route))
 
-const ClassesIdLazyRoute = ClassesIdLazyImport.update({
-  id: '/classes/$id',
-  path: '/classes/$id',
+const LevelsPlanetnameIndexLazyRoute = LevelsPlanetnameIndexLazyImport.update({
+  id: '/levels/$planet_name/',
+  path: '/levels/$planet_name/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/classes/$id.lazy').then((d) => d.Route))
+} as any).lazy(() =>
+  import('./routes/levels/$planet_name/index.lazy').then((d) => d.Route),
+)
+
+const ClassesClassidIndexLazyRoute = ClassesClassidIndexLazyImport.update({
+  id: '/classes/$class_id/',
+  path: '/classes/$class_id/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/classes/$class_id/index.lazy').then((d) => d.Route),
+)
+
+const ClassesClassidTeachersLazyRoute = ClassesClassidTeachersLazyImport.update(
+  {
+    id: '/classes/$class_id/teachers',
+    path: '/classes/$class_id/teachers',
+    getParentRoute: () => rootRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/classes/$class_id/teachers.lazy').then((d) => d.Route),
+)
+
+const ClassesClassidStudentsLazyRoute = ClassesClassidStudentsLazyImport.update(
+  {
+    id: '/classes/$class_id/students',
+    path: '/classes/$class_id/students',
+    getParentRoute: () => rootRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/classes/$class_id/students.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -79,18 +125,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MetaverseLazyImport
       parentRoute: typeof rootRoute
     }
-    '/classes/$id': {
-      id: '/classes/$id'
-      path: '/classes/$id'
-      fullPath: '/classes/$id'
-      preLoaderRoute: typeof ClassesIdLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/classes/': {
       id: '/classes/'
       path: '/classes'
       fullPath: '/classes'
       preLoaderRoute: typeof ClassesIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/levels/': {
+      id: '/levels/'
+      path: '/levels'
+      fullPath: '/levels'
+      preLoaderRoute: typeof LevelsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/classes/$class_id/students': {
+      id: '/classes/$class_id/students'
+      path: '/classes/$class_id/students'
+      fullPath: '/classes/$class_id/students'
+      preLoaderRoute: typeof ClassesClassidStudentsLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/classes/$class_id/teachers': {
+      id: '/classes/$class_id/teachers'
+      path: '/classes/$class_id/teachers'
+      fullPath: '/classes/$class_id/teachers'
+      preLoaderRoute: typeof ClassesClassidTeachersLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/classes/$class_id/': {
+      id: '/classes/$class_id/'
+      path: '/classes/$class_id'
+      fullPath: '/classes/$class_id'
+      preLoaderRoute: typeof ClassesClassidIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/levels/$planet_name/': {
+      id: '/levels/$planet_name/'
+      path: '/levels/$planet_name'
+      fullPath: '/levels/$planet_name'
+      preLoaderRoute: typeof LevelsPlanetnameIndexLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -102,16 +176,24 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/coming-soon': typeof ComingSoonLazyRoute
   '/metaverse': typeof MetaverseLazyRoute
-  '/classes/$id': typeof ClassesIdLazyRoute
   '/classes': typeof ClassesIndexLazyRoute
+  '/levels': typeof LevelsIndexLazyRoute
+  '/classes/$class_id/students': typeof ClassesClassidStudentsLazyRoute
+  '/classes/$class_id/teachers': typeof ClassesClassidTeachersLazyRoute
+  '/classes/$class_id': typeof ClassesClassidIndexLazyRoute
+  '/levels/$planet_name': typeof LevelsPlanetnameIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/coming-soon': typeof ComingSoonLazyRoute
   '/metaverse': typeof MetaverseLazyRoute
-  '/classes/$id': typeof ClassesIdLazyRoute
   '/classes': typeof ClassesIndexLazyRoute
+  '/levels': typeof LevelsIndexLazyRoute
+  '/classes/$class_id/students': typeof ClassesClassidStudentsLazyRoute
+  '/classes/$class_id/teachers': typeof ClassesClassidTeachersLazyRoute
+  '/classes/$class_id': typeof ClassesClassidIndexLazyRoute
+  '/levels/$planet_name': typeof LevelsPlanetnameIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -119,22 +201,48 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/coming-soon': typeof ComingSoonLazyRoute
   '/metaverse': typeof MetaverseLazyRoute
-  '/classes/$id': typeof ClassesIdLazyRoute
   '/classes/': typeof ClassesIndexLazyRoute
+  '/levels/': typeof LevelsIndexLazyRoute
+  '/classes/$class_id/students': typeof ClassesClassidStudentsLazyRoute
+  '/classes/$class_id/teachers': typeof ClassesClassidTeachersLazyRoute
+  '/classes/$class_id/': typeof ClassesClassidIndexLazyRoute
+  '/levels/$planet_name/': typeof LevelsPlanetnameIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/coming-soon' | '/metaverse' | '/classes/$id' | '/classes'
+  fullPaths:
+    | '/'
+    | '/coming-soon'
+    | '/metaverse'
+    | '/classes'
+    | '/levels'
+    | '/classes/$class_id/students'
+    | '/classes/$class_id/teachers'
+    | '/classes/$class_id'
+    | '/levels/$planet_name'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/coming-soon' | '/metaverse' | '/classes/$id' | '/classes'
+  to:
+    | '/'
+    | '/coming-soon'
+    | '/metaverse'
+    | '/classes'
+    | '/levels'
+    | '/classes/$class_id/students'
+    | '/classes/$class_id/teachers'
+    | '/classes/$class_id'
+    | '/levels/$planet_name'
   id:
     | '__root__'
     | '/'
     | '/coming-soon'
     | '/metaverse'
-    | '/classes/$id'
     | '/classes/'
+    | '/levels/'
+    | '/classes/$class_id/students'
+    | '/classes/$class_id/teachers'
+    | '/classes/$class_id/'
+    | '/levels/$planet_name/'
   fileRoutesById: FileRoutesById
 }
 
@@ -142,16 +250,24 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   ComingSoonLazyRoute: typeof ComingSoonLazyRoute
   MetaverseLazyRoute: typeof MetaverseLazyRoute
-  ClassesIdLazyRoute: typeof ClassesIdLazyRoute
   ClassesIndexLazyRoute: typeof ClassesIndexLazyRoute
+  LevelsIndexLazyRoute: typeof LevelsIndexLazyRoute
+  ClassesClassidStudentsLazyRoute: typeof ClassesClassidStudentsLazyRoute
+  ClassesClassidTeachersLazyRoute: typeof ClassesClassidTeachersLazyRoute
+  ClassesClassidIndexLazyRoute: typeof ClassesClassidIndexLazyRoute
+  LevelsPlanetnameIndexLazyRoute: typeof LevelsPlanetnameIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   ComingSoonLazyRoute: ComingSoonLazyRoute,
   MetaverseLazyRoute: MetaverseLazyRoute,
-  ClassesIdLazyRoute: ClassesIdLazyRoute,
   ClassesIndexLazyRoute: ClassesIndexLazyRoute,
+  LevelsIndexLazyRoute: LevelsIndexLazyRoute,
+  ClassesClassidStudentsLazyRoute: ClassesClassidStudentsLazyRoute,
+  ClassesClassidTeachersLazyRoute: ClassesClassidTeachersLazyRoute,
+  ClassesClassidIndexLazyRoute: ClassesClassidIndexLazyRoute,
+  LevelsPlanetnameIndexLazyRoute: LevelsPlanetnameIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -167,8 +283,12 @@ export const routeTree = rootRoute
         "/",
         "/coming-soon",
         "/metaverse",
-        "/classes/$id",
-        "/classes/"
+        "/classes/",
+        "/levels/",
+        "/classes/$class_id/students",
+        "/classes/$class_id/teachers",
+        "/classes/$class_id/",
+        "/levels/$planet_name/"
       ]
     },
     "/": {
@@ -180,11 +300,23 @@ export const routeTree = rootRoute
     "/metaverse": {
       "filePath": "metaverse.lazy.tsx"
     },
-    "/classes/$id": {
-      "filePath": "classes/$id.lazy.tsx"
-    },
     "/classes/": {
       "filePath": "classes/index.lazy.tsx"
+    },
+    "/levels/": {
+      "filePath": "levels/index.lazy.tsx"
+    },
+    "/classes/$class_id/students": {
+      "filePath": "classes/$class_id/students.lazy.tsx"
+    },
+    "/classes/$class_id/teachers": {
+      "filePath": "classes/$class_id/teachers.lazy.tsx"
+    },
+    "/classes/$class_id/": {
+      "filePath": "classes/$class_id/index.lazy.tsx"
+    },
+    "/levels/$planet_name/": {
+      "filePath": "levels/$planet_name/index.lazy.tsx"
     }
   }
 }

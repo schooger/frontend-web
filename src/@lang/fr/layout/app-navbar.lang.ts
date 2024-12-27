@@ -8,6 +8,7 @@ const $lang = {
   tokens: 'jetons',
   metaverse: 'metaverse',
   organization: 'organisation',
+  levels: 'niveaux',
   classes: 'classes',
   modules: 'modules',
   calendars: 'calendriers',

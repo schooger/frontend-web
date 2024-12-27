@@ -18,7 +18,7 @@ export default function AppNavbar() {
   const openedAccordionItems = getOpenedAccordionItems(pathname)
 
   return (
-    <div className="fixed top-0 left-0 z-40 w-[14rem] h-full px-4 py-2 overflow-auto">
+    <div className="fixed top-0 left-0 z-40 w-[12.5rem] h-full pl-4 pr-0 py-2 overflow-auto">
       <div className="flex justify-start items-baseline w-full">
         <AppLogo />
       </div>
@@ -105,6 +105,7 @@ function getLinks($lang: any, tokens: string) {
       title: $lang?.organization,
       icon: <School size={20} />,
       sublinks: [
+        { path: '/levels', title: $lang?.levels },
         { path: '/classes', title: $lang?.classes },
         { path: '/modules', title: $lang?.modules },
         { path: '/calendars', title: $lang?.calendars },

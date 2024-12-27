@@ -6,6 +6,7 @@
       "@asset/*": ["./src/@asset/*"],
       "@lib/*": ["./src/@lib/*"],
       "@style/*": ["./src/@style/*"],
+      "@ui/*": ["./src/@ui/*"],
       "@form/*": ["./src/@form/*"],
       "@lang/*": ["./src/@lang/*"],
       "@layout/*": ["./src/@layout/*"],

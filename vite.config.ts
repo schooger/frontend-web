@@ -15,6 +15,7 @@ export default defineConfig({
       '@asset': path.resolve('.', 'src/@asset'),
       '@lib': path.resolve('.', 'src/@lib'),
       '@style': path.resolve('.', 'src/@style'),
+      '@ui': path.resolve('.', 'src/@ui'),
       '@form': path.resolve('.', 'src/@form'),
       '@lang': path.resolve('.', 'src/@lang'),
       '@layout': path.resolve('.', 'src/@layout'),
