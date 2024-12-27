@@ -10,3 +10,7 @@ body {
   background:#f6f8fa !important;
   color: #444;
 }
+
+.mantine-Modal-header, .mantine-Modal-body {
+  background:#f6f8fa !important;
+}

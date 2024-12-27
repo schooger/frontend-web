@@ -4,17 +4,18 @@ import { Link } from "@tanstack/react-router"
 import Planet from "@asset/planet.asset"
 import { useDisclosure } from "@mantine/hooks"
 import FormClass from "@form/class.form"
+import planets from "@lib/planets.lib"
 
 interface Props {
   class_id: number,
   class_name: string,
   planet_id: number,
-  planet_name: string,
-  planet_color: string,
 }
 
-export default function Card({ class_id, class_name, planet_id, planet_name, planet_color }: Props) {
+export default function Card({ class_id, class_name, planet_id }: Props) {
   const [opened, { open, close }] = useDisclosure(false)
+  
+  const { planet_name = '', planet_color = '' } = planets.find(planet => planet.planet_id === planet_id) ?? {}
 
   return (
     <>
@@ -53,12 +54,13 @@ export default function Card({ class_id, class_name, planet_id, planet_name, pla
       </Paper>
 
       <Modal
+        centered
+        closeOnClickOutside={false}
         opened={opened}
         onClose={close}
         title={<p className="text-xl font-bold">Update Class</p>}
-        centered
       >
-        <FormClass action="create" class_id={class_id} class_name={class_name} planet_id={planet_id} planet_name={planet_name} planet_color={planet_color} close={close} />
+        <FormClass action="create" class_id={class_id} class_name={class_name} planet_id={planet_id} close={close} />
       </Modal>
     </>
   )
