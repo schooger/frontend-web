@@ -1,4 +1,4 @@
-import { Button, Group, Menu, Modal, Paper, Text } from "@mantine/core"
+import { Box, Button, Group, Menu, Modal, Paper, Text } from "@mantine/core"
 import { EllipsisVertical } from "lucide-react"
 import { Link } from "@tanstack/react-router"
 import Planet from "@asset/planet.asset"
@@ -14,12 +14,12 @@ interface Props {
 
 export default function Card({ class_id, class_name, planet_id }: Props) {
   const [opened, { open, close }] = useDisclosure(false)
-  
-  const { planet_name = '', planet_color = '' } = planets.find(planet => planet.planet_id === planet_id) ?? {}
+
+  const { planet_name = '', planet_color = '', level_name = '' } = planets.find(planet => planet.planet_id === planet_id) ?? {}
 
   return (
     <>
-      <Paper radius="md" withBorder p="md" className="relative flex flex-col justify-center items-center w-full h-[18rem] overflow-hidden">
+      <Paper radius="md" withBorder p="md" className="relative flex flex-col justify-center items-center w-full overflow-hidden">
         <div className="absolute top-0 right-0 mt-2">
           <CardDropdown class_id={class_id} />
         </div>
@@ -30,7 +30,11 @@ export default function Card({ class_id, class_name, planet_id }: Props) {
           planet_color={planet_color}
         />
 
-        <Text className="mt-4 text-xl font-semibold">{class_name}</Text>
+        <Text className="mt-1 text-md font-medium lowercase">{level_name}</Text>
+
+        <Box className="w-full text-center">
+          <Text className="mt-4 text-xl font-semibold" truncate="end">{class_name}</Text>
+        </Box>
 
         <Group mt="md" justify="center" gap={30}>
           <div>
@@ -48,7 +52,10 @@ export default function Card({ class_id, class_name, planet_id }: Props) {
           variant="filled"
           fullWidth
           className="mt-4 font-bold"
-          style={{ backgroundColor: planet_color, color: get_color(planet_name) }}
+          style={{
+            backgroundColor: planet_color,
+            color: get_color(planet_name),
+          }}
           onClick={open}
         >UPDATE</Button>
       </Paper>
@@ -83,10 +90,10 @@ function CardDropdown({ class_id }: { class_id: number }) {
           <a role="button" className="text-red-500" aria-label="delete">delete</a>
         </Menu.Item>
         <Menu.Item>
-          <Link to={`/classes/${class_id}/students`} className="text-[#444]" aria-label="view students">view students</Link>
+          <Link to={`/classes/${class_id}/teachers`} className="text-[#444]" aria-label="view teachers">view teachers</Link>
         </Menu.Item>
         <Menu.Item>
-          <Link to={`/classes/${class_id}/teachers`} className="text-[#444]" aria-label="view teachers">view teachers</Link>
+          <Link to={`/classes/${class_id}/students`} className="text-[#444]" aria-label="view students">view students</Link>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

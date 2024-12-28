@@ -81,9 +81,9 @@ export default function AppNavbar() {
 }
 
 function getOpenedAccordionItems(pathname: string): string[] {
-  if (['/organization/classes', '/organization/modules', '/organization/calendars', '/organization/transports', '/organization/permissions'].includes(pathname)) return ['item-0']
-  if (['/reports/exams', '/reports/degrees', '/reports/homework', '/reports/presence'].includes(pathname)) return ['item-1']
-  if (['/profiles/parents', '/profiles/students', '/profiles/teachers', '/profiles/administrators'].includes(pathname)) return ['item-2']
+  if (['/levels', '/classes', '/modules', '/calendars', '/transports', '/permissions'].includes(pathname)) return ['item-0']
+  if (['/exams', '/degrees', '/homework', '/presence'].includes(pathname)) return ['item-1']
+  if (['/parents', '/students', '/teachers', '/administrators'].includes(pathname)) return ['item-2']
   if (['/accounting/incomes', '/accounting/charges'].includes(pathname)) return ['item-3']
   return []
 }

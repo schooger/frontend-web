@@ -3,7 +3,7 @@ import AppLogo from "@layout/app-logo";
 import { useQuery } from "@tanstack/react-query";
 
 export default function View() {
-  const { isPending, isError, data: $lang } = useQuery<{ [key: string]: any }, Error>({
+  const { isPending, isError } = useQuery<{ [key: string]: any }, Error>({
     queryKey: ['lang/view/home'],
     queryFn: async () => (await import(`@lang/${localStorage.getItem('lang') || 'en'}/view/home.lang.ts`)).default,
   })

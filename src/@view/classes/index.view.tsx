@@ -1,29 +1,47 @@
-import { Button, Modal } from "@mantine/core"
-import { Plus } from "lucide-react"
+import { Button, Group, Modal, Text } from "@mantine/core"
+import { Plus, Search } from "lucide-react"
 import { useDisclosure } from "@mantine/hooks"
 import FormClass from "@form/class.form"
 import CardClass from "@ui/card/class.card"
+import AppLoader from "@layout/app-loader.layout"
+import { useQuery } from "@tanstack/react-query"
+import { find_all } from "@api/classes/get.api"
 
 export default function View() {
   const [opened, { open, close }] = useDisclosure(false)
 
+  const { isPending, data } = useQuery({
+    queryKey: ['api/classes/find_all'],
+    queryFn: () => find_all(),
+  })
+
+  if (isPending) return <AppLoader />
+
   return (
     <div className="flex flex-col justify-start items-center w-full px-2 h-full">
       <div className="flex flex-col items-center w-[64rem] max-w-[90%] h-full">
-        <div className="flex flex-row justify-start items-start gap-2 w-full mb-8">
-          <div className="flex flex-row justify-start items-center gap-2 w-full">
-            <h1 className="text-left text-2xl font-bold capitalize">Classes</h1>
-          </div>
+        <Group justify="space-between" gap={2} className="w-full mb-8">
+          <Text className="text-2xl font-bold capitalize">Classes</Text>
 
-          <Button
-            variant="default"
-            className={`h-[2.8rem] rounded-full border-0`}
-            onClick={open}
-          >
-            <Plus size={28} strokeWidth={2.8} />
-            <span className="ml-1 font-bold">CREATE</span>
-          </Button>
-        </div>
+          <Group gap={8}>
+            <Button
+              variant="transparent"
+              color="#222"
+              className="h-[2.8rem] px-2 rounded-full hover:bg-gray-200"
+              onClick={open}
+            >
+              <Search size={28} strokeWidth={2.8} />
+            </Button>
+
+            <Button
+              variant="filled"
+              color="blue"
+              className="h-[2.8rem] rounded-full border-0 font-extrabold"
+              onClick={open}
+              leftSection={<Plus size={20} strokeWidth={2.8} />}
+            >CREATE</Button>
+          </Group>
+        </Group>
 
         <Modal
           centered
@@ -37,9 +55,9 @@ export default function View() {
 
         <div className="flex flex-wrap justify-start w-full">
           {
-            Array.from({ length: 3 }, (_, i) => (
-              <div className="w-1/3 px-4 mb-8" key={`box-class-${i}`}>
-                <CardClass class_id={i + 1} class_name="Class" planet_id={6} />
+            data?.map(({ class_id, class_name, planet_id }) => (
+              <div className="w-1/3 px-4 mb-8" key={`box-class-${class_id}`}>
+                <CardClass class_id={class_id} class_name={class_name} planet_id={planet_id} />
               </div>
             ))
           }

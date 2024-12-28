@@ -27,7 +27,7 @@ export default function View({ planet_id }: { planet_id: number }) {
           <Button
             variant="default"
             style={{ backgroundColor: planet_color, color: get_color(planet_name) }}
-            className={`h-[2.8rem] rounded-full border-0`}
+            className="h-[2.8rem] rounded-full border-0"
             onClick={open}
           >
             <Plus size={28} strokeWidth={2.8} />
