@@ -83,18 +83,26 @@ function CardDropdown({ class_id }: { class_id: number }) {
       </Menu.Target>
 
       <Menu.Dropdown className="font-semibold">
-        <Menu.Item>
-          <a role="button" className="text-[#444]" aria-label="update">update</a>
-        </Menu.Item>
-        <Menu.Item>
-          <a role="button" className="text-red-500" aria-label="delete">delete</a>
-        </Menu.Item>
-        <Menu.Item>
-          <Link to={`/classes/${class_id}/teachers`} className="text-[#444]" aria-label="view teachers">view teachers</Link>
-        </Menu.Item>
-        <Menu.Item>
-          <Link to={`/classes/${class_id}/students`} className="text-[#444]" aria-label="view students">view students</Link>
-        </Menu.Item>
+        <a role="button" className="text-[#444]" aria-label="update">
+          <Menu.Item>
+            update
+          </Menu.Item>
+        </a>
+        <a role="button" className="text-red-500" aria-label="delete">
+          <Menu.Item>
+            delete
+          </Menu.Item>
+        </a>
+        <Link to={`/classes/${class_id}/teachers`} className="text-[#444]" aria-label="view teachers">
+          <Menu.Item>
+            view teachers
+          </Menu.Item>
+        </Link>
+        <Link to={`/classes/${class_id}/students`} className="text-[#444]" aria-label="view students">
+          <Menu.Item>
+            view students
+          </Menu.Item>
+        </Link>
       </Menu.Dropdown>
     </Menu>
   );
