@@ -1,7 +1,9 @@
-import { AtSign, Phone } from "lucide-react"
-import { Group, Skeleton, Text } from "@mantine/core"
-import { useState } from "react"
+import { Box, Button, Menu, Modal, Paper, Skeleton, Text } from "@mantine/core"
+import { EllipsisVertical } from "lucide-react"
+import { useDisclosure } from "@mantine/hooks"
+import FormStudent from "@form/student.form"
 import planets from "@lib/planets.lib"
+import { useState } from "react"
 
 interface Props {
   student_id: number,
@@ -15,50 +17,94 @@ interface Props {
 
 export default function Card({ student_id, student_name, student_email, student_phone, student_image, planet_id, class_name }: Props) {
   const [imageIsLoaded, _imageIsLoaded] = useState(false)
+  const [opened, { open, close }] = useDisclosure(false)
 
-  const { planet_name = '', planet_color = '' } = planets.find(planet => planet.planet_id === planet_id) ?? {}
+  const { planet_name = '', planet_color = '', level_name = '' } = planets.find(planet => planet.planet_id === planet_id) ?? {}
 
   return (
-    <div className="flex flex-row" id={`student-${student_id}`}>
-      <div className='w-[6rem] bg-transparent border-0 rounded-full'>
-        <img
-          className={`w-full aspect-square bg-white object-cover object-center rounded-full ${!imageIsLoaded && 'hidden'}`}
-          src={`https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/${student_image}`}
-          alt="image"
-          onLoad={() => _imageIsLoaded(true)}
-        />
-        <Skeleton
-          circle
-          mb="xl"
-          classNames={{
-            root: `w-full aspect-square ${imageIsLoaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
+    <>
+      <Paper radius="md" withBorder p="md" className="relative flex flex-col justify-center items-center w-full overflow-hidden">
+        <div className="absolute top-0 right-0 mt-2">
+          <CardDropdown />
+        </div>
+
+        <div className='w-[6rem] bg-transparent border-0 rounded-full'>
+          <img
+            className={`w-full aspect-square bg-white object-cover object-center rounded-full ${!imageIsLoaded && 'hidden'}`}
+            src={`https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/${student_image}`}
+            alt="image"
+            onLoad={() => _imageIsLoaded(true)}
+          />
+          <Skeleton
+            circle
+            mb="xl"
+            classNames={{
+              root: `w-full aspect-square ${imageIsLoaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
+            }}
+          />
+        </div>
+
+        <Box className="w-full text-center">
+          <Text className="mt-1 text-sm font-semibold lowercase" style={{ color: planet_color }}>{planet_name}</Text>
+
+          <Text className="mt-2 text-xl font-bold" truncate="end">{student_name}</Text>
+          <Text className="mt-0 text-sm text-gray-500 font-normal capitalize" truncate="end">{class_name} | {level_name}</Text>
+
+          <Text className="mt-4 text-sm text-gray-500 font-medium lower" truncate="end">{student_email}</Text>
+          <Text className="mt-1 text-sm text-gray-500 font-medium lower" truncate="end">{student_phone}</Text>
+        </Box>
+
+        <Button
+          variant="filled"
+          fullWidth
+          className="mt-4 font-bold"
+          style={{
+            backgroundColor: planet_color,
+            color: get_color(planet_name),
           }}
-        />
-      </div>
+          onClick={open}
+        >UPDATE</Button>
+      </Paper>
 
-      <div className="pl-2" style={{ width: 'calc(100% - 6rem)' }}>
-        <Text fz="xs" tt="uppercase" fw={700} c={planet_color} truncate>
-          {planet_name} | {class_name}
-        </Text>
-
-        <Text fz="md" fw={500} truncate>
-          {student_name}
-        </Text>
-
-        <Group wrap="nowrap" gap={10} mt={3}>
-          <AtSign size={16} />
-          <Text fz="xs" c="dimmed" truncate>
-            {student_email}
-          </Text>
-        </Group>
-
-        <Group wrap="nowrap" gap={10} mt={5}>
-          <Phone size={16} />
-          <Text fz="xs" c="dimmed" truncate>
-            {student_phone}
-          </Text>
-        </Group>
-      </div>
-    </div>
+      <Modal
+        centered
+        closeOnClickOutside={false}
+        opened={opened}
+        onClose={close}
+        title={<p className="text-xl font-bold">Update Student</p>}
+      >
+        <FormStudent action="create" student_id={student_id} student_name={student_name} planet_id={planet_id} close={close} />
+      </Modal>
+    </>
   )
+}
+
+function CardDropdown() {
+  return (
+    <Menu shadow="md" width={155} position="left-start">
+      <Menu.Target>
+        <button className='bg-transparent border-0 rounded-full'>
+          <EllipsisVertical />
+        </button>
+      </Menu.Target>
+
+      <Menu.Dropdown className="font-semibold">
+        <a role="button" className="text-[#444]" aria-label="update">
+          <Menu.Item>
+            update
+          </Menu.Item>
+        </a>
+        <a role="button" className="text-red-500" aria-label="delete">
+          <Menu.Item>
+            delete
+          </Menu.Item>
+        </a>
+      </Menu.Dropdown>
+    </Menu>
+  )
+}
+
+function get_color(planet_name: any): string {
+  if (['netras'].includes(planet_name)) return 'black'
+  return 'white'
 }

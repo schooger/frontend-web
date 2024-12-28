@@ -1,18 +1,18 @@
 import { Button, Group, Modal, Text } from "@mantine/core"
 import { Plus, Search } from "lucide-react"
 import { useDisclosure } from "@mantine/hooks"
-import FormClass from "@form/class.form"
-import CardClass from "@ui/card/class.card"
+import FormTeacher from "@form/teacher.form"
+import CardTeacher from "@ui/card/teacher.card"
 import AppLoader from "@layout/app-loader.layout"
 import { useQuery } from "@tanstack/react-query"
-import { find_all } from "@api/classes/get.api"
+import { find_all as find_all_teachers } from "@api/teachers/get.api"
 
 export default function View() {
   const [opened, { open, close }] = useDisclosure(false)
 
   const { isPending, data } = useQuery({
-    queryKey: ['api/classes/find_all'],
-    queryFn: () => find_all(),
+    queryKey: ['api/teachers/find_all'],
+    queryFn: () => find_all_teachers(),
   })
 
   if (isPending) return <AppLoader />
@@ -21,7 +21,7 @@ export default function View() {
     <div className="flex flex-col justify-start items-center w-full px-2 h-full">
       <div className="flex flex-col items-center w-[64rem] max-w-[100%] h-full">
         <Group justify="space-between" gap={2} className="w-full mb-8">
-          <Text className="text-2xl font-bold capitalize">Classes</Text>
+          <Text className="text-2xl font-bold capitalize">Teachers</Text>
 
           <Group gap={8}>
             <Button
@@ -48,16 +48,23 @@ export default function View() {
           closeOnClickOutside={false}
           opened={opened}
           onClose={close}
-          title={<p className="text-xl font-bold">Create New Class</p>}
+          title={<p className="text-xl font-bold">Add New Teacher</p>}
         >
-          <FormClass action="create" class_id={null} close={close} />
+          <FormTeacher action="create" teacher_id={null} close={close} />
         </Modal>
 
         <div className="flex flex-wrap justify-start w-full">
           {
-            data?.map(({ class_id, class_name, planet_id }) => (
-              <div className="w-1/3 px-4 mb-8" key={`box-class-${class_id}`}>
-                <CardClass class_id={class_id} class_name={class_name} planet_id={planet_id} />
+            data?.map(({ teacher_id, teacher_name, teacher_email, teacher_phone, teacher_title, teacher_image }) => (
+              <div className="w-1/3 mb-8 pr-2" key={`teacher-${teacher_id}`}>
+                <CardTeacher
+                  teacher_id={teacher_id}
+                  teacher_name={teacher_name}
+                  teacher_email={teacher_email}
+                  teacher_phone={teacher_phone}
+                  teacher_title={teacher_title}
+                  teacher_image={teacher_image}
+                />
               </div>
             ))
           }

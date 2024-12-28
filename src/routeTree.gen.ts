@@ -19,6 +19,8 @@ import { Route as rootRoute } from './routes/__root'
 const MetaverseLazyImport = createFileRoute('/metaverse')()
 const ComingSoonLazyImport = createFileRoute('/coming-soon')()
 const IndexLazyImport = createFileRoute('/')()
+const TeachersIndexLazyImport = createFileRoute('/teachers/')()
+const StudentsIndexLazyImport = createFileRoute('/students/')()
 const LevelsIndexLazyImport = createFileRoute('/levels/')()
 const ClassesIndexLazyImport = createFileRoute('/classes/')()
 const LevelsPlanetnameIndexLazyImport = createFileRoute(
@@ -51,6 +53,22 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const TeachersIndexLazyRoute = TeachersIndexLazyImport.update({
+  id: '/teachers/',
+  path: '/teachers/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/teachers/index.lazy').then((d) => d.Route),
+)
+
+const StudentsIndexLazyRoute = StudentsIndexLazyImport.update({
+  id: '/students/',
+  path: '/students/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/students/index.lazy').then((d) => d.Route),
+)
 
 const LevelsIndexLazyRoute = LevelsIndexLazyImport.update({
   id: '/levels/',
@@ -139,6 +157,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LevelsIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/students/': {
+      id: '/students/'
+      path: '/students'
+      fullPath: '/students'
+      preLoaderRoute: typeof StudentsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/teachers/': {
+      id: '/teachers/'
+      path: '/teachers'
+      fullPath: '/teachers'
+      preLoaderRoute: typeof TeachersIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/classes/$class_id/students': {
       id: '/classes/$class_id/students'
       path: '/classes/$class_id/students'
@@ -178,6 +210,8 @@ export interface FileRoutesByFullPath {
   '/metaverse': typeof MetaverseLazyRoute
   '/classes': typeof ClassesIndexLazyRoute
   '/levels': typeof LevelsIndexLazyRoute
+  '/students': typeof StudentsIndexLazyRoute
+  '/teachers': typeof TeachersIndexLazyRoute
   '/classes/$class_id/students': typeof ClassesClassidStudentsLazyRoute
   '/classes/$class_id/teachers': typeof ClassesClassidTeachersLazyRoute
   '/classes/$class_id': typeof ClassesClassidIndexLazyRoute
@@ -190,6 +224,8 @@ export interface FileRoutesByTo {
   '/metaverse': typeof MetaverseLazyRoute
   '/classes': typeof ClassesIndexLazyRoute
   '/levels': typeof LevelsIndexLazyRoute
+  '/students': typeof StudentsIndexLazyRoute
+  '/teachers': typeof TeachersIndexLazyRoute
   '/classes/$class_id/students': typeof ClassesClassidStudentsLazyRoute
   '/classes/$class_id/teachers': typeof ClassesClassidTeachersLazyRoute
   '/classes/$class_id': typeof ClassesClassidIndexLazyRoute
@@ -203,6 +239,8 @@ export interface FileRoutesById {
   '/metaverse': typeof MetaverseLazyRoute
   '/classes/': typeof ClassesIndexLazyRoute
   '/levels/': typeof LevelsIndexLazyRoute
+  '/students/': typeof StudentsIndexLazyRoute
+  '/teachers/': typeof TeachersIndexLazyRoute
   '/classes/$class_id/students': typeof ClassesClassidStudentsLazyRoute
   '/classes/$class_id/teachers': typeof ClassesClassidTeachersLazyRoute
   '/classes/$class_id/': typeof ClassesClassidIndexLazyRoute
@@ -217,6 +255,8 @@ export interface FileRouteTypes {
     | '/metaverse'
     | '/classes'
     | '/levels'
+    | '/students'
+    | '/teachers'
     | '/classes/$class_id/students'
     | '/classes/$class_id/teachers'
     | '/classes/$class_id'
@@ -228,6 +268,8 @@ export interface FileRouteTypes {
     | '/metaverse'
     | '/classes'
     | '/levels'
+    | '/students'
+    | '/teachers'
     | '/classes/$class_id/students'
     | '/classes/$class_id/teachers'
     | '/classes/$class_id'
@@ -239,6 +281,8 @@ export interface FileRouteTypes {
     | '/metaverse'
     | '/classes/'
     | '/levels/'
+    | '/students/'
+    | '/teachers/'
     | '/classes/$class_id/students'
     | '/classes/$class_id/teachers'
     | '/classes/$class_id/'
@@ -252,6 +296,8 @@ export interface RootRouteChildren {
   MetaverseLazyRoute: typeof MetaverseLazyRoute
   ClassesIndexLazyRoute: typeof ClassesIndexLazyRoute
   LevelsIndexLazyRoute: typeof LevelsIndexLazyRoute
+  StudentsIndexLazyRoute: typeof StudentsIndexLazyRoute
+  TeachersIndexLazyRoute: typeof TeachersIndexLazyRoute
   ClassesClassidStudentsLazyRoute: typeof ClassesClassidStudentsLazyRoute
   ClassesClassidTeachersLazyRoute: typeof ClassesClassidTeachersLazyRoute
   ClassesClassidIndexLazyRoute: typeof ClassesClassidIndexLazyRoute
@@ -264,6 +310,8 @@ const rootRouteChildren: RootRouteChildren = {
   MetaverseLazyRoute: MetaverseLazyRoute,
   ClassesIndexLazyRoute: ClassesIndexLazyRoute,
   LevelsIndexLazyRoute: LevelsIndexLazyRoute,
+  StudentsIndexLazyRoute: StudentsIndexLazyRoute,
+  TeachersIndexLazyRoute: TeachersIndexLazyRoute,
   ClassesClassidStudentsLazyRoute: ClassesClassidStudentsLazyRoute,
   ClassesClassidTeachersLazyRoute: ClassesClassidTeachersLazyRoute,
   ClassesClassidIndexLazyRoute: ClassesClassidIndexLazyRoute,
@@ -285,6 +333,8 @@ export const routeTree = rootRoute
         "/metaverse",
         "/classes/",
         "/levels/",
+        "/students/",
+        "/teachers/",
         "/classes/$class_id/students",
         "/classes/$class_id/teachers",
         "/classes/$class_id/",
@@ -305,6 +355,12 @@ export const routeTree = rootRoute
     },
     "/levels/": {
       "filePath": "levels/index.lazy.tsx"
+    },
+    "/students/": {
+      "filePath": "students/index.lazy.tsx"
+    },
+    "/teachers/": {
+      "filePath": "teachers/index.lazy.tsx"
     },
     "/classes/$class_id/students": {
       "filePath": "classes/$class_id/students.lazy.tsx"

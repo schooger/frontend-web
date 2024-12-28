@@ -1,13 +1,15 @@
 import Planet from "@asset/planet.asset"
 import { useQuery } from "@tanstack/react-query"
 import { find_one } from "@api/classes/get.api"
+import { find_all as find_all_teachers } from "@api/teachers/get.api"
+import { find_all as find_all_students } from "@api/students/get.api"
 import planets from "@lib/planets.lib"
 import { Users, GraduationCap, Info } from "lucide-react"
 import AppLoader from "@layout/app-loader.layout"
 import { Link } from "@tanstack/react-router"
 import CardClass from "@ui/card/class.card"
-import CardTeacher from "@ui/card/teacher.card"
-import CardStudent from "@ui/card/student.card"
+import InfoTeacher from "@ui/info/teacher.info"
+import InfoStudent from "@ui/info/student.info"
 
 interface Props {
   class_id: number,
@@ -26,7 +28,7 @@ export default function View({ class_id, active_tab }: Props) {
 
   return (
     <div className="flex flex-col justify-start items-center w-full px-2 h-full">
-      <div className="flex flex-col items-center w-[48rem] max-w-[90%] h-full">
+      <div className="flex flex-col items-center w-[48rem] max-w-[100%] h-full">
         <div className="flex flex-row justify-start items-start gap-2 w-full mb-8">
           <div className="flex flex-row justify-start items-center gap-2 w-full">
             <Planet
@@ -81,15 +83,7 @@ export default function View({ class_id, active_tab }: Props) {
 function TabTeachers() {
   const { isPending, data } = useQuery({
     queryKey: ['wait-t'],
-    queryFn: async () => {
-      await new Promise(r => setTimeout(r, 2000))
-      return [
-        { teacher_id: 1, teacher_name: 'Oualid Ouarrho', teacher_email: 'ouarrho@schooger.com', teacher_phone: '+212 612 34 56 78', teacher_title: 'Maths', teacher_image: 'avatar-2.png' },
-        { teacher_id: 2, teacher_name: 'Nora Hakim', teacher_email: 'nora@schooger.com', teacher_phone: '+212 612 34 56 78', teacher_title: 'Art & Music', teacher_image: 'avatar-8.png' },
-        { teacher_id: 3, teacher_name: 'Abir Hakim', teacher_email: 'abir@schooger.com', teacher_phone: '+212 612 34 56 78', teacher_title: 'English', teacher_image: 'avatar-6.png' },
-        { teacher_id: 4, teacher_name: 'Dodo Hakim', teacher_email: 'dodo@schooger.com', teacher_phone: '+212 612 34 56 78', teacher_title: 'Arabic', teacher_image: 'avatar-7.png' },
-      ]
-    },
+    queryFn: async () => find_all_teachers(),
   })
 
   if (isPending) return <AppLoader />
@@ -97,18 +91,19 @@ function TabTeachers() {
   return (
     <div className="flex flex-wrap justify-start w-full">
       {
-      data?.map(({ teacher_id, teacher_name, teacher_email, teacher_phone, teacher_title, teacher_image }) => (
-        <div className="w-1/2 mb-8 pr-2" key={`teacher-${teacher_id}`}>
-          <CardTeacher 
-            teacher_id={teacher_id} 
-            teacher_name={teacher_name} 
-            teacher_email={teacher_email} 
-            teacher_phone={teacher_phone} 
-            teacher_title={teacher_title} 
-            teacher_image={teacher_image} 
-          />
-        </div>
-      ))}
+        data?.map(({ teacher_id, teacher_name, teacher_email, teacher_phone, teacher_title, teacher_image }) => (
+          <div className="w-1/2 mb-8 pr-2" key={`teacher-${teacher_id}`}>
+            <InfoTeacher
+              teacher_id={teacher_id}
+              teacher_name={teacher_name}
+              teacher_email={teacher_email}
+              teacher_phone={teacher_phone}
+              teacher_title={teacher_title}
+              teacher_image={teacher_image}
+            />
+          </div>
+        ))
+      }
     </div>
   )
 }
@@ -116,15 +111,7 @@ function TabTeachers() {
 function TabStudents() {
   const { isPending, data } = useQuery({
     queryKey: ['wait-s'],
-    queryFn: async () => {
-      await new Promise(r => setTimeout(r, 2000))
-      return [
-        { student_id: 1, student_name: 'Oualid Ouarrho', student_email: 'ouarrho@schooger.com', student_phone: '+212 612 34 56 78', student_image: 'avatar-2.png', planet_id: 6, class_name: 'Class A', },
-        { student_id: 2, student_name: 'Nora Hakim', student_email: 'nora@schooger.com', student_phone: '+212 612 34 56 78', student_image: 'avatar-8.png', planet_id: 5, class_name: 'Class A', },
-        { student_id: 3, student_name: 'Abir Hakim', student_email: 'abir@schooger.com', student_phone: '+212 612 34 56 78', student_image: 'avatar-6.png', planet_id: 3, class_name: 'Class A', },
-        { student_id: 4, student_name: 'Dodo Hakim', student_email: 'dodo@schooger.com', student_phone: '+212 612 34 56 78', student_image: 'avatar-7.png', planet_id: 1, class_name: 'Class A', },
-      ]
-    },
+    queryFn: () => find_all_students()
   })
 
   if (isPending) return <AppLoader />
@@ -132,19 +119,20 @@ function TabStudents() {
   return (
     <div className="flex flex-wrap justify-start w-full">
       {
-      data?.map(({ student_id, student_name, student_email, student_phone, student_image, planet_id, class_name }) => (
-        <div className="w-1/2 mb-8 pr-2" key={`student-${student_id}`}>
-          <CardStudent 
-            student_id={student_id} 
-            student_name={student_name} 
-            student_email={student_email} 
-            student_phone={student_phone} 
-            student_image={student_image} 
-            planet_id={planet_id} 
-            class_name={class_name} 
-          />
-        </div>
-      ))}
+        data?.map(({ student_id, student_name, student_email, student_phone, student_image, planet_id, class_name }) => (
+          <div className="w-1/2 mb-8 pr-2" key={`student-${student_id}`}>
+            <InfoStudent
+              student_id={student_id}
+              student_name={student_name}
+              student_email={student_email}
+              student_phone={student_phone}
+              student_image={student_image}
+              planet_id={planet_id}
+              class_name={class_name}
+            />
+          </div>
+        ))
+      }
     </div>
   )
 }

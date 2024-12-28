@@ -30,7 +30,7 @@ export default function Card({ class_id, class_name, planet_id }: Props) {
           planet_color={planet_color}
         />
 
-        <Text className="mt-1 text-md font-medium lowercase">{level_name}</Text>
+        <Text className="mt-1 text-sm font-semibold lowercase" style={{ color: planet_color }}>{planet_name} | {level_name}</Text>
 
         <Box className="w-full text-center">
           <Text className="mt-4 text-xl font-semibold" truncate="end">{class_name}</Text>
@@ -105,7 +105,7 @@ function CardDropdown({ class_id }: { class_id: number }) {
         </Link>
       </Menu.Dropdown>
     </Menu>
-  );
+  )
 }
 
 function get_color(planet_name: any): string {

@@ -13,7 +13,7 @@ export default function View({ planet_id }: { planet_id: number }) {
 
   return (
     <div className="flex flex-col justify-start items-center w-full px-2 h-full">
-      <div className="flex flex-col items-center w-[64rem] max-w-[90%] h-full">
+      <div className="flex flex-col items-center w-[64rem] max-w-[100%] h-full">
         <div className="flex flex-row justify-start items-start gap-2 w-full mb-8">
           <div className="flex flex-row justify-start items-center gap-2 w-full">
             <Planet

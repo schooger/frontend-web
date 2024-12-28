@@ -13,7 +13,7 @@ interface PropsClassForm {
   close: () => void,
 }
 
-export default function FormClass({ action, class_id, class_name, planet_id, close }: PropsClassForm) {
+export default function Form({ action, class_id, class_name, planet_id, close }: PropsClassForm) {
   console.log('class.form')
   const form = useForm({
     mode: 'uncontrolled',

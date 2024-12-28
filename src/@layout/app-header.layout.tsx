@@ -116,19 +116,19 @@ function AppHeaderDropdown({ $lang }: any) {
       </Menu.Target>
 
       <Menu.Dropdown className="font-bold">
-        <Link to="/profile" className="text-[#444] capitalize" aria-label={$lang?.my_profile}>
+        <Link to="/profile" aria-label={$lang?.my_profile}>
           <Menu.Item leftSection={<UserCircle size={20} className="text-[#444]" />}>
-            {$lang?.my_profile}
+          <span className="text-[#444] capitalize">{$lang?.my_profile}</span>
           </Menu.Item>
         </Link>
-        <Link to="/settings" className="text-[#444] capitalize" aria-label={$lang?.settings}>
+        <Link to="/settings" aria-label={$lang?.settings}>
           <Menu.Item leftSection={<Settings size={20} className="text-[#444]" />}>
-            {$lang?.settings}
+            <span className="text-[#444] capitalize">{$lang?.settings}</span>
           </Menu.Item>
         </Link>
-        <a role="button" className="text-red-500 capitalize" aria-label={$lang?.sign_out}>
+        <a role="button" aria-label={$lang?.sign_out}>
           <Menu.Item leftSection={<LogOut size={20} className="text-red-500" />}>
-            {$lang?.sign_out}
+            <span className="text-red-500 capitalize">{$lang?.sign_out}</span>
           </Menu.Item>
         </a>
       </Menu.Dropdown>
