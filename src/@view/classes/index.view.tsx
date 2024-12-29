@@ -39,7 +39,7 @@ export default function View() {
               className="h-[2.8rem] rounded-full border-0 font-extrabold"
               onClick={open}
               leftSection={<Plus size={20} strokeWidth={2.8} />}
-            >CREATE</Button>
+            >Add</Button>
           </Group>
         </Group>
 

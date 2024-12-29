@@ -1,4 +1,4 @@
-import AppLogo from "./app-logo"
+import AppLogo from "./app-logo.layout"
 import { Accordion, Skeleton } from "@mantine/core";
 import { CircleUser, Coins, Gift, Home, Landmark, Palmtree, School, Settings, SquareChartGantt, Telescope, Trophy, Users } from 'lucide-react';
 import { Link, useLocation } from "@tanstack/react-router";
@@ -26,7 +26,7 @@ export default function AppNavbar() {
         (isPending) ? <AppNavbarLoader />
           : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
             : <>
-              <div className="flex flex-col gap-4 text-[#444] mt-8">
+              <div className="flex flex-col gap-4 text-[#444] mt-6">
                 {
                   topLinks.map((link, i) => (
                     <Link to={link.path} key={`link-top-${i}`} aria-label={link.title}>

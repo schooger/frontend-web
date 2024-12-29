@@ -31,7 +31,7 @@ export default function View({ planet_id }: { planet_id: number }) {
             onClick={open}
           >
             <Plus size={28} strokeWidth={2.8} />
-            <span className="ml-1 font-bold">CREATE</span>
+            <span className="ml-1 font-bold">ADD</span>
           </Button>
         </div>
 

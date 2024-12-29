@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Text } from "@mantine/core"
+import { Button, Group, Modal, Pagination, Text } from "@mantine/core"
 import { Plus, Search } from "lucide-react"
 import { useDisclosure } from "@mantine/hooks"
 import FormTeacher from "@form/teacher.form"
@@ -19,27 +19,27 @@ export default function View() {
 
   return (
     <div className="flex flex-col justify-start items-center w-full px-2 h-full">
-      <div className="flex flex-col items-center w-[64rem] max-w-[100%] h-full">
-        <Group justify="space-between" gap={2} className="w-full mb-8">
-          <Text className="text-2xl font-bold capitalize">Teachers</Text>
+      <div className="flex flex-col items-center w-full h-full">
+        <Group justify="space-between" gap={2} className="w-full mb-4 pr-2">
+          <Text className="text-2xl font-extrabold capitalize">Teachers</Text>
 
           <Group gap={8}>
             <Button
               variant="transparent"
-              color="#222"
+              color="blue"
               className="h-[2.8rem] px-2 rounded-full hover:bg-gray-200"
               onClick={open}
             >
-              <Search size={28} strokeWidth={2.8} />
+              <Search size={28} strokeWidth={2.4} />
             </Button>
 
             <Button
-              variant="filled"
+              variant="light"
               color="blue"
-              className="h-[2.8rem] rounded-full border-0 font-extrabold"
+              className="h-[2.8rem] rounded-full font-extrabold"
               onClick={open}
               leftSection={<Plus size={20} strokeWidth={2.8} />}
-            >CREATE</Button>
+            >ADD</Button>
           </Group>
         </Group>
 
@@ -53,10 +53,14 @@ export default function View() {
           <FormTeacher action="create" teacher_id={null} close={close} />
         </Modal>
 
+        <div className="hidden flex justify-end w-full mb-4 pr-2">
+          <Pagination total={10} size="md" radius="xl" withControls={false} />
+        </div>
+
         <div className="flex flex-wrap justify-start w-full">
           {
             data?.map(({ teacher_id, teacher_name, teacher_email, teacher_phone, teacher_title, teacher_image }) => (
-              <div className="w-1/3 mb-8 pr-2" key={`teacher-${teacher_id}`}>
+              <div className="w-1/4 mb-8 pr-2" key={`teacher-${teacher_id}`}>
                 <CardTeacher
                   teacher_id={teacher_id}
                   teacher_name={teacher_name}
@@ -68,6 +72,10 @@ export default function View() {
               </div>
             ))
           }
+        </div>
+
+        <div className="flex justify-center w-full">
+          <Pagination total={10} size="md" radius="xl" withControls={false} />
         </div>
       </div>
     </div>
