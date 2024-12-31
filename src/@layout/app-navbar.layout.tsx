@@ -18,64 +18,66 @@ export default function AppNavbar() {
   const openedAccordionItems = getOpenedAccordionItems(pathname)
 
   return (
-    <div className="fixed top-0 left-0 z-40 w-[12.5rem] h-full pl-4 pr-0 py-2 overflow-auto">
-      <div className="flex justify-start items-baseline w-full">
-        <AppLogo />
-      </div>
-      {
-        (isPending) ? <AppNavbarLoader />
-          : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
-            : <>
-              <div className="flex flex-col gap-4 text-[#444] mt-6">
-                {
-                  topLinks.map((link, i) => (
-                    <Link to={link.path} key={`link-top-${i}`} aria-label={link.title}>
-                      <div className={`flex justify-start items-center gap-2 text-md capitalize ${pathname === link.path
-                        ? 'text-blue-500 font-bold'
-                        : 'font-medium'
-                        }`}>
-                        {link.icon}
-                        <span>{link.title}</span>
-                      </div>
-                    </Link>
-                  ))
-                }
-              </div>
-
-              <div className="mt-8 capitalize">
-                <Accordion
-                  multiple
-                  defaultValue={openedAccordionItems}
-                  classNames={{
-                    item: 'border-none',
-                    panel: 'pl-4',
-                    control: 'pl-0 hover:bg-gray-200',
-                    label: 'font-bold text-[#444]',
-                  }}
-                >
+    <div className="fixed top-0 left-0 z-40 w-[12.5rem] h-full pl-4 pr-0 py-2">
+      <div className="relative w-full h-full">
+        <div className="absolute top-0 left-0 flex justify-start items-baseline w-full h-[3.4rem] bg-[#f6f8fa]">
+          <AppLogo />
+        </div>
+        {
+          (isPending) ? <AppNavbarLoader />
+            : (isError) ? <h1 className="text-md text-red-500 mt-4">something went wrong!</h1>
+              : <div className="w-full h-full pt-8 overflow-auto">
+                <div className="flex flex-col gap-4 text-[#444] mt-6">
                   {
-                    accordionLinks.map((link, m) => (
-                      <Accordion.Item value={`item-${m}`} key={`link-m-${m}`}>
-                        <Accordion.Control icon={link.icon} className="capitalize">{link.title}</Accordion.Control>
-                        {
-                          link.sublinks.map((sublink, n) => (
-                            <Link to={sublink.path} key={`link-n-${n}`} aria-label={sublink.title}>
-                              <Accordion.Panel>
-                                <span className={`${pathname === sublink.path
-                                  ? 'text-blue-500 font-bold'
-                                  : 'font-medium'
-                                  }`}>{sublink.title}</span>
-                              </Accordion.Panel>
-                            </Link>
-                          ))
-                        }
-                      </Accordion.Item>
+                    topLinks.map((link, i) => (
+                      <Link to={link.path} key={`link-top-${i}`} aria-label={link.title}>
+                        <div className={`flex justify-start items-center gap-2 text-md capitalize ${pathname === link.path
+                          ? 'text-blue-500 font-bold'
+                          : 'font-medium'
+                          }`}>
+                          {link.icon}
+                          <span>{link.title}</span>
+                        </div>
+                      </Link>
                     ))
                   }
-                </Accordion>
+                </div>
+
+                <div className="mt-8 capitalize">
+                  <Accordion
+                    multiple
+                    defaultValue={openedAccordionItems}
+                    classNames={{
+                      item: 'border-none',
+                      panel: 'pl-4',
+                      control: 'pl-0 hover:bg-gray-200',
+                      label: 'font-bold text-[#444]',
+                    }}
+                  >
+                    {
+                      accordionLinks.map((link, m) => (
+                        <Accordion.Item value={`item-${m}`} key={`link-m-${m}`}>
+                          <Accordion.Control icon={link.icon} className="capitalize">{link.title}</Accordion.Control>
+                          {
+                            link.sublinks.map((sublink, n) => (
+                              <Link to={sublink.path} key={`link-n-${n}`} aria-label={sublink.title}>
+                                <Accordion.Panel>
+                                  <span className={`${pathname === sublink.path
+                                    ? 'text-blue-500 font-bold'
+                                    : 'font-medium'
+                                    }`}>{sublink.title}</span>
+                                </Accordion.Panel>
+                              </Link>
+                            ))
+                          }
+                        </Accordion.Item>
+                      ))
+                    }
+                  </Accordion>
+                </div>
               </div>
-            </>
-      }
+        }
+      </div>
     </div>
   )
 }

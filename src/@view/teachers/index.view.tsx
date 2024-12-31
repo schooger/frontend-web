@@ -54,11 +54,12 @@ export default function View() {
 
       <div className="flex flex-wrap justify-start w-full">
         {
-          data?.map(({ teacher_id, teacher_name, teacher_email, teacher_phone, teacher_title, teacher_image }) => (
+          data?.map(({ teacher_id, teacher_first_name, teacher_last_name, teacher_email, teacher_phone, teacher_title, teacher_image }) => (
             <div className="w-1/4 mb-8 pr-2" key={`teacher-${teacher_id}`}>
               <CardTeacher
                 teacher_id={teacher_id}
-                teacher_name={teacher_name}
+                teacher_first_name={teacher_first_name}
+                teacher_last_name={teacher_last_name}
                 teacher_email={teacher_email}
                 teacher_phone={teacher_phone}
                 teacher_title={teacher_title}

@@ -7,7 +7,8 @@ import { useState } from "react"
 
 interface Props {
   student_id: number,
-  student_name: string,
+  student_first_name: string,
+  student_last_name: string,
   student_email: string,
   student_phone: string,
   student_image: string,
@@ -15,7 +16,7 @@ interface Props {
   class_name: string,
 }
 
-export default function Card({ student_id, student_name, student_email, student_phone, student_image, planet_id, class_name }: Props) {
+export default function Card({ student_id, student_first_name, student_last_name, student_email, student_phone, student_image, planet_id, class_name }: Props) {
   const [imageIsLoaded, _imageIsLoaded] = useState(false)
   const [opened, { open, close }] = useDisclosure(false)
 
@@ -47,7 +48,7 @@ export default function Card({ student_id, student_name, student_email, student_
         <Box className="w-full text-center">
           <Text className="mt-1 text-sm font-semibold lowercase" style={{ color: planet_color }}>{planet_name}</Text>
 
-          <Text className="mt-2 text-xl font-bold" truncate="end">{student_name}</Text>
+          <Text className="mt-2 text-xl font-bold" truncate="end">{student_first_name} {student_last_name}</Text>
           <Text className="mt-0 text-sm text-gray-500 font-normal capitalize" truncate="end">{class_name} | {level_name}</Text>
 
           <Text className="mt-4 text-sm text-gray-500 font-medium lower" truncate="end">{student_email}</Text>
@@ -60,7 +61,6 @@ export default function Card({ student_id, student_name, student_email, student_
           className="mt-4 font-bold"
           style={{
             backgroundColor: planet_color,
-            color: get_color(planet_name),
           }}
           onClick={open}
         >UPDATE</Button>
@@ -73,7 +73,16 @@ export default function Card({ student_id, student_name, student_email, student_
         onClose={close}
         title={<p className="text-xl font-bold">Update Student</p>}
       >
-        <FormStudent action="create" student_id={student_id} student_name={student_name} planet_id={planet_id} close={close} />
+        <FormStudent
+          action="create"
+          student_id={student_id}
+          student_first_name={student_first_name}
+          student_last_name={student_last_name}
+          student_email={student_email}
+          student_phone={student_phone}
+          planet_id={planet_id}
+          close={close}
+        />
       </Modal>
     </>
   )
@@ -102,9 +111,4 @@ function CardDropdown() {
       </Menu.Dropdown>
     </Menu>
   )
-}
-
-function get_color(planet_name: any): string {
-  if (['netras'].includes(planet_name)) return 'black'
-  return 'white'
 }

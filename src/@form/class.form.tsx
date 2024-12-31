@@ -1,9 +1,8 @@
 import { Button, Input, Paper, Select } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import Planet from "@asset/planet.asset"
-import planets from "@lib/planets.lib";
-import { Languages } from "lucide-react";
-import { useState } from "react";
+import planets from "@lib/planets.lib"
+import { useState } from "react"
 
 interface PropsClassForm {
   action?: 'create' | 'update',
@@ -79,7 +78,7 @@ export default function Form({ action, class_id, class_name, planet_id, close }:
             defaultValue={planet_id?.toString()}
             onChange={change_planet}
             allowDeselect={false}
-            leftSection={<Languages color="#444" size={20} />}
+            leftSection={<Planet width={24} height={24} planet_color={$planet.planet_color} />}
             leftSectionPointerEvents="none"
           />
 

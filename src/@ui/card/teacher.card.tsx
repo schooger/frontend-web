@@ -7,14 +7,15 @@ import { useState } from "react"
 
 interface Props {
   teacher_id: number,
-  teacher_name: string,
+  teacher_first_name: string,
+  teacher_last_name: string,
   teacher_email: string,
   teacher_phone: string,
   teacher_title: string,
   teacher_image: string,
 }
 
-export default function Card({ teacher_id, teacher_name, teacher_email, teacher_phone, teacher_title, teacher_image }: Props) {
+export default function Card({ teacher_id, teacher_first_name, teacher_last_name, teacher_email, teacher_phone, teacher_title, teacher_image }: Props) {
   const [imageIsLoaded, _imageIsLoaded] = useState(false)
   const [opened, { open, close }] = useDisclosure(false)
 
@@ -44,7 +45,7 @@ export default function Card({ teacher_id, teacher_name, teacher_email, teacher_
         <Box className="w-full text-center">
           <Text className="mt-1 text-blue-500 text-sm font-semibold lowercase">{teacher_title}</Text>
 
-          <Text className="mt-2 text-xl font-bold" truncate="end">{teacher_name}</Text>
+          <Text className="mt-2 text-xl font-bold" truncate="end">{teacher_first_name} {teacher_last_name}</Text>
 
           <Text className="mt-4 text-sm text-gray-500 font-medium lower" truncate="end">{teacher_email}</Text>
           <Text className="mt-1 text-sm text-gray-500 font-medium lower" truncate="end">{teacher_phone}</Text>
@@ -82,7 +83,17 @@ export default function Card({ teacher_id, teacher_name, teacher_email, teacher_
         onClose={close}
         title={<p className="text-xl font-bold">Update Teacher</p>}
       >
-        <FormTeacher action="create" teacher_id={teacher_id} teacher_name={teacher_name} close={close} />
+        <FormTeacher
+          action="create"
+          teacher_id={teacher_id}
+          teacher_first_name={teacher_first_name}
+          teacher_last_name={teacher_last_name}
+          teacher_email={teacher_email}
+          teacher_phone={teacher_phone}
+          teacher_title={teacher_title}
+          teacher_image={teacher_image}
+          close={close}
+        />
       </Modal>
     </>
   )

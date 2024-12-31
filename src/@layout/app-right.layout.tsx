@@ -15,7 +15,7 @@ export default function AppRight() {
     <div className="fixed z-40 right-0 top-0 w-[12.5rem] h-full pt-[4rem]">
       <div className="flex flex-col gap-4 mt-2">
         {
-          data?.map(({ student_name, student_image }, i) => (
+          data?.map(({ student_first_name, student_last_name, student_image }, i) => (
             <div className="flex flex-row justify-start items-center gap-2" key={`app-right-user-${i}`}>
               <Indicator inline processing color="green" size={10} offset={4} position="bottom-end">
                 <Avatar
@@ -25,7 +25,7 @@ export default function AppRight() {
                   />
               </Indicator>
 
-              <Text className="text-sm font-semibold" truncate="end">{student_name}</Text>
+              <Text className="text-sm font-semibold" truncate="end">{student_first_name} {student_last_name}</Text>
             </div>
           ))
         }
