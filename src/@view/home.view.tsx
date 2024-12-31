@@ -1,5 +1,5 @@
 import AppLoader from "@layout/app-loader.layout"
-import AppLogo from "@layout/app-logo";
+import AppLogo from "@layout/app-logo.layout";
 import { useQuery } from "@tanstack/react-query";
 
 export default function View() {

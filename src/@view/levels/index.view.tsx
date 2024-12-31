@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@mantine/core"
+import { Group, Text } from "@mantine/core"
 import { Link } from "@tanstack/react-router"
 import Planet from "@asset/planet.asset"
 import planets from "@lib/planets.lib"
@@ -11,14 +11,16 @@ export default function View() {
 
   return (
     <div className="flex flex-col justify-start items-center w-full px-2 h-full">
-      <div className="flex flex-col items-center w-[72rem] max-w-[100%] h-full">
-        <h1 className="w-full mt-0 text-left text-2xl font-bold">Levels</h1>
+      <Group justify="space-between" gap={2} className="w-full h-[2.8rem] mb-8">
+        <Text className="text-2xl font-extrabold capitalize">Levels</Text>
+      </Group>
 
-        <SimpleGrid className="w-full" cols={6} spacing="xl">
-          {
-            primary.map(({ planet_name, planet_color, level_name }, i) => (
-              <Link to={`/levels/${planet_name}`} key={`planet-${i}`}>
-                <div className="flex flex-col justify-start items-center gap-1 pl-2 my-4">
+      <div className="flex flex-wrap justify-start w-full">
+        {
+          primary.map(({ planet_name, planet_color, level_name }, i) => (
+            <div className="w-1/6 pr-2 mb-8" key={`planet-${i}`}>
+              <Link to={`/levels/${planet_name}`}>
+                <div className="flex flex-col justify-start items-center pr-2 my-4">
                   <Planet
                     width={100}
                     height={100}
@@ -28,9 +30,9 @@ export default function View() {
                   <span className="text-md font-medium">{level_name}</span>
                 </div>
               </Link>
-            ))
-          }
-        </SimpleGrid>
+            </div>
+          ))
+        }
       </div>
     </div>
   )

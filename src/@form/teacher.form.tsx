@@ -30,7 +30,6 @@ export default function Form({ action, teacher_id, teacher_name, teacher_title, 
       className="w-full"
     >
       <Paper radius="md" p="md" className="flex flex-col justify-between items-center gap-4 w-full bg-transparent overflow-hidden">
-
         <div className="flex flex-col gap-2 w-full">
           <Input
             {...form.getInputProps('teacher_name')}

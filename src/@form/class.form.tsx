@@ -89,7 +89,7 @@ export default function Form({ action, class_id, class_name, planet_id, close }:
               type="button"
               variant="outline"
               className="mt-4 font-extrabold border-2"
-              style={{ borderColor: $planet.planet_color, color: ['netras'].includes($planet.planet_name) ? 'black' : $planet.planet_color }}
+              style={{ borderColor: $planet.planet_color, color: $planet.planet_color }}
               onClick={close}
             >Cancel</Button>
 
@@ -97,17 +97,12 @@ export default function Form({ action, class_id, class_name, planet_id, close }:
               fullWidth
               type="submit"
               variant="filled"
-              style={{ backgroundColor: $planet.planet_color, color: get_color($planet.planet_name) }}
-              className="mt-4 font-bold"
+              style={{ backgroundColor: $planet.planet_color }}
+              className="mt-4 text-white font-bold"
             >SAVE</Button>
           </div>
         </div>
       </Paper>
     </form>
   )
-}
-
-function get_color(planet_name: any): string {
-  if (['netras'].includes(planet_name)) return 'black'
-  return 'white'
 }

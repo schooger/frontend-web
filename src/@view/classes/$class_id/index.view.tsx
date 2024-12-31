@@ -27,7 +27,7 @@ export default function View({ class_id, active_tab }: Props) {
   const { planet_id = 1, planet_name = '', planet_color = '', level_name = '' } = planets.find(planet => planet.planet_id === data?.planet_id) ?? {}
 
   return (
-    <div className="flex flex-col justify-start items-center w-full px-2 h-full">
+    <div className="flex flex-col justify-start items-center w-full px-4 h-full">
       <div className="flex flex-col items-center w-[48rem] max-w-[100%] h-full">
         <div className="flex flex-row justify-start items-start gap-2 w-full mb-8">
           <div className="flex flex-row justify-start items-center gap-2 w-full">

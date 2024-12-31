@@ -51,10 +51,9 @@ export default function Card({ class_id, class_name, planet_id }: Props) {
         <Button
           variant="filled"
           fullWidth
-          className="mt-4 font-bold"
+          className="mt-4 text-white font-bold"
           style={{
             backgroundColor: planet_color,
-            color: get_color(planet_name),
           }}
           onClick={open}
         >UPDATE</Button>
@@ -106,9 +105,4 @@ function CardDropdown({ class_id }: { class_id: number }) {
       </Menu.Dropdown>
     </Menu>
   )
-}
-
-function get_color(planet_name: any): string {
-  if (['netras'].includes(planet_name)) return 'black'
-  return 'white'
 }
