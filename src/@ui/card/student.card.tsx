@@ -7,17 +7,17 @@ import { useState } from "react"
 
 interface Props {
   student_id: number,
-  student_first_name: string,
-  student_last_name: string,
-  student_email: string,
-  student_phone: string,
-  student_image: string,
-  planet_id: number,
-  class_name: string,
+  student_first_name?: string,
+  student_last_name?: string,
+  student_email?: string,
+  student_phone?: string,
+  student_image?: string,
+  planet_id?: number,
+  class_name?: string,
 }
 
 export default function Card({ student_id, student_first_name, student_last_name, student_email, student_phone, student_image, planet_id, class_name }: Props) {
-  const [imageIsLoaded, _imageIsLoaded] = useState(false)
+  const [$image_is_loaded, $_image_is_loaded] = useState(false)
   const [opened, { open, close }] = useDisclosure(false)
 
   const { planet_name = '', planet_color = '', level_name = '' } = planets.find(planet => planet.planet_id === planet_id) ?? {}
@@ -31,16 +31,16 @@ export default function Card({ student_id, student_first_name, student_last_name
 
         <div className='w-[6rem] bg-transparent border-0 rounded-full'>
           <img
-            className={`w-full aspect-square bg-white object-cover object-center rounded-full ${!imageIsLoaded && 'hidden'}`}
+            className={`w-full aspect-square bg-white object-cover object-center rounded-full ${!$image_is_loaded && 'hidden'}`}
             src={`https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/${student_image}`}
             alt="image"
-            onLoad={() => _imageIsLoaded(true)}
+            onLoad={() => $_image_is_loaded(true)}
           />
           <Skeleton
             circle
             mb="xl"
             classNames={{
-              root: `w-full aspect-square ${imageIsLoaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
+              root: `w-full aspect-square ${$image_is_loaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
             }}
           />
         </div>

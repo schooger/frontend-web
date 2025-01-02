@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function Info({ student_id, student_name, student_email, student_phone, student_image, planet_id, class_name }: Props) {
-  const [imageIsLoaded, _imageIsLoaded] = useState(false)
+  const [$image_is_loaded, $_image_is_loaded] = useState(false)
 
   const { planet_name = '', planet_color = '' } = planets.find(planet => planet.planet_id === planet_id) ?? {}
 
@@ -22,16 +22,16 @@ export default function Info({ student_id, student_name, student_email, student_
     <div className="flex flex-row" id={`student-${student_id}`}>
       <div className='w-[6rem] bg-transparent border-0 rounded-full'>
         <img
-          className={`w-full aspect-square bg-white object-cover object-center rounded-full ${!imageIsLoaded && 'hidden'}`}
+          className={`w-full aspect-square bg-white object-cover object-center rounded-full ${!$image_is_loaded && 'hidden'}`}
           src={`https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/${student_image}`}
           alt="image"
-          onLoad={() => _imageIsLoaded(true)}
+          onLoad={() => $_image_is_loaded(true)}
         />
         <Skeleton
           circle
           mb="xl"
           classNames={{
-            root: `w-full aspect-square ${imageIsLoaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
+            root: `w-full aspect-square ${$image_is_loaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
           }}
         />
       </div>

@@ -1,5 +1,5 @@
 import planets from "@lib/planets.lib";
-import { Button, Input, Paper, Select } from "@mantine/core"
+import { Button, Input, Select } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { AtSign, Phone } from "lucide-react"
 import Planet from "@asset/planet.asset"

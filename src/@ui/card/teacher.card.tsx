@@ -7,16 +7,16 @@ import { useState } from "react"
 
 interface Props {
   teacher_id: number,
-  teacher_first_name: string,
-  teacher_last_name: string,
-  teacher_email: string,
-  teacher_phone: string,
-  teacher_title: string,
-  teacher_image: string,
+  teacher_first_name?: string,
+  teacher_last_name?: string,
+  teacher_email?: string,
+  teacher_phone?: string,
+  teacher_title?: string,
+  teacher_image?: string,
 }
 
 export default function Card({ teacher_id, teacher_first_name, teacher_last_name, teacher_email, teacher_phone, teacher_title, teacher_image }: Props) {
-  const [imageIsLoaded, _imageIsLoaded] = useState(false)
+  const [$image_is_loaded, $_image_is_loaded] = useState(false)
   const [opened, { open, close }] = useDisclosure(false)
 
   return (
@@ -28,16 +28,16 @@ export default function Card({ teacher_id, teacher_first_name, teacher_last_name
 
         <div className='w-[6rem] bg-transparent border-0 rounded-full'>
           <img
-            className={`w-full aspect-square bg-white object-cover object-center rounded-full ${!imageIsLoaded && 'hidden'}`}
+            className={`w-full aspect-square bg-white object-cover object-center rounded-full ${!$image_is_loaded && 'hidden'}`}
             src={`https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/${teacher_image}`}
             alt="image"
-            onLoad={() => _imageIsLoaded(true)}
+            onLoad={() => $_image_is_loaded(true)}
           />
           <Skeleton
             circle
             mb="xl"
             classNames={{
-              root: `w-full aspect-square ${imageIsLoaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
+              root: `w-full aspect-square ${$image_is_loaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
             }}
           />
         </div>

@@ -82,7 +82,7 @@ export default function View({ class_id, active_tab }: Props) {
 
 function TabTeachers() {
   const { isPending, data } = useQuery({
-    queryKey: ['wait-t'],
+    queryKey: ['api/teachers/find_all'],
     queryFn: async () => find_all_teachers(),
   })
 
@@ -91,11 +91,11 @@ function TabTeachers() {
   return (
     <div className="flex flex-wrap justify-start w-full">
       {
-        data?.map(({ teacher_id, teacher_name, teacher_email, teacher_phone, teacher_title, teacher_image }) => (
+        data?.map(({ teacher_id, teacher_first_name, teacher_last_name, teacher_email, teacher_phone, teacher_title, teacher_image }) => (
           <div className="w-1/2 mb-8 pr-2" key={`teacher-${teacher_id}`}>
             <InfoTeacher
               teacher_id={teacher_id}
-              teacher_name={teacher_name}
+              teacher_name={`${teacher_first_name} ${teacher_last_name}`}
               teacher_email={teacher_email}
               teacher_phone={teacher_phone}
               teacher_title={teacher_title}
@@ -110,7 +110,7 @@ function TabTeachers() {
 
 function TabStudents() {
   const { isPending, data } = useQuery({
-    queryKey: ['wait-s'],
+    queryKey: ['api/students/find_all'],
     queryFn: () => find_all_students()
   })
 
@@ -119,11 +119,11 @@ function TabStudents() {
   return (
     <div className="flex flex-wrap justify-start w-full">
       {
-        data?.map(({ student_id, student_name, student_email, student_phone, student_image, planet_id, class_name }) => (
+        data?.map(({ student_id, student_first_name, student_last_name, student_email, student_phone, student_image, planet_id, class_name }) => (
           <div className="w-1/2 mb-8 pr-2" key={`student-${student_id}`}>
             <InfoStudent
               student_id={student_id}
-              student_name={student_name}
+              student_name={`${student_first_name} ${student_last_name}`}
               student_email={student_email}
               student_phone={student_phone}
               student_image={student_image}

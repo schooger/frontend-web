@@ -72,24 +72,24 @@ export default function AppHeader() {
 }
 
 function AppHeaderDropdown({ $lang }: any) {
-  const [imageIsLoaded, _imageIsLoaded] = useState(false)
+  const [$image_is_loaded, $_image_is_loaded] = useState(false)
 
   return (
     <Menu shadow="md" width={155} position="top-end">
       <Menu.Target>
         <button className='bg-transparent border-0 rounded-full'>
           <img
-            className={`w-[2.8rem] h-[2.8rem] bg-white object-cover object-center rounded-full ${!imageIsLoaded && 'hidden'}`}
+            className={`w-[2.8rem] h-[2.8rem] bg-white object-cover object-center rounded-full ${!$image_is_loaded && 'hidden'}`}
             src='/image.jpg'
             alt="image"
-            onLoad={() => _imageIsLoaded(true)}
+            onLoad={() => $_image_is_loaded(true)}
           />
           <Skeleton
             height={44}
             circle
             mb="xl"
             classNames={{
-              root: `${imageIsLoaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
+              root: `${$image_is_loaded ? 'hidden' : 'inline-block'} mb-[0_!important]`
             }}
           />
         </button>

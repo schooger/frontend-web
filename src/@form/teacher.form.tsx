@@ -1,4 +1,4 @@
-import { Button, Input, Paper } from "@mantine/core"
+import { Button, Input } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { AtSign, Phone } from "lucide-react";
 
